@@ -1,0 +1,40 @@
+{
+	"license": "proprietary",
+	"name": "engage/judicial-watch",
+	"description": "the theme for the Judicial Watch website and associated web properties",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Engage, LLC",
+			"email": "david.kees@engagedc.com"
+		}
+	],
+	"config": {
+		"vendor-dir": "wp-content/vendor"
+	},
+	"autoload": {
+		"psr-4": {
+			"Migration\\": "migration",
+			"Engage\\JudicialWatch\\": "wp-content/themes/judicial-watch/includes",
+			"Engage\\JudicialWatch\\Migration\\": "wp-content/migration/includes"
+		}
+	},
+	"minimum-stability": "stable",
+	"require": {
+		"php" : ">=7.1.19",
+		"ext-fileinfo": "*",
+		"ext-simplexml": "*",
+		"guzzlehttp/guzzle": "^6.3",
+		"engagedc/wp-handler": "2.1.*",
+		"dashifen/containers": "1.1.*",
+		"latitude/latitude": "^3.1",
+		"spatie/pdf-to-image": "^1.8",
+		"dashifen/database": "1.3.*",
+		"symfony/var-dumper": "^4.2",
+		"drewjbartlett/wordpress-eloquent": "^0.2.1",
+		"authorizenet/authorizenet": "^2.0",
+		"moneyphp/money": "^3.2",
+		"symfony/dom-crawler": "^4.2",
+		"symfony/css-selector": "^4.2"
+	}
+}

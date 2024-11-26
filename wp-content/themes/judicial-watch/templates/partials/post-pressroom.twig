@@ -1,0 +1,11 @@
+<div class="component-card-post {{ classes }}">
+    <a href="{{ post.link }}">
+        <h2 class="title">
+            {{ post.title| truncate(14)}}
+        </h2>
+    </a>
+    <div class="date">{% include "partials/date-and-source.twig" %}</div>
+    <div class="content">
+        {{ post.content|striptags|length > 180 ? post.content|striptags|slice(0, 180) ~ '...' : post.content|striptags }}
+    </div>
+</div>

@@ -1,0 +1,257 @@
+{% extends "default-template.twig" %}
+
+{% block afterBodyStart %}
+    {% if featuredBackgroundImage %}
+        <div class="page-jwtv-bg{% if isDefaultBgImage %} is-default-bg{% endif %}"
+             style="background-image: url('{{ featuredBackgroundImage }}')"></div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {# JWTV Header #}
+    <section class="page-jwtv-header columns is-multiline">
+        {# Logo #}
+        <div class="column column-logo">
+            <a href="/jwtv">
+                <img src="/wp-content/themes/judicial-watch/assets/images/jw-tv-new1-logo.png"/>
+            </a>
+        </div>
+
+        {# Youtube #}
+        <div class="column column-youtube">
+            <div class="g-ytsubscribe" data-channel="JudicialWatch"></div>
+        </div>
+
+        {# Subscribe #}
+        <div class="column column-subscribe">
+            <form>
+                <div class="jw-subscribe field has-addons">
+                    <form>
+                        <div class="control">
+                            <input class="input input-newsletter" required type="email" placeholder="Email Address">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-danger button-sub">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div class="jwtv-index-with-socialbar container-1140">
+        <!-- Social Share Widget -->
+        <div class="column-social-widget component-social-share-widget is-inverted">
+            <div class="component-title">Share</div>
+                <div class="social-links">
+					<a target="_blank" class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+						<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+					</a>
+	                <a target="_blank" class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+					</a>
+					
+					<a target="_blank" class="social-link" href="http://www.reddit.com/submit?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/reddit.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://www.linkedin.com/shareArticle?mini=true&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/linkedin.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://telegram.me/share/url?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/talegram-logo.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://gettr.com/share?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/Gettr-logo.png"></span>
+					</a>
+					<a class="social-link" href="mailto:?subject={{ social.title|replace({'+': ' '}) }}&body={{ social.link }}">
+						<span class="gmail-social"><img src="/wp-content/themes/judicial-watch/assets/images/gmail.png"></span>
+					</a>
+					<a  class="social-link" href="javascript:void(0)"  onclick="{window.print()}">
+						<span class="print-social"><img src="/wp-content/themes/judicial-watch/assets/images/print.png"></span>
+					</a>
+				</div>
+        </div>
+
+        <div class="jwtv-index-content">
+        {# Featured Post #}
+        {% if featuredPost %}
+            <section class="featured-post">
+                <div class="column-post">
+                    <div class="meta">
+                        <span class="date">{{ featuredPost.date }}</span>
+                        {% if featuredPost.category.name %}
+                            <span class="divider"></span>
+                            <a class="category" href="{{ featuredPost.category.link }}">
+                                {{ featuredPost.category.name }}
+                            </a>
+                        {% endif %}
+                    </div>
+                    <h1 class="post-title">
+                        <a href="{{ featuredPost.link }}">{{ featuredPost.title }}</a>
+                    </h1>
+                    <div class="wysiwyg-content">
+                        <div class="invert-body-text description">
+                            {# featuredPost.caption ? featuredPost.caption : featuredPost.content|striptags|truncate(255, true) #}
+                        </div>
+                    </div>
+                </div>
+                <div class="column-play-icon">
+                    <a href="{{ featuredPost.link }}" class="js-play-video">
+                        <img class="play-icon"
+                             src="/wp-content/themes/judicial-watch/assets/images/icon-play-yellow-lg.png"/>
+                    </a>
+                </div>
+            </section>
+            <div class="modal modal-video">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <iframe src=""
+                            frameborder="0" allow="autoplay; encrypted-media"
+                            class="js-play-featured-video"
+                            allowfullscreen></iframe>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+        {% endif %}
+
+        <section class="container-1140">
+            {% for postGroup in shuffledPostGroup %}
+            {% set option_li_var = 1 %}
+                <!-- Videos -->
+                 <div class="component-jwtv-slider delay-2s">
+                    <h1 class="component-title">
+                        <a href="{{ postGroup.link }}">{{ postGroup.name }}</a>
+                    </h1>
+                    <div class="component-slides-container">
+                        <div class="js-slick jwtv-slides">
+                            {% for post in postGroup.posts %}
+								<a class="jwtv-slide {% if option_li_var > 3 %} is-hidden-mobile{% endif %}" href="{{ post.link }}">
+                                    {#<div class="slide-media"
+                                         style="background-image:url('{{ post.thumbnails.large.src }}')">
+										<img class="play-icon is-mobile is-hidden-tablet" src="/wp-content/themes/judicial-watch/assets/images/icon-play-blue-lg.png">
+									</div>#}
+                                    <div class="slide-media"
+                                         style="background-image:url('http://img.youtube.com/vi/{{ post.video_id}}/sddefault.jpg')">
+										<img class="play-icon is-mobile is-hidden-tablet" src="/wp-content/themes/judicial-watch/assets/images/icon-play-blue-lg.png">
+									</div>
+                                    <div class="slide-content">
+                                        <div class="slide-stats">
+										</div>
+                                        <div class="slide-title">
+                                            {{ post.title }}
+                                        </div>
+											<div class="slide-meta">{% if not(postGroup.name|trim|upper == 'JW UNIVERSITY' or postGroup.name|trim|upper == 'JW ON ISSUE')%}{{ post.date }}{% endif%}</div>
+									</div>
+                                </a>
+							{% set option_li_var = option_li_var + 1 %}
+							 {% endfor %}
+							 	<div class="jwtv-button is-mobile is-hidden-tablet">
+									<a href="{{ postGroup.link }}" type="button" class="button button-primary">View All</a>
+								</div>
+
+                        </div>
+                    </div>
+				 </div>
+            {% endfor %}
+        </section>
+    </div>
+    </div>
+{% endblock %}
+
+{% block pageScripts %}
+    <script>
+        // Video dialog
+        var $videoDialog = $('.modal-video');
+        var $playButton = $('.js-play-video');
+        var $featuredVideo = $('.js-play-featured-video')
+        var featuredVideoSrc = 'https://www.youtube.com/embed/{{ featuredPost.video_id }}?autoplay=1';
+        var $modalClose = $('.modal-close');
+
+        $playButton.on('click', function(e) {
+            e.preventDefault();
+            $videoDialog.addClass('is-active');
+            $featuredVideo.attr('src', featuredVideoSrc);
+        });
+        $modalClose.on('click', function() {
+            $videoDialog.removeClass('is-active');
+            $featuredVideo.attr('src', 'empty');
+        });
+
+        // Sliders
+       function jwtvallSlider()
+		{
+			var $slickSliders = $('.jwtv-slides');
+			$slickSliders.each(function (index, elem) {
+				var $this = $(this);
+
+				$this.slick({
+					arrows: true,
+					slidesToShow: 3,
+					variableWidth: true,
+					slidesToScroll: 3,
+					infinite: false,
+					draggable: true,
+					prevArrow: '<button type="button" class="slick-prev"><span class="far fa-chevron-left"></span></button>',
+					nextArrow: '<button type="button" class="slick-next"><span class="far fa-chevron-right"></span></button>',
+					waitForAnimate: false,
+
+					responsive: [
+							{
+								breakpoint: 768,
+								settings: "unslick"
+							},
+							{
+								breakpoint: 1024,
+								settings: {
+									arrows: true,
+									slidesToShow: 2,
+									slidesToScroll: 1
+								}
+							},
+							{
+								breakpoint: 1025,
+								settings: {
+									arrows: true
+								}
+							},
+					]
+				});
+			});
+		}
+
+        // Animations
+        var $videoHoverDivs = $(document).find('.slick-slide > div');
+        var $jwtvSlides = $('.jwtv-slide');
+        $('.slick-slide').on('mouseenter', function () {
+            var $this = $(this);
+            $videoHoverDivs.removeClass('is-hovered');
+            $jwtvSlides.stop();
+            $jwtvSlides.css('max-width', '');
+
+            $this.find('.jwtv-slide').animate({
+                maxWidth: 400
+            }, 350, function () {
+                $(document).find($this).find('> div').addClass('is-hovered')
+            });
+
+        })
+
+        $('.slick-slide').on('mouseleave', function () {
+            $videoHoverDivs.removeClass('is-hovered');
+            $jwtvSlides.stop();
+            $jwtvSlides.css('max-width', '');
+        })
+        /* Sliders remove in mobile*/
+		jwtvallSlider();
+		
+		$(window).resize(function(){
+			var $windowWidth = $(window).width();
+			if ($windowWidth > 768) {
+				jwtvallSlider();   
+				
+			}
+		});
+    </script>
+{% endblock %}

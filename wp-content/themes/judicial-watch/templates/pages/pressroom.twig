@@ -1,0 +1,82 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-subpage-news">
+        <h1>{{ page.title }}</h1>
+    </section>
+
+    <!-- Section: Page Content -->
+    <div class="page-content page-container">
+        <div class="column-content  wysiwyg-content column-content-pressroom">
+		<h2>Latest Press Releases</h2>
+            <!-- Posts -->
+            <div class="post-container">
+                <div class="columns is-multiline">
+                    {% for post in page.posts %}
+                        <div class="column is-full">
+                            {% include "partials/post-pressroom.twig" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav class="component-pagination-pager">
+                {% if page.pagination.previous.pageNumber != page.pagination.next.pageNumber %}
+                    <a href="{{ page.pagination.previous.link }}"
+                       class="pager-previous {% if page.pagination.previous.isCurrent %} disabled {% endif %}">
+                        <span class="far fa-long-arrow-left"></span>
+                    </a>
+
+                    {% for pageLink in page.pagination.pages %}
+                        <a href="{{ pageLink.link }}"
+                           class="pager-item {% if pageLink.isCurrent %} is-active disabled {% endif %}">{{ pageLink.pageNumber }}</a>
+                    {% endfor %}
+
+                    <a href="{{ page.pagination.next.link }}"
+                       class="pager-previous {% if page.pagination.next.isCurrent %} disabled {% endif %}">
+                        <span class="far fa-long-arrow-right"></span>
+                    </a>
+                {% endif %}
+            </nav>
+			{{ page.content }}
+		</div>
+        <div class="column-sidebar column-sidebar-pressroom">
+            {# Latest Video Post #}
+            {% if latestVideos %}
+                <div class="sidebar-item sidebar-item-pressroom">
+                    <h4 class="sidebar-item-title">Videos</h4>
+                    {% for video in latestVideos %}
+                        <div class="pressroom-item">
+                            <div class="media{{ video.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                {% if video.thumbnails.medium_large.src %}
+                                    style="background-image: url('{{ video.thumbnails.medium_large.src ?? defaultImage }}')"
+                                {% endif %}
+                        ></div>
+                            <div class="content">
+                                <h6 class="title"><a href="{{ video.link }}">{{ video.title }}</a></h6>
+                            <div class="date">{{ video.date }}</div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {# Latest Documents Post #}
+            {% if latestDocuments %}
+                <div class="sidebar-item sidebar-item-pressroom">
+                    <h4 class="sidebar-item-title">Documents</h4>
+                    {% for document in latestDocuments %}
+                        <div class="pressroom-item">
+                           
+                            <div class="content">
+                                <h6 class="title"><a href="{{ document.link }}">{{ document.title }}</a></h6>
+                                <div class="date">{{ document.date }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+         </div>
+    </div>
+{% endblock %}

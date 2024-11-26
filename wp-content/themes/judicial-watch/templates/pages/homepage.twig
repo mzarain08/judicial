@@ -1,0 +1,565 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    {# Section: CTA #}
+    <section class="cta">
+        <div class="container">
+            <div class="columns is-wrapped is-desktop">
+                <div class="column column-primary column-breaking-news-slider">
+                    <div class="card" data-post-id="{{  page.latestNews.featured.postId }}">
+                        <div class="card-image">
+                            <a href="{{ page.latestNews.featured.link }}"
+                               class="{{ page.latestNews.featured.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                {% if page.latestNews.featured.thumbnails.medium_large.src %}
+                                    style="background-image:url('{{ page.latestNews.featured.thumbnails.medium_large.src ?? defaultImage }}')"
+                                {% endif %}
+                            >
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="p-b-5">
+                                <a href="{{ page.latestNews.featured.link }}" class="title">
+                                    {{ page.latestNews.featured.title|length > 110 ? page.latestNews.featured.title|slice(0, 120) ~ '...' : page.latestNews.featured.title }}
+                                </a>
+                            </h4>
+
+                            <div class="card-post-content"> {{ page.latestNews.featured.content|striptags|length > 300 ? page.latestNews.featured.content|striptags|slice(0, 300) ~ '...' : page.latestNews.featured.content|striptags }}</div>
+                        </div>
+                    </div>
+                    {% for newsPost in page.latestNews.breakingNews %}
+                        <div class="card" data-post-id="{{ newsPost.postId }}">
+                            <div class="card-image">
+                                <a href="{{ newsPost.link }}"
+                                       class="{{ newsPost.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                        {% if newsPost.thumbnails.medium_large.src %}
+                                            style="background-image: url('{{ newsPost.thumbnails.medium_large.src ?? defaultImage }}')"
+                                        {% endif %}>
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <h5>{{ newsPost.date }} | Judicial Watch</h5>
+                                <h4 class="p-b-5">
+                                    <a href="{{ newsPost.link }}" class="title">
+                                        {{ newsPost.title|length > 110 ? newsPost.title|slice(0, 120) ~ '...' : newsPost.title }}
+                                    </a>
+                                </h4>
+
+                                <div class="card-post-content">{{ newsPost.content|striptags|length > 300 ? newsPost.content|striptags|slice(0, 300) ~ '...' : newsPost.content|striptags }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="column column-article-list is-12-tablet is-hidden-768">
+                    <div class="tabs-nav">
+                        <ul>
+                            <li class="is-active is-hidden-768">
+                                Breaking News
+                                
+                            </li>
+                            
+                            
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <!-- Tab 1 -->
+                        <div class="tab-pane is-active tab-pane-breaking jw-breaking-news">
+                            <div class="tab-content-item">
+                                {% for newsPost in page.latestNews.breakingNews %}
+                                    <a class="tab-item article-list-item" href="{{ newsPost.link }}"
+                                       data-post-id="{{ newsPost.postId }}"
+                                       title="{{ newsPost.title }}">
+                                        <div class="image{{ newsPost.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                                {% if newsPost.thumbnails.medium_large.src %}
+                                                    style="background-image: url('{{ newsPost.thumbnails.medium_large.src ?? defaultImage }}')"
+                                                {% endif %}
+                                        ></div>
+                                        <div class="content">
+                                            <h4>
+                                                {{ newsPost.title }}
+                                            </h4>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section: Read Now #}
+    <section class="read-now">
+        <div class="container section-content-container">
+            <div class="first-slider read-now-categories">
+                {% for category in page.readNow.archives.categories %}
+                    <div class="column">
+                        <a href="{{ category.link }}" title="{{ category.name }}">
+                            <img src="{{ category.image.sizes.medium_large }}">
+                            <h4>{{ category.name }}</h4>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                <div class="column">
+                    <a href="{{ page.readNow.archives.theVerdict.link.url }}">
+                        <img src="{{ page.readNow.archives.theVerdict.image }}">
+                        <h4>{{ page.readNow.archives.theVerdict.link.title }}</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="news-section-mobile column column-article-list is-12-tablet is-mobile is-hidden-tablet">
+                    <div class="tabs-nav">
+						 <ul>
+                           <li>
+								<span><i class="fas fa-caret-right is-hidden-768 "></i></span>
+							In The News</li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                       
+                        <!-- Tab 2 -->
+                        <div class="tab-pane jw-in-the-news">
+                            {% for pressPost in page.latestNews.inTheNews %}
+                                <a class="tab-item article-list-item" href="{{ pressPost.link }}"
+                                   title="{{ pressPost.title }}">
+                                    <div class="image{{ pressPost.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                            {% if pressPost.thumbnails.medium_large.src %}
+                                                style="background-image: url('{{ pressPost.thumbnails.medium_large.src ?? defaultImage }}')"
+                                            {% endif %}
+                                    ></div>
+                                    <div class="content">
+                                        <h4>
+                                            {{ pressPost.title }}
+                                        </h4>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+			</div>
+            <!-- Tabs -->
+            {% set option_li = 1 %}
+            <div class="component-tabs">
+                <div class="tabs-nav has-white-bg">
+					<div class="columns  is-mobile search-filter-posts is-hidden-tablet is-marginless container ">
+						<div class="column p-t-0 filter-box">
+							<div class="select is-block">
+								<select class="input input-select" name="Filter" onchange="checkclickchanged(this.value)">
+									<option value="">Filter by</option>
+									
+                        {% for tabName, tabPosts in page.readNow.posts %}
+                          
+							<option value="{{option_li}}" id="option_id_{{option_li}}">{{ tabName }}</option>
+							{% set option_li = option_li + 1 %}
+                        {% endfor %}
+						
+									 
+								</select>
+							</div>
+						</div>
+					</div>
+                   <ul class="option_check_ul is-hidden-768">
+                        {% for tabName, tabPosts in page.readNow.posts %}
+                            <li{% if loop.first %} class="is-active"{% endif %}>{{ tabName }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="tab-content" style="position:relative">
+                    {% for tabName, tabPosts in page.readNow.posts %}
+					{% set option_li_var = 1 %}
+					{% set cat_link = 1 %}
+                        <div class="tab-pane{% if loop.first %} is-active{% endif %}">
+                            <div class="read-more-group-slider">
+                                {% for post in tabPosts %}
+								<div {% if option_li_var > 3 %} class="is-hidden-mobile"{% endif %}>
+								 {% include "partials/post-card.twig" with { "classes": "m-r-30"} %}
+								</div>
+                                   
+									{% set option_li_var = option_li_var + 1 %}
+									{% set cat_link = post.category.link %}
+									
+                                {% endfor %}
+								
+								
+                                {% if 0 == tabPosts|length%}
+                                    <div class="p-b-25 p-t-25">No posts in this category yet, please check back later</div>
+                                {% endif %}
+                            </div>
+							<div class="p-b-20 p-r-15 fa-pull-right is-mobile is-hidden-tablet">
+									<a href="{{ cat_link }}" type="button" class="button button-primary">View All</a>
+							</div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section: Watch now #}
+    <section class="watch-now">
+        <div class="container section-content-container">
+            <div class="title-container">
+                <a href="/jwtv" name="jwtv" title="JWTV" class="jwtv-logo">
+                    <img src="/wp-content/themes/judicial-watch/assets/images/jw-tv-new1-logo.png" class="logo-jwtv"/>
+                </a>
+                <div class="g-ytsubscribe" data-channel="JudicialWatch"></div>
+            </div>
+            <div class="columns is-gapless is-multiline">
+                <div class="column column-primary">
+                    <div class="component-card-post is-inverted">
+                        <div class="media-wrapper">
+                            <iframe width="555" height="312"
+                                    src="https://www.youtube.com/embed/{{ page.watchNow.featured.videoId }}?rel=0&enablejsapi=1"
+                                    frameborder="0"
+                                    allow="autoplay; encrypted-media"
+                                    class="media-item"
+                                    allowfullscreen></iframe>
+                        </div>
+                        <h3 class="title">
+                            <a href="{{ page.watchNow.featured.link }}">
+                                {{ page.watchNow.featured.title }}
+                            </a>
+                        </h3>
+                        <div class="content">{{ page.watchNow.featured.content|striptags|truncate(20, true) }}</div>
+                        <div class="date">{{ page.watchNow.featured.date }}</div>
+                        <div class="button-container">
+                            <a href="/jwtv" type="button" class="button button-primary">View All</a>
+                            <button type="button" class="button is-danger is-hidden-tablet">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column column-videos">
+                    {% for video in page.watchNow.videos %}
+                        <div class="video-item">
+                            <div class="media{{ video.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                    {% if video.thumbnails.medium_large.src %}
+                                        style="background-image: url('{{ video.thumbnails.medium_large.src ?? defaultImage }}')"
+                                    {% endif %}
+                            ></div>
+                            <div class="content">
+                                <h4 class="title">
+                                    <a href="{{ video.link }}">{{ video.title }}</a>
+                                </h4>
+                                <div class="date">{{ video.date }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="jw-tv">
+                        <h3 class="title">Subscribe to Judicial Watch TV</h3>
+                        <p>
+                            Stay up-to-date with all things Judicial Watch by subscribing to Judicial Watch TV. Over 400,000 people
+                            have
+                            subscribed and trust Judicial Watch TV as a daily news source.
+                        </p>
+                        <form class="field has-addons jwtv-subscribe js-clonedNewsletterForm">
+                            <div class="control column-email">
+                                <input class="input input-newsletter" type="email" placeholder="Email Address">
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-danger button-sub">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section: Join JW #}
+    {% if page.signupForm.type != "no-form" %}
+        <section class="join"
+            style="{% if page.signupForm.image.url %}
+                background-image:url('{{ page.signupForm.image.url }}');
+            {% endif %}
+            {% if page.signupForm.background_color %}
+                {% if page.signupForm.image.url is empty %}
+                    background: {{ page.signupForm.background_color }} !important;
+                {% else %}
+                    background-color:{{ page.signupForm.background_color }};
+                {% endif %}
+            {% endif %}"
+        >
+            <div class="container section-content-container">
+                <h1 class="section-title">{{ page.signupForm.heading }}</h1>
+                <form class="form js-clonedNewsletterForm">
+                    <div class="columns">
+                        <div class="column is-half">
+                            <input type="text" class="input has-background-white" placeholder="First Name">
+                        </div>
+                        <div class="column is-half">
+                            <input type="text" class="input has-background-white" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-three-quarters">
+                            <input type="email" required class="input has-background-white input-newsletter" placeholder="Email Address">
+                        </div>
+                        <div class="column is-one-quarter">
+                            <input type="text" class="input has-background-white" placeholder="Zip code">
+                        </div>
+                    </div>
+                    <div class="columns columns-submit">
+                        <button type="submit" class="button button-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    {% endif %}
+
+    {# Section: Featured Petitions #}
+    {% if page.petitions %}
+    <section class="key-petitions">
+        <div class="container section-content-container">
+            <h1 class="section-title">
+                <a href="/petitions" class="section-title">Take Action Now</a>
+            </h1>
+            <div class="columns is-multiline slick-petitions is-0 is-fluid js-slick">
+                {% for petition in page.petitions %}
+                    <div class="column">
+                        <a href="{{ petition.link }}" class="petition-item{{ petition.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                            {% if petition.thumbnails.medium_large.src %}
+                                style="background-image: url('{{ petition.thumbnails.medium_large.src ?? defaultImage }}')"
+                            {% endif %}
+                        >
+                            <h2>{{ petition.title }}</h2>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="has-text-centered row-view-all">
+                <a href="/petitions" type="button" class="button button-primary is-inverted button-view-all">View All</a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+{% endblock %}
+
+{% block pageScripts %}
+
+    {# One-off scripts #}
+    <script>
+        // Breaking news slider
+        function checkclickchanged(option_value){
+			$( "ul.option_check_ul li:nth-child("+option_value+")" ).click();
+		//	alert(option_value);
+		}
+		function breakingNewsSlider()
+		{
+			var $breakingNewsSlider = $('.column-breaking-news-slider');
+			$breakingNewsSlider.slick({
+				arrows: true,
+				autoplay:true, 
+				autoplaySpeed : 6000,
+				prevArrow: '<button type="button" class="slick-prev"><span class="far fa-chevron-left"></span></button>',
+				nextArrow: '<button type="button" class="slick-next"><span class="far fa-chevron-right"></span></button>',
+				infinite: true,
+				draggable: true,
+				responsive: [
+					{
+						breakpoint: 768,
+						settings: "unslick"
+					}
+				]
+			});
+		}
+
+        // Transition top navigation on scroll event
+        $(document).ready(function () {
+            if ($(window).scrollTop() > 0) {
+                $('body').addClass('is-scrolled');
+            } else {
+                $('body').removeClass('is-scrolled');
+            }
+        })
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 0) {
+                $('body').addClass('is-scrolled');
+            } else {
+                $('body').removeClass('is-scrolled');
+            }
+        });
+
+        // Read now: first slider
+		function readmoreSlider()
+		{
+        
+			$('.read-now .first-slider').slick({
+				arrows: false,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				variableWidth: true,
+				infinite: false,
+				draggable: true,
+				
+				responsive: [
+					{
+						breakpoint: 768,
+						settings: "unslick"
+					}
+				]
+			});
+		}
+		
+		 // Read now: second slider
+		function readMoreGroupSlider()
+		{
+        
+			
+			$('.read-now .read-more-group-slider').slick({
+				arrows: true,
+				slidesToShow: 3,
+				variableWidth: true,
+				slidesToScroll: 3,
+				infinite: false,
+				mobileFirst: false,
+				draggable: true,
+				prevArrow: '<button type="button" class="slick-prev"><span class="far fa-chevron-left"></span></button>',
+				nextArrow: '<button type="button" class="slick-next"><span class="far fa-chevron-right"></span></button>',
+				responsive: [
+					{
+						breakpoint: 768,
+						settings: "unslick"
+					},
+					{
+						breakpoint: 800,
+						settings: {
+							slidesToShow: 2,
+							slidesToScroll: 1,
+							variableWidth: true,
+							infinite: true,
+							draggable: true
+						}
+					},
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: 2,
+							slidesToScroll: 1,
+							variableWidth: true,
+							infinite: true,
+							draggable: true
+						}
+					},
+					{
+						breakpoint: 1026,
+						settings: {
+							slidesToShow: 2,
+							slidesToScroll: 2,
+							variableWidth: false,
+							infinite: true,
+							draggable: true
+						}
+					}
+				]
+			});
+		}	
+
+        // Key Issues
+		function slickpetitions()
+		{
+		
+			$('.slick-petitions').slick({
+				prevArrow: null,
+				nextArrow: null,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				rows: 1,
+				slidesPerRow: 1,
+				variableWidth: true,
+				infinite: true,
+				draggable: true,
+				mobileFirst: false,
+				
+		
+				responsive: [
+					{
+						breakpoint: 768,
+						settings: "unslick"
+					},
+					{
+						breakpoint: 1023,
+						settings: {
+							prevArrow: null,
+							nextArrow: null,
+							slidesToShow: 1,
+							slidesToScroll: 1,
+							rows: 1,
+							slidesPerRow: 1,
+							variableWidth: true,
+							infinite: true,
+							draggable: true
+						}
+					},
+					 
+					{
+						breakpoint: 4840,
+						settings: {
+							prevArrow: null,
+							nextArrow: null,
+							slidesToShow: 4,
+							slidesToScroll: 4,
+							rows: 2,
+							slidesPerRow: 2,
+							variableWidth: true,
+							infinite: true,
+							draggable: false,
+						}
+					},
+				]
+			});
+		}
+
+        /* Apply transparency to slides that are only partially visible */
+        function applySliderSlideTransparency() {
+            var $slides = $(this).find('.slick-slide');
+
+            $slides.each(function (index, elem) {
+                if (!$(elem).visible(false, false, 'horizontal')) {
+                    $(elem).css('opacity', '0.7');
+                } else {
+                    $(elem).css('opacity', '1');
+                }
+            });
+        }
+
+        $(window).on('resize scroll', function () {
+            var $sliders = $('.js-slick');
+
+            $sliders.each(function (index, item) {
+                applySliderSlideTransparency.call($(item));
+            })
+        });
+        /* Sliders in tab panes */
+        $(document).on('afterChange', '.js-slick', function () {
+            applySliderSlideTransparency.call($('.js-slick'));
+        });
+        
+        /* Sliders remove in mobile*/
+		breakingNewsSlider();
+		readmoreSlider();
+		readMoreGroupSlider();
+		slickpetitions();
+		
+		$(window).resize(function(){
+			var $windowWidth = $(window).width();
+			if ($windowWidth > 768) {
+				breakingNewsSlider();   
+				readmoreSlider();
+				readMoreGroupSlider();
+				slickpetitions();
+			}
+		});
+    </script>
+{% endblock %}

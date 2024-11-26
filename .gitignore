@@ -1,0 +1,25 @@
+# Ignore wp-config.php
+wp-config.php
+
+# Ignore wp-content/uploads directory
+wp-content/uploads/
+
+# Ignore wp-content/uploads directory
+wp-content/themes/judicial-watch/assets/assets/uploads/
+
+# Ignore db.php
+db.php
+
+# Ignore database dump files
+db.sql
+
+# Ignore all log files
+*.log
+
+# Ignore all environment variable files
+*.env
+
+# Ignore all zip files
+*.zip
+
+.idea/

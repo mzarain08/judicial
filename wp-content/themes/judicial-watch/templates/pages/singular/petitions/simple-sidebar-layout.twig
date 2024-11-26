@@ -1,0 +1,43 @@
+{% extends "collection-template.twig" %}
+
+{% block content %}
+
+	<div class="bg-cover p-b-100"
+		 style="{% if page.layout.image %}background-image: url('{{ page.layout.image }}'); {% endif %}
+		{% if page.layout.color %} background-color: {{ page.layout.color }}; {% endif %}"
+	>
+	    <section class="page-content page-container p-t-120 mobile-p-t-40 container-950 invert-body-text">
+	        <div class="columns is-marginless is-multiline">
+	            <!-- Page Content -->
+	            <div class="column is-three-fifths is-paddingless m-r-100">
+	                <div class="wysiwyg-content invert-body-text">
+	                    <h1 class="petition-title p-t-5 m-b-25">{{ meta.title }}</h1>
+
+		                {% if page.media.type == "image" %}
+			                <img src="{{ page.media.image.sizes.medium_large }}" alt="{{ media.image.alt }}">
+		                {% elseif page.media.type == "video" %}
+			                <div class="responsive-media">
+				                <iframe width="750" height="421.875"
+					                src="https://www.youtube.com/embed/{{ page.media.video }}?rel=0&controls=0"
+					                allow="autoplay; encrypted-media" frameborder="0"
+					                allowfullscreen></iframe>
+		                    </div>
+		                {% endif %}
+
+		                {{ page.description }}
+
+		                {% if page.finePrint is not empty %}
+			                <small class="is-inline-block p-t-150 mobile-p-t-10 has-text-white">{{ page.finePrint }}</small>
+			            {% endif %}
+	                </div>
+	            </div>
+	            <div class="column is-paddingless column-sidebar wysiwyg-content">
+					{% if form %}
+						{{ form }}
+					{% endif %}
+	            </div>
+	        </div>
+	    </section>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    {# Page Title #}
+    <section class="component-subpage-title is-subpage-jwtalk"
+             style="{{  backgroundImage ? "background-image: url('" ~ backgroundImage ~ "');" : '' }}">
+        <div class="columns container-1140 is-multiline">
+            <div class="column is-narrow column-logo">
+                <img src="/wp-content/themes/judicial-watch/assets/images/logo-jwtalk.png" class="logo-jwtalk"/>
+            </div>
+            <div class="column is-narrow">
+                <a href="https://itunes.apple.com/us/podcast/jw-talknet/id1386449666?mt=2" class="button button-sub">
+                    <span class="button-sub-heading">Subscribe</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    {# Latest Podcast #}
+    <section class="the-latest">
+        <div class="container-1140">
+            <h1 class="section-title">The Latest</h1>
+            <div class="columns is-multiline is-marginless is-paddingless">
+                {% if featuredPost %}
+                    <div class="column column-image">
+                        <div class="featured-image{{ featuredPost.thumbnails.large.src ? '' : ' background-image-missing' }}"
+                                {% if featuredPost.thumbnails.large.src %}
+                                    style="background-image: url('{{ featuredPost.thumbnails.large.src ?? defaultImage }}')"
+                                {% endif %}
+                        ></div>
+                    </div>
+                    <div class="column-post">
+                        <h2>
+                            <a href="{{ featuredPost.link }}" class="post-title">
+                                {{ featuredPost.title }}
+                            </a>
+                        </h2>
+                        <div class="excerpt">
+                            {{ featuredPost.exerpt ?? featuredPost.content|striptags|truncate(30, true) }}
+                        </div>
+
+                        {% if featuredPost.buzzsproutLink %}
+                            <div class="podcast-ui">
+                                <script src="{{ featuredPost.buzzsproutLink }}.js?player=small"
+                                        type="text/javascript" charset="utf-8"></script>
+
+                                {% if featuredPost.itunesLink %}
+                                    <a href="{{ featuredPost.itunesLink }}" class="apple-itunes-link">
+                                        <span class="fab fa-apple"></span>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+
+    {# Weekly Update #}
+    <section class="section-blue-grid">
+        <div class="container-1140">
+            <h1 class="section-title">Tom Fitton's Weekly Update</h1>
+
+            <!-- Post Grid -->
+            <div class="columns is-multiline jwtalk-posts-grid">
+                {% for post in posts %}
+                    {# Weekly Update Post #}
+                    <div class="column">
+                        <div class="jwtalk-posts-grid-item has-dark-background">
+                            <div class="featured-image{{ post.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                    {% if post.thumbnails.medium_large.src %}
+                                        style="background-image: url('{{ post.thumbnails.medium_large.src ?? defaultImage }}')"
+                                    {% endif %}
+                            ></div>
+                            <div class="content">
+                                <h2>
+                                    <a href="{{ post.link }}" class="post-title">
+                                        {{ post.title }}
+                                    </a>
+                                </h2>
+                                <div class="date">{{ post.date }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% for postGroup in morePostsGroups %}
+                <div class="columns is-multiline jwtalk-posts-grid is-hidden" style="display:none">
+                    {% for post in postGroup %}
+                        <div class="column">
+                            <div class="jwtalk-posts-grid-item has-dark-background">
+                                <div class="featured-image{{ post.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                        {% if post.thumbnails.medium_large.src %}
+                                            style="background-image: url('{{ post.thumbnails.medium_large.src ?? defaultImage }}')"
+                                        {% endif %}
+                                ></div>
+                                <div class="content">
+                                    <h2>
+                                        <a href="{{ post.link }}" class="post-title">
+                                            {{ post.title }}
+                                        </a>
+                                    </h2>
+                                    <div class="date">{{ post.date }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+
+            <a href="#" class="button is-primary js-loadMore">More Podcasts</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block pageScripts %}
+    {# One-off scripts #}
+    <script>
+        var $loadMoreBtn = $('.js-loadMore');
+
+        $loadMoreBtn.on('click', function(e) {
+            e.preventDefault();
+
+            var $nextGroup = $('.jwtalk-posts-grid.is-hidden').first();
+            console.log($nextGroup.length);
+
+            if ($nextGroup.length) {
+                $nextGroup.removeClass('is-hidden').fadeIn();
+            }
+
+            $nextGroup = $('.jwtalk-posts-grid.is-hidden').first();
+            if (!$nextGroup.length) {
+                $loadMoreBtn.hide();
+            }
+        });
+    </script>
+{% endblock %}

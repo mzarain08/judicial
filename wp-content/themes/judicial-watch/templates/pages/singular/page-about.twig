@@ -1,0 +1,354 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+
+    {# Section: Page Title #}
+    <section class="component-subpage-title is-subpage-about"
+             style="{{ backgroundImage ? "background-image: url('" ~ backgroundImage ~ "');" : '' }}">
+        <h1>{{ page.title }}</h1>
+    </section>
+
+    {# Section: Page Content #}
+    <section class="page-content page-container">
+        <div class="column-content p-b-30">
+
+            <div id="about_tabs" class="component-tabs">
+                <!-- Subpage nav -->
+                <div class="subpage-nav tabs-nav">
+                    <li class="subpage-nav-item is-active" data-push-state="mission">Mission</li>
+                    <li class="subpage-nav-item" data-push-state="investigations">Investigations</li>
+                    <li class="subpage-nav-item" data-push-state="legal">Legal</li>
+                    <li class="subpage-nav-item" data-push-state="board">Board</li>
+                    <li class="subpage-nav-item" data-push-state="staff">Staff</li>
+                    <li class="subpage-nav-item" data-push-state="careers">Careers</li>
+                </div>
+                <div class="tab-content">
+                    {# Tab 1: Mission #}
+                    <div id="mission" class="tab-pane is-active">
+                        <div class="wysiwyg-content">
+                            {{ page.content }}
+                        </div>
+                    </div>
+
+                    {# Tab 2: Investigation Team #}
+                    <div id="investigations" class="tab-pane wysiwyg-content">
+                        <h1>Judicial Watch Investigations Team</h1>
+                        {% if investigationsTab.description %}
+                            {{  investigationsTab.description }}
+                        {% endif %}
+                        {% if investigationsTab.staff %}
+                            <div class="staff-search">
+                                <input type="text" class="input js-filter-staff" placeholder="Search for Investigations Team Member "/>
+                            </div>
+                            {% for staffItem in investigationsTab.staff %}
+                                <div class="team-item p-t-20">
+                                    <div class="columns">
+                                        {% if staffItem.thumbnails.thumbnail.src %}
+                                            <div class="column is-narrow column-headshot">
+                                                <img src="{{ staffItem.thumbnails.thumbnail.src }}"/>
+
+                                            </div>
+                                        {% endif %}
+                                        <div class="column column-title">
+                                            <div class="title-content">
+                                                <h4>{{ staffItem.title }}</h4>
+                                                <p class="has-text-primary">{{ staffItem.team_title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-content wysiwyg-content">
+                                        {{ staffItem.content }}
+                                    </div>
+
+                                    <div class="row-buttons">
+                                        {% if staffItem.content|length > 200 %}
+                                            <button type="button"
+                                                    class="button is-primary is-inverted is-slim js-expand-bio">
+                                                Expand Bio
+                                            </button>
+                                        {% endif %}
+                                        {#
+                                        <a href="#" class="button is-primary is-inverted is-slim has-icon-right">
+                                            Meet Tom
+                                            <span class="far fa-play-circle"></span>
+                                        </a>
+                                        #}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {# Tab 3: Legal Team #}
+                    <div id="legal" class="tab-pane wysiwyg-content">
+                        <h1>Judicial Watch Legal Team</h1>
+                        {% if legalTab.description %}
+                            {{  legalTab.description }}
+                        {% endif %}
+                        {% if legalTab.staff %}
+                            <div class="staff-search">
+                                <input type="text" class="input js-filter-staff" placeholder="Search for Legal Team Member "/>
+                            </div>
+                            {% for staffItem in legalTab.staff %}
+                                <div class="team-item p-t-20">
+                                    <div class="columns">
+                                        {% if staffItem.thumbnails.thumbnail.src %}
+                                        <div class="column is-narrow column-headshot">
+                                                <img src="{{ staffItem.thumbnails.thumbnail.src }}"/>
+
+                                        </div>
+                                        {% endif %}
+                                        <div class="column column-title">
+                                            <div class="title-content">
+                                                <h4>{{ staffItem.title }}</h4>
+                                                <p class="has-text-primary">{{ staffItem.team_title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-content wysiwyg-content">
+                                        {{ staffItem.content }}
+                                    </div>
+
+                                    <div class="row-buttons">
+                                        {% if staffItem.content|length > 200 %}
+                                            <button type="button"
+                                                    class="button is-primary is-inverted is-slim js-expand-bio">
+                                                Expand Bio
+                                            </button>
+                                        {% endif %}
+                                        {#
+                                        <a href="#" class="button is-primary is-inverted is-slim has-icon-right">
+                                            Meet Tom
+                                            <span class="far fa-play-circle"></span>
+                                        </a>
+                                        #}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {# Tab 4: Board Team #}
+                    <div id="board" class="tab-pane wysiwyg-content">
+                        <h1>Judicial Watch Board</h1>
+                        {% if boardTab.description %}
+                            {{  boardTab.description }}
+                        {% endif %}
+                        {% if boardTab.staff %}
+                            <div class="staff-search">
+                                <input type="text" class="input js-filter-staff" placeholder="Search for Board Member "/>
+                            </div>
+                            {% for staffItem in boardTab.staff %}
+                                <div class="team-item p-t-20">
+                                    <div class="columns">
+                                        {% if staffItem.thumbnails.thumbnail.src %}
+                                            <div class="column is-narrow column-headshot">
+                                                <img src="{{ staffItem.thumbnails.thumbnail.src }}"/>
+
+                                            </div>
+                                        {% endif %}
+                                        <div class="column column-title">
+                                            <div class="title-content">
+                                                <h4>{{ staffItem.title }}</h4>
+                                                <p class="has-text-primary">{{ staffItem.team_title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-content wysiwyg-content">
+                                        {{ staffItem.content }}
+                                    </div>
+
+                                    <div class="row-buttons">
+                                        {% if staffItem.content|length > 200 %}
+                                            <button type="button"
+                                                    class="button is-primary is-inverted is-slim js-expand-bio">
+                                                Expand Bio
+                                            </button>
+                                        {% endif %}
+                                        {#
+                                        <a href="#" class="button is-primary is-inverted is-slim has-icon-right">
+                                            Meet Tom
+                                            <span class="far fa-play-circle"></span>
+                                        </a>
+                                        #}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {# Tab 5: General Staff #}
+                    <div id="staff" class="tab-pane wysiwyg-content new-page-staff">
+                        <h1>Judicial Watch Staff Team</h1>
+                        {% if staffTab.description %}
+                            {{  staffTab.description }}
+                        {% endif %}
+
+                        {% if staffTab.staff %}
+                            <div class="staff-search">
+                                <input type="text" class="input js-filter-staff" placeholder="Search for Staff Member"/>
+                            </div>
+                            {% for staffItem in staffTab.staff %}
+                                <div class="team-item p-t-20">
+                                   <!-- <div class="columns">
+                                        {% if staffItem.thumbnails.thumbnail.src %}
+                                            <div class="column is-narrow column-headshot">
+                                                <img src="{{ staffItem.thumbnails.thumbnail.src }}"/>
+
+                                            </div>
+                                        {% endif %}
+                                        <div class="column column-title">
+                                            <div class="title-content">
+                                                <h4>{{ staffItem.title }}</h4>
+                                                <p class="has-text-primary">{{ staffItem.team_title }}</p>
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                    <div class="row-content wysiwyg-content">
+                                        {{ staffItem.content }}
+                                    </div>
+
+                                   <!-- <div class="row-buttons">
+                                        {% if staffItem.content|length > 200 %}
+                                            <button type="button"
+                                                    class="button is-primary is-inverted is-slim js-expand-bio">
+                                                Expand Bio
+                                            </button>
+                                        {% endif %}
+                                        {#
+                                        <a href="#" class="button is-primary is-inverted is-slim has-icon-right">
+                                            Meet Tom
+                                            <span class="far fa-play-circle"></span>
+                                        </a>
+                                        #}
+                                    </div>-->
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {# Tab 6: Careers #}
+                    <div id="careers" class="tab-pane wysiwyg-content">
+                        <h1>Careers</h1>
+                        {% if careersTab.description %}
+                            {{  careersTab.description }}
+                        {% endif %}
+                        {% if careersTab.careers %}
+                            {% for careerPost in careersTab.careers %}
+                                <div class="career-item p-t-20">
+                                    <div class="columns">
+                                        <div class="column column-title">
+                                            <div class="title-content">
+                                                <h2>{{ careerPost.post_title }}</h2>
+
+                                                {% if careerPost.department %}
+                                                    <div class="meta-item">
+                                                        <h3 class="meta-title">Department:</h3>
+                                                        <div class="meta-value">{{ careerPost.department }}</div>
+                                                    </div>
+                                                {% endif %}
+
+                                                {% if careerPost.reports_to %}
+                                                    <div class="meta-item">
+                                                        <h3 class="meta-title">Reports To:</h3>
+                                                        <div class="meta-value">{{ careerPost.reports_to }}</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if careerPost.status %}
+                                                    <div class="meta-item">
+                                                        <h3 class="meta-title">Status:</h3>
+                                                        <div class="meta-value">{{ careerPost.status }}</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if careerPost.summary %}
+                                                    <div class="meta-item is-multiline">
+                                                        <h3 class="meta-title">Summary:</h3>
+                                                        <div class="meta-value">{{ careerPost.summary }}</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if careerPost.content %}
+                                                    <div class="description wysiwyg-content">
+                                                        {{ careerPost.content }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Sidebar #}
+        <div class="column-sidebar">
+            {{ dynamicSidebar }}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block pageScripts %}
+    <script>
+        (function() {
+            /**
+             * Expand Buttons
+             */
+            var $expandBioBtns = $('.js-expand-bio');
+
+            $expandBioBtns.on('click', function () {
+                var $this = $(this);
+                var $contentBox = $this.closest('.team-item').find('.row-content');
+                $contentBox.toggleClass('is-expanded');
+                if ($contentBox.hasClass('is-expanded')) {
+                    $this.text('Hide Bio');
+                } else {
+                    $this.text('Expand Bio');
+                }
+            });
+
+            /**
+             * Staff Filters
+             */
+            var $filterStaffInputs = $('.js-filter-staff');
+
+            $filterStaffInputs.on('keyup', function() {
+                var $searchInput = $(this);
+                var $tabPane = $searchInput.closest('.tab-pane');
+                var $items = $tabPane.find('.team-item');
+
+                if (!$searchInput.val()) {
+                    $items.fadeIn();
+                    return;
+                }
+
+                $items.each(function(i, d) {
+                    var $item = $(d);
+                    var name = $item.find('h4').text().toLowerCase();
+
+                    if (name.indexOf($searchInput.val().toLowerCase()) !== -1) {
+                        $item.fadeIn();
+                    } else {
+                        $item.fadeOut();
+                    }
+                })
+            });
+
+            /**
+             * Anchor Link Padding
+             */
+            var aboutHash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            if (aboutHash) {
+                $('html,body').animate({
+                    scrollTop: $('#about_tabs').offset().top  - 150
+                }, 'slow');
+            }
+        })();
+    </script>
+{% endblock %}

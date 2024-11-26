@@ -1,0 +1,88 @@
+{% extends "collection-template.twig" %}
+
+{% block content %}
+
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-subpage-special-report">
+        <h1>Special Report</h1>
+    </section>
+
+    <!-- Section: Page Content -->
+    <section class="page-content page-container container-1100 p-b-50">
+
+        <div class="columns columns-page-content is-multiline">
+            <div class="column is-narrow column-report is-hidden-mobile">
+                {% if image.url %}
+                <img src="{{ image.url }}" />
+                {% endif %}
+            </div>
+            <div class="column column-form">
+                <!-- Page Content -->
+                <div class="wysiwyg-content">
+                    <h1 class="page-title">{{ post.title }}</h1>
+
+                    {{ post.content }}
+                </div>
+
+                {% if form %}
+                    {{ form }}
+                {% endif %}
+
+                {% if  disclaimer %}
+                <small class="m-t-20 is-inline-block">
+                    {{ disclaimer }}
+                </small>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block pageScripts %}
+    <script>
+        $(document).ready(function() {
+            /**
+             * Update placeholders to indicate required status
+             */
+            var $requiredFieldContainers = $('li.gfield_contains_required');
+
+            setTimeout(function() {
+                $requiredFieldContainers.each(function(i, elem) {
+                    var $fields = $(elem).find('input,select');
+                    $fields.each(function(x, fieldElem) {
+                        var $fieldElem = $(fieldElem);
+                        var $placeholder = $fieldElem.attr('placeholder');
+
+                        // Inputs
+                        if ($placeholder) {
+                            $fieldElem.attr('placeholder', $fieldElem.attr('placeholder') + ' *');
+                            return;
+                        }
+
+                        // Selects
+                        var selectedOption = $fieldElem.find('selectedoption:text');
+                        var selectOptionText = $fieldElem.find('option:selected').text();
+
+                        if (selectOptionText && 'State' === selectOptionText) {
+                            $fieldElem.find('option:selected').text('State *');
+                        }
+                    })
+                });
+            }, 45)
+
+
+            /**
+             * Prompt download on success
+             */
+            jQuery(document).on('gform_confirmation_loaded', function(event, formId){
+
+                var id = '{{ post.postId }}';
+
+                window.location = '/download-special-report.php?id={{ post.postId }}';
+
+            });
+        })
+
+        </script>
+{% endblock %}

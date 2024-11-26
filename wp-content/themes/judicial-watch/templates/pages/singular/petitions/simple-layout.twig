@@ -1,0 +1,68 @@
+{% extends "collection-template.twig" %}
+
+{% block content %}
+
+	<div class="bg-cover"
+		 style="{% if page.layout.image %}background-image: url('{{ page.layout.image }}'); {% endif %}
+		{% if page.layout.color %} background-color: {{ page.layout.color }}; {% endif %}"
+	>
+	    <section class="page-content page-container p-b-120 mobile-p-b-40 p-t-120 mobile-p-t-40 container-600{% if page.layout.text_color == 'white' %} invert-body-text {% endif %}">
+
+	        <!-- Page Content -->
+	        <div class="wysiwyg-content{% if page.layout.text_color == 'white' %} invert-body-text {% endif %}">
+	            <h1 class="petition-title p-t-5 m-b-25">{{ meta.title }}</h1>
+
+	            {{ page.description }}
+	        </div>
+
+			<div class="wysiwyg-content">
+				{% if form %}
+					{{ form }}
+				{% endif %}
+			</div>
+
+		    {% if page.finePrint is not empty %}
+		        <div class="wysiwyg-content{% if page.layout.text_color == 'white' %} invert-body-text {% endif %}">
+		            <small class="m-t-50 is-inline-block{% if page.layout.text_color == 'white' %} has-text-white{% endif %}">{{ page.finePrint }}</small>
+		        </div>
+		    {% endif %}
+	    </section>
+	</div>
+
+{% endblock %}
+
+
+{% block pageScripts %}
+<script>
+	$(document).ready(function() {
+		/**
+		 * Update placeholders to indicate required status
+		 */
+		var $requiredFieldContainers = $('li.gfield_contains_required');
+
+		setTimeout(function () {
+			$requiredFieldContainers.each(function (i, elem) {
+				var $fields = $(elem).find('input,select');
+				$fields.each(function (x, fieldElem) {
+					var $fieldElem = $(fieldElem);
+					var $placeholder = $fieldElem.attr('placeholder');
+
+					// Inputs
+					if ($placeholder) {
+						$fieldElem.attr('placeholder', $fieldElem.attr('placeholder') + ' *');
+						return;
+					}
+
+					// Selects
+					var selectedOption = $fieldElem.find('selectedoption:text');
+					var selectOptionText = $fieldElem.find('option:selected').text();
+
+					if (selectOptionText && 'State' === selectOptionText) {
+						$fieldElem.find('option:selected').text('State *');
+					}
+				})
+			});
+		}, 45);
+	});
+	</script>
+{% endblock %}

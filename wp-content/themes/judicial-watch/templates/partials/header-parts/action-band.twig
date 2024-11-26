@@ -1,0 +1,76 @@
+<section class="header is-hidden-mobile">
+    <div class="columns is-gapless">
+        <!-- Logo -->
+        <div class="column column-logo">
+            <a href="/" class="logo" title="Judicial Watch">
+                <img src="/wp-content/themes/judicial-watch/assets/images/logo-361x85.png"/>
+            </a>
+        </div>
+        <!-- Newsletter -->
+        <div class="column column-newsletter gforms-hide-errors">
+            <label>Sign up for the latest news and updates.</label>
+            <form class="field has-addons js-clonedNewsletterForm">
+                <div class="control">
+                    <div class="validation-message"></div>
+                    <input class="input input-newsletter" required type="email" placeholder="Email Address">
+                </div>
+                <div class="control control-button">
+                    <button type="submit" class="button is-danger button-sub">
+                        Subscribe
+                    </button>
+                </div>
+            </form>
+        </div>
+        {# Social #}
+        <div class="column column-social">
+            <div class="is-flex-new is-flex">
+                <a title="Twitter" class="is-flex" href="{{ sitewideSettings.twitter.value }}" target="_blank"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" style="fill: #ffffff;">
+                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                    </svg>
+                </a>
+                <a title="Facebook" href="{{ sitewideSettings.facebook.value }}" target="_blank">
+                    <span class="fab fa-facebook-f"></span>
+                </a>
+                <a title="Youtube" href="{{ sitewideSettings.youtube.value }}" target="_blank">
+                    <span class="fab fa-youtube"></span>
+                </a>
+                <a title="Instagram" href="{{ sitewideSettings.instagram.value }}" target="_blank">
+                    <span class="fab fa-instagram"></span>
+                </a>
+            </div>
+        </div>
+
+        {# Action Buttons #}
+        <div class="column column-action-buttons">
+            <a href="https://shopjw.org" class="action-button-shop" title="Shop JW">
+                <span class="flip-container">
+                    <span class="flipper">
+                        <span class="front">
+                            <span class="fas fa-shopping-cart"></span>
+                            <span class="action-button-text">Shop</span>
+                        </span>
+                        <span class="back">
+                            <span class="fas fa-shopping-cart"></span>
+                            <span class="action-button-text action-button-text-shop">Shop</span>
+                        </span>
+                    </span>
+                </span>
+            </a>
+            <a href="/donate/make-a-contribution-2/" class="action-button-donate">
+                <span class="flip-container">
+                    <span class="flipper">
+                        <span class="front">
+                            <span class="fas fa-donate"></span>
+                            <span class="action-button-text">Donate</span>
+                        </span>
+                        <span class="back">
+                            <span class="fas fa-donate"></span>
+                            <span class="action-button-text">Donate</span>
+                        </span>
+                    </span>
+                </span>
+            </a>
+        </div>
+    </div>
+</section>

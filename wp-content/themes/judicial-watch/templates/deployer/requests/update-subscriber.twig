@@ -1,0 +1,24 @@
+<xmlrequest>
+    <username>{{ api.user }}</username>
+    <usertoken>{{ api.token }}</usertoken>
+    <requesttype>subscribers</requesttype>
+    <requestmethod>AddOrUpdateSubscriber</requestmethod>
+    <details>
+        <emailaddress>{{ subscriber.email }}</emailaddress>
+        <sms_mobile>{{ sms_mobile }}</sms_mobile>
+        <listgroupid>{{ listGroupId }}</listgroupid>
+        <listid>{{ listId }}</listid>
+        <!-- mailinglist>{{ mailingListId }}</mailinglist -->
+        <format>html</format>
+        <confirmed>yes</confirmed>
+        <customfields>
+            {% for deployerFieldKey, deployerFieldValue in customFields %}
+                <item>
+                    <fieldid>{{ deployerFieldKey }}</fieldid>
+                    <value>{{ deployerFieldValue }}</value>
+                </item>
+            {% endfor %}
+        </customfields>
+        <opt_in>{{ opt_in }}</opt_in>
+    </details>
+</xmlrequest>

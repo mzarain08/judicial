@@ -1,0 +1,34 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-subpage-news">
+        <h1>Petitions</h1>
+    </section>
+    <!-- Section: Page Content -->
+    <div class="container-1140">
+        <!-- Posts -->
+        <div class="columns is-multiline columns-petitions">
+            {% for petition in page.petitions %}
+                {# Petition Column #}
+                <div class="column is-half">
+                    <div class="component-card-petition">
+                        <a href="{{ petition.link }}">
+                            <div class="image{{ petition.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                {% if petition.thumbnails.medium_large.src %}
+                                    style="background-image: url('{{ petition.thumbnails.medium_large.src }}')"
+                                {% endif %}></div>
+                            <h2 class="title">
+                                {{ petition.title }}
+                            </h2>
+                        </a>
+                        <div class="content">
+                            {{ petition.content|length > 120 ? petition.content|slice(0, 220) ~ '...' : petition.content }}
+                        </div>
+                        <a href="{{ petition.link }}" class="button is-primary is-slim is-inverted">View Petition</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

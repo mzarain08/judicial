@@ -1,0 +1,188 @@
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html class="no-js" {{ function("language_attributes") }}>
+<head>
+<meta name="facebook-domain-verification" content="zo38yzhfkkihsrm9a2s3b4gf6piltr" />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TZW2BDR');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Ads: 967049505 --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-967049505"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-967049505'); </script>
+
+    <!-- Google Tag Manager SuccessDonation page -->
+      <script>
+        if( window.location.pathname == '/thanks-for-your-donation/' ) {
+           gtag('event', 'conversion', {'send_to': 'AW-967049505/1eVGCLfO-mQQoYKQzQM'});
+         }
+      </script>
+    <!-- End Google Tag Manager tag -->
+
+    <!-- standard GA code -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-3032650-3', 'auto'); 
+        ga('send', 'pageview');
+    </script>
+
+    <!-- GA Ecommerce tracking script code -->
+
+    <script>
+        if( window.location.pathname == '/thanks-for-your-donation/' ) {
+
+            // enable the ecommerce features
+            ga('require', 'ecommerce');
+
+            var donationData = localStorage.getItem('donationResponseData');
+            donationData = JSON.parse(donationData);
+
+            // start the transaction
+
+            ga('ecommerce:addTransaction', {
+            'id': donationData.trans_id,
+            'affiliation': 'Donation',
+            'revenue': donationData.amount,
+            'shipping': '0.00',
+            'tax': '0.00'
+            });
+
+            // add item
+
+            ga('ecommerce:addItem', {
+            'id': donationData['trans_id'],
+            'name': 'Judicial Watch',
+            'sku': donationData.trans_id,
+            'category': 'donation',
+            'price': donationData.amount,
+            'quantity': '1'
+            });
+
+            // send transaction
+
+            ga('ecommerce:send');
+
+            // clear ecommercce data
+
+            ga('ecommerce:clear');
+
+            localStorage.removeItem('donationResponseData');
+
+        }
+    </script>
+    
+    <!-- END GA Ecommerce tracking script code -->
+
+    {# meta.title is always present, but if page.title isn't empty we want  #}
+    {# to use it instead.  the following nested ternary statement is bad    #}
+    {# is bad form, but it handles the page.title override when we need it. #}
+
+    <title>
+        {% if function('is_404') %}
+            Page Not Found
+        {% else %}
+            {{ page.title is empty
+            ? (meta.title ? meta.title ~ " | Judicial Watch": "Judicial Watch")
+            : page.title ~ " | Judicial Watch" }}
+        {% endif %}
+    </title>
+
+    <script>
+        window.happeningNow = {{ happeningNow | json_encode | raw }};
+    </script>
+
+    {% block jsData %}
+    {% endblock %}
+
+    {{ function("gravity_form_enqueue_scripts", 6, true) }}
+    <script src="{{  function('get_template_directory_uri') }}/assets/scripts/vue-2.6.10.js"></script>
+    {{ function("wp_head") }}
+</head>
+<body class="{{ meta.bodyClasses }}" style="{{ meta.bodyStyles }}">
+{% include "partials/header-parts/new-header.twig" %}
+{% block afterBodyStart %}
+{% endblock %}
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZW2BDR"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<a href="#content" class="visually-hidden focusable">Skip to content</a>
+
+<!-- Full-page menu dialog -->
+<div class="component-page-menu-dialog-mobile component-page-menu-dialog animated fadeOutUp">
+    {% include "partials/header-parts/hamburger-menu.twig" %}
+</div>
+
+<!-- Top Nav -->
+{#<nav class="page-top-nav no-printme">
+    <a href="/" class="mobile-logo" title="Judicial Watch Homepage">
+        <img src="/wp-content/themes/judicial-watch/assets/images/logo.png"/>
+    </a>
+
+    {% include "partials/header-parts/main-menu.twig" %}
+
+    <div class="secondary-nav">
+        <div class="nav-donate-button">
+            <a href="/donate/make-a-contribution-2/" type="button" class="button is-success button-donate">
+                Donate
+            </a>
+        </div>
+
+        <div class="secondary-nav-item js-toggle-search-dialog">
+            <span class="fas fa-search"></span>
+
+            <div class="page-search-dialog">
+                <form class="search-input" action="/">
+                    <div class="control has-icons-right column-input">
+                        <input class="input" type="text" placeholder="Search" name="s" required>
+                    </div>
+                    <button type="submit" class="button is-primary column-button submit-search-dropdown">
+                        SEARCH <span class="fas fa-search"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="button-shop">
+            <a href="https://shopjw.org" class="action-button-shop" title="Shop JW">
+                <span class="fas fa-shopping-cart"></span>
+            </a>
+        </div>
+        
+        {% include "partials/header-parts/happening-now.twig" %}
+
+        <div class="secondary-nav-item hamburger-menu js-toggle-page-menu-dialog">
+            <span class="far fa-bars"></span>
+        </div>
+    </div>
+</nav>#}
+
+<!-- Header -->
+{% if meta.fullHeader %}
+    {% include "partials/header-parts/action-band.twig" %}
+{% endif %}
+
+<main id="content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+{% include "partials/footer.twig" %}
+
+{% block pageScripts %}
+{% endblock %}
+{{ constant('ZOTA_MARKETING_URL') }}
+{% include "partials/new-footer.twig" %}
+</body>
+</html>

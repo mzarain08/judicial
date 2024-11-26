@@ -1,0 +1,92 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+
+    {# Section: Page Title #}
+    <section class="component-subpage-title is-subpage-news">
+        <h1><a href="/podcasts">Tom Fitton's Weekly Update Podcast</a></h1>
+    </section>
+
+    {#  Post #}
+    <section class="post">
+        <div class="post-container">
+            <!-- Social Share Widget -->
+            <div class="column-social-widget component-social-share-widget">
+                <div class="component-title">Share</div>
+                    <div class="social-links">
+                        <a target="_blank" class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+						<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+					</a>
+	                <a target="_blank" class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+					</a>
+					
+					<a target="_blank" class="social-link" href="http://www.reddit.com/submit?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/reddit.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://www.linkedin.com/shareArticle?mini=true&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/linkedin.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://telegram.me/share/url?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/talegram-logo.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://gettr.com/share?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/Gettr-logo.png"></span>
+					</a>
+					<a class="social-link" href="mailto:?subject={{ social.title|replace({'+': ' '}) }}&body={{ social.link }}">
+						<span class="gmail-social"><img src="/wp-content/themes/judicial-watch/assets/images/gmail.png"></span>
+					</a>
+					<a  class="social-link" href="javascript:void(0)"  onclick="{window.print()}">
+						<span class="print-social"><img src="/wp-content/themes/judicial-watch/assets/images/print.png"></span>
+					</a>
+                    </div>
+            </div>
+
+            <div class="column-post wysiwyg-content">
+                <small class="post-date">{% include "partials/date-and-source.twig" with { "post": post } %}</small>
+                <h1 class="post-title">{{ meta.title }}</h1>
+
+                {# Featured Image #}
+                {% if post.thumbnails is not empty %}
+                    <div class="container-featured-image">
+                        <img src="{{ post.thumbnails.medium_large.src }}"
+                             alt="{{ post.thumbnails.medium_large.alt }}"
+                             class="post-featured-image">
+                    </div>
+                {% endif %}
+
+                {{ post.content }}
+
+                {% if buzzsproutLink %}
+                    <div class="podcast-ui">
+                        <script src="{{ buzzsproutLink }}.js?player=small"
+                                type="text/javascript" charset="utf-8"></script>
+
+                        {% if itunesLink %}
+                            <a href="{{ itunesLink }}" class="apple-itunes-link">
+                                <span class="fab fa-apple"></span>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    {# Section: Related Posts #}
+    <section class="section related-posts">
+        <div class="container-1140 p-t-30">
+            <h1 class="section-title section-title-primary-bordered">Related</h1>
+            <div class="columns">
+                {% for relatedPost in related %}
+                    <div class="column">
+                        {% include "partials/post-card.twig" with { "post": relatedPost } %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

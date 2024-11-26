@@ -1,0 +1,113 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+
+	<!-- Section: Page Title -->
+	<section class="component-subpage-title is-subpage-news no-printme">
+		{% if post.category %}
+	    <a href="{{ post.category.link }}">
+		    <h1>
+				{{ post.category.name }}
+			</h1>
+	    </a>
+		{% else %}
+			Uncategorized
+		{% endif %}
+	</section>
+
+	<!-- Post -->
+	<section class="post">
+		<div class="post-container">
+	        <!-- Social Share Widget -->
+	        <div class="column-social-widget component-social-share-widget no-printme">
+	            <div class="component-title">Share</div>
+					<div class="social-links">
+						<a class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+							<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+						</a>
+						<a class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+							<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+						</a>
+						<a class="social-link" href="mailto:?subject={{ social.title }}&body={{ social.link }}">
+							<span class="gmail-social"><img src="/wp-content/themes/judicial-watch/assets/images/gmail.png"></span>
+						</a>
+						<a class="social-link" href="javascript:void(0)"  onclick="{window.print()}">
+							<span class="print-social"><img src="/wp-content/themes/judicial-watch/assets/images/print.png"></span>
+						</a>
+					</div>
+	        </div>
+
+	        <div class="column-post wysiwyg-content">
+				<div id="print-header" class="print-header  printme">
+					<img src="/wp-content/themes/judicial-watch/assets/images/logo-color.png">
+				</div>
+
+	            <small class="post-date">{% include "partials/date-and-source.twig" with { "post": post } %}</small>
+	            <h1 class="post-title">{{ meta.title }}</h1>
+
+				{# Act Buttons #}
+				{% if videoLink or podcastLink %}
+					<div class="button-group button-group-act m-b-25">
+						{% if videoLink.url %}
+							<a href="{{ videoLink.url }}"
+								{% if '_blank' == videoLink.target %}
+									target="_blank"
+								{% endif %}
+							   class="button button-primary is-slim is-inverted">Watch Now</a>
+						{% endif %}
+						{% if podcastLink.url %}
+							<a href="{{ podcastLink.url }}"
+								{% if '_blank' == podcastLink.target %}
+									target="_blank"
+								{% endif %}
+							   class="button button-primary is-slim is-inverted">Listen Now</a>
+						{% endif %}
+					</div>
+				{% endif %}
+
+				{# Featured Image #}
+				{% if iframeDetected == 0 %}
+
+					{% if post.thumbnails is not empty %}
+						<div class="container-featured-image">
+							<img src="{{ post.thumbnails.medium_large.src }}"
+								alt="{{ post.thumbnails.medium_large.alt }}"
+								class="post-featured-image">
+						</div>
+					{% endif %}
+
+				{% endif %}
+
+		        {{ post.content }}
+
+				<div id="print-footer" class="print-footer  printme">
+                    <p>© 2019 Judicial Watch, Inc.</p>
+                    <p>
+                        Judicial Watch is a 501(c)(3) nonprofit organization. Contributions are received from
+                        individuals,
+                        foundations, and corporations and are tax-deductible to the extent allowed by law.
+					</p>
+						<a href="https://shopjw.org">Shop  </a>
+						<a href="/donate/make-a-contribution-2/" style="margin: 0 10px;">Donate</a>
+				</div>
+	        </div>
+	    </div>
+	</section>
+
+	<hr>
+
+	<!-- Section: Related Posts -->
+	<section class="section related-posts no-printme">
+	    <div class="container-1140 p-t-30 p-b-50">
+	        <h1 class="section-title section-title-primary-bordered">Related</h1>
+	        <div class="columns">
+		        {% for relatedPost in related %}
+			        <div class="column">
+						{% include "partials/post-card.twig" with { "post": relatedPost } %}
+			        </div>
+		        {% endfor %}
+	        </div>
+	    </div>
+	</section>
+
+{% endblock %}

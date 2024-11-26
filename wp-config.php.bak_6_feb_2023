@@ -1,0 +1,124 @@
+<?php
+#$wpHome = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/';
+#define('WP_SITEURL', $wpHome);
+#define('WP_HOME',    $wpHome);
+define('WP_ROOT', __DIR__);
+#define('WP_CONTENT_DIR', __DIR__ . '/wp-content');
+#define('WP_CONTENT_URL', $wpHome . 'wp-content');
+define('SUPERCACHE_JW_MENU_TAG', '643543452438734288238034238472349545');
+/**
+ * Custom JW Variables
+ */
+// Deployer
+define('DEPLOYER_USER', 'judicialwatch');
+define('DEPLOYER_API_KEY', '453e5318ec0a29f3ec52c27207cae995c11ae694');
+// Server environment
+$serverEnv = 'production';
+if (false !== strpos($wpHome, 'judicialwatch.org')
+    || false !== strpos($wpHome, 'judicialwatch.wpengine.com')) {
+    $serverEnv = 'production';
+}
+define('WP_SERVER_ENVIRONMENT', $serverEnv);
+define('WP_TEST_CARDS', ['370000000000002', '6011000000000012', '3088000000000017', '38000000000006', '4007000000027', '4012888818888', '5424000000000015', '2223000010309703', '2223000010309711']);
+// Payment processors
+$authorizeNetKeys = [
+    //'transaction_key' => '38bL7YTp7v22ChVE',
+	'transaction_key' => '23Us2jTf29C7AxKM',
+    'id' => 'sn3a3V9uV'
+];
+/*if ('staging' === $serverEnv) {
+    $authorizeNetKeys = [
+        'transaction_key' => '9hX87TkV5Yk9L8DL',
+        'id' => '68KxHc2eZ9T'
+    ];
+}*/
+define('ZOTA_MARKETING_URL', "<script async src='//static.zotabox.com/3/e/3e95e69f32c4a9749d3fdb36a9ebcb4a/widgets.js'></script>" );
+if ('staging' === $serverEnv) {
+    define('ZOTA_MARKETING_URL', "<script async src='//static.zotabox.com/3/6/363363ccfc81bb02ed9933be99bbe5ea/widgets.js'></script>");
+    $authorizeNetKeys = [
+        'transaction_key' => '7X7QtG6e55pf8P7d',
+        'id' => '2dZ4Csv6Q',
+    ];
+}
+define('AUTHORIZENET_API_KEYS', $authorizeNetKeys);
+# Database Configuration
+define( 'DB_NAME', 'wp_judicialwatch' );
+define( 'DB_USER', 'judicialwatch' );
+define( 'DB_PASSWORD', 'cFfiqyV2nHW3hSXSGvVq' );
+define( 'DB_HOST', 'cr1e0qtfkabu3gm.cjezfm3slk9b.us-east-2.rds.amazonaws.com:3306' );
+define( 'DB_HOST_SLAVE', 'cr1e0qtfkabu3gm.cjezfm3slk9b.us-east-2.rds.amazonaws.com:3306' );
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', 'utf8_unicode_ci');
+$table_prefix = 'jw_';
+# Security Salts, Keys, Etc
+define('AUTH_KEY',         'q~+e*dMe%-8;@=ZA>ux:fBRWO;*:%Q3P1(E^t<]IX,/05a#(`wB{`-iBRt1;tp[5');
+define('SECURE_AUTH_KEY',  '{)hv|!Q7.>Z4MV_&s/Q@ryVy}W}#`wIcaW2G0zz*|(a|3:$Ipk2xjT=`h@c<&Dwc');
+define('LOGGED_IN_KEY',    'Q=^-7G22JpF@:pyw!+(l,HF#Oo-qxVo_^6:M9VG}=}g,n`#zn*IJ*-_T/c_t]tkm');
+define('NONCE_KEY',        '9N%TYL6TpT;&iRe:A^I*^vY|mY7U[1DX~a4gW*ao XtooK~)@FKymsjsFS *)/SL');
+define('AUTH_SALT',        'NR4w#vIX[ob4Sgf>f{N.0z@fU+}Sd*]cM~$G7ZbA3t2ins$Z7S`%$&Ktk)*gH0V:');
+define('SECURE_AUTH_SALT', '5Fa/p+%q$Cu~^*u;*iJdH6sKX,nhgdYVE0MmIX r]4Z2WOiu~_b&(o+(iO%}Ixa|');
+define('LOGGED_IN_SALT',   '7pJ#e5bq>:oy_`+#AfL:h.0R9|F]Y_G,2si1 7qg23x-=2<_}c1|KMaG` G^-g ;');
+define('NONCE_SALT',       '5<Pjd=)^<*3495vDA1n[GrE*mSN5q]{ w*9U~EvZb|,)_jDq<Vm&??!m>vCg@KN`');
+define('WP_MEMORY_LIMIT', '256M');
+# Localized Language Stuff
+define( 'WP_AUTO_UPDATE_CORE', false );
+define( 'PWP_NAME', 'judicialwatch' );
+define( 'FS_METHOD', 'direct' );
+define( 'FS_CHMOD_DIR', 0775 );
+define( 'FS_CHMOD_FILE', 0664 );
+define( 'PWP_ROOT_DIR', '/nas/wp' );
+define( 'WPE_APIKEY', 'daa28c870b62a9e61311356744d9107ccf171ce8' );
+define( 'WPE_FOOTER_HTML', "" );
+define( 'WPE_CLUSTER_ID', '96077' );
+define( 'WPE_CLUSTER_TYPE', 'utility' );
+define( 'WPE_ISP', false );
+define( 'WPE_BPOD', false );
+define( 'WPE_RO_FILESYSTEM', false );
+define( 'WPE_LARGEFS_BUCKET', 'largefs.wpengine' );
+define( 'WPE_CACHE_TYPE', 'generational' );
+define( 'WPE_LBMASTER_IP', '' );
+define( 'WPE_CDN_DISABLE_ALLOWED', false );
+define( 'DISALLOW_FILE_EDIT', FALSE );
+define( 'DISALLOW_FILE_MODS', FALSE );
+define( 'DISABLE_WP_CRON', true );
+define( 'WPE_FORCE_SSL_LOGIN', true );
+define( 'FORCE_SSL_LOGIN', true );
+/*SSLSTART*/ if ( isset($_SERVER['HTTP_X_WPE_SSL']) && $_SERVER['HTTP_X_WPE_SSL'] ) $_SERVER['HTTPS'] = 'on'; /*SSLEND*/
+define( 'WPE_EXTERNAL_URL', false );
+define( 'WP_POST_REVISIONS', FALSE );
+define( 'WPE_WHITELABEL', 'wpengine' );
+define( 'WP_TURN_OFF_ADMIN_BAR', false );
+define( 'WPE_BETA_TESTER', false );
+umask(0002);
+$wpe_cdn_uris=array ( );
+$wpe_no_cdn_uris=array ( );
+$wpe_content_regexs=array ( );
+$wpe_all_domains=array ( 0 => 'judicialwatch.wpengine.com', 1 => 'judicial.local', 2 => 'judicialwatch.org', 3 => 'judicialwatch.wpenginepowered.com', );
+$wpe_varnish_servers=array ( 0 => 'varnish-96077.wpestorage.net', );
+$wpe_special_ips=array ( 0 => '3.145.23.126', 1 => '18.118.105.115', 2 => '18.191.204.39', 3 => 'varnish-96077.wpestorage.net', 4 => '10.3.14.235', 5 => '52.14.182.166', );
+$wpe_ec_servers=array ( );
+$wpe_largefs=array ( );
+$wpe_netdna_domains=array ( );
+$wpe_netdna_domains_secure=array ( );
+$wpe_netdna_push_domains=array ( );
+$wpe_domain_mappings=array ( );
+$memcached_servers=array ( );
+define( 'WPE_SFTP_PORT', 22 );
+define( 'WPE_SFTP_ENDPOINT', '' );
+
+define( 'WP_CACHE', TRUE );
+define('WPLANG','');
+# WP Engine ID
+/**
+ini_set('display_errors', 'Off');
+//define('PWP_DOMAIN_CONFIG', '' );
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+define( 'SAVEQUERIES', false );
+# WP Engine Settings
+**/
+# That's It. Pencils down
+if ( !defined('ABSPATH') )
+        define('ABSPATH', dirname(__FILE__) . '/');
+require_once(ABSPATH . 'wp-settings.php');

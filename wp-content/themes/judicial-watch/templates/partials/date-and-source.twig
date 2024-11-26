@@ -1,0 +1,20 @@
+{# Source / Category #}
+
+	
+	
+	<a href="{{ post.category.link }}">{{ post.category.name }}</a>
+	<span class="datesource-spacer">|</span>
+		{# Date #}
+{{ post.date }}
+
+
+{# Tags #}
+{% if post.tagged is not empty and post.tagged is iterable %}
+	<div class="post-tagged">
+		<span class="post-tagged-label">Tagged:</span>
+
+		{% for postTagged in post.tagged %}
+			<a class="post-tagged-item" href="{{ postTagged.link }}">{{ postTagged.name }}</a>
+		{% endfor %}
+	</div>
+{% endif %}

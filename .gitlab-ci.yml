@@ -1,0 +1,46 @@
+stages:
+  - deploy_dev
+  - deploy_staging
+  - deploy_live
+
+before_script:
+  - 'which ssh-agent || ( apk add --update openssh )'
+    #  - apk add --update bash
+    #  - apk add --update git
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY"
+  - mkdir -p ~/.ssh  
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+  - chmod 700 ~/.ssh/id_rsa
+  - ssh-add ~/.ssh/id_rsa
+  - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+Deploy Dev:
+  stage: deploy_dev
+  script:
+    - git remote add dev $WPENGINE_DEV_GIT
+    - "git checkout -b dev"
+    - "git push dev HEAD:master --force"
+  only:
+    - develop
+
+Deploy Staging:
+  stage: deploy_staging
+  script:
+    - git remote add staging $WPENGINE_STAGING_GIT
+    - "git checkout -b staging"
+    - "git push staging HEAD:master --force"
+  only:
+    - stage
+
+Deploy Live:
+  stage: deploy_live
+  when: manual
+  script:
+    - git remote add live $WPENGINE_LIVE_GIT
+    - "git checkout -b live"
+    - "git push live HEAD:master --force"
+  only:
+    - master
+

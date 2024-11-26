@@ -1,0 +1,49 @@
+{
+	"name": "judicial-watch",
+	"version": "1.0.0",
+	"description": "the theme for the Judicial Watch website and associated web properties",
+	"author": "Engage, LLC",
+	"license": "proprietary",
+	"repository": {
+		"type": "git",
+		"url": "https://gitlab.enga.ge/clients/judicial-watch"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "npm run development",
+		"development": "node node_modules/cross-env/dist/bin/cross-env.js  NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
+		"watch": "npm run development -- --watch",
+		"watch-poll": "npm run watch -- --watch-poll",
+		"hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+		"prod": "npm run production",
+		"production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=webpack.config.js"
+	},
+	"devDependencies": {
+		"bulma": "^0.7.1",
+		"cross-env": "^5.2.0",
+		"css-loader": "^1.0.0",
+		"extract-text-webpack-plugin": "^4.0.0-beta.0",
+		"mini-css-extract-plugin": "^0.4.3",
+		"node-sass": "^4.9.3",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"sass-loader": "^7.1.0",
+		"style-loader": "^0.23.0",
+		"webpack": "^4.20.2",
+		"webpack-cli": "^3.1.1"
+	},
+	"dependencies": {
+		"@babel/core": "^7.1.2",
+		"axios": "^0.18.0",
+		"babel-loader": "^8.0.4",
+		"bulma-extensions": "^3.0.0",
+		"gulp": "^3.9.1",
+		"jquery": "^3.3.1",
+		"js-cookie": "^2.2.0",
+		"lodash": "^4.17.11",
+		"slick-carousel": "^1.8.1",
+		"vee-validate": "^2.2.0",
+		"vue": "^2.6.10",
+		"vue-loader": "^15.7.0",
+		"vue-template-compiler": "^2.6.10"
+	}
+}

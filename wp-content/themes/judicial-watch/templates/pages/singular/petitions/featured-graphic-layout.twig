@@ -1,0 +1,75 @@
+{% extends "collection-template.twig" %}
+
+{% block content %}
+
+    <div class="bg-cover bg-cover-featured-graphic"
+         style="{% if page.page_background_image %}background-image: url('{{ page.page_background_image }}'); {% endif %}
+		{% if page.background_color %} background-color: {{ page.background_color }};background-size: contain !important;
+    background-position: top center; {% endif %}"
+    >
+        <section class="page-content page-container p-b-120 mobile-p-b-40 p-t-120 mobile-p-t-40 container-950{% if page.text_color == '#ffffff' %} invert-body-text {% endif %}">
+
+            <!-- Page Content -->
+            <div class="wysiwyg-content {% if page.text_color == '#ffffff' %} invert-body-text {% endif %} featured-graphic-form"
+            style="background-color: {{ page.form_background_color ?? '#000' }};">
+                {% if form %}
+                    {% if page.description %}
+                        <div class="columns">
+                            <div class="column is-half">
+                                {{ form }}
+                            </div>
+                            <div class="column is-half">
+                                {{ page.description }}
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form }}
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            {% if page.fine_print is not empty %}
+                <div class="wysiwyg-content{% if page.layout.text_color == '#ffffff' %} invert-body-text {% endif %}">
+                    <small class="m-t-50 is-inline-block{% if page.layout.text_color == '#ffffff' %} has-text-white{% endif %}">{{ page.fine_print }}</small>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+
+{% endblock %}
+
+
+{% block pageScripts %}
+    <script>
+        $(document).ready(function() {
+            /**
+             * Update placeholders to indicate required status
+             */
+            var $requiredFieldContainers = $('li.gfield_contains_required');
+
+            setTimeout(function () {
+                $requiredFieldContainers.each(function (i, elem) {
+                    var $fields = $(elem).find('input,select');
+                    $fields.each(function (x, fieldElem) {
+                        var $fieldElem = $(fieldElem);
+                        var $placeholder = $fieldElem.attr('placeholder');
+
+                        // Inputs
+                        if ($placeholder) {
+                            $fieldElem.attr('placeholder', $fieldElem.attr('placeholder') + ' *');
+                            return;
+                        }
+
+                        // Selects
+                        var selectedOption = $fieldElem.find('selectedoption:text');
+                        var selectOptionText = $fieldElem.find('option:selected').text();
+
+                        if (selectOptionText && 'State' === selectOptionText) {
+                            $fieldElem.find('option:selected').text('State *');
+                        }
+                    })
+                });
+            }, 45);
+        });
+    </script>
+{% endblock %}

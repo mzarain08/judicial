@@ -1,0 +1,29 @@
+<div class="component-card-post {{ classes }}">
+    <div class="category">
+        {% if post.category.link %}
+            {% if post.category.iconColor %}
+                <span class="category-icon" style="background: {{ post.category.iconColor }}"></span>
+            {% else %}
+                <span class="category-icon"></span>
+            {% endif %}
+            <a href="{{ post.category.link }}">{{ post.category.name }}</a>
+        {% endif %}
+    </div>
+    <a href="{{ post.link }}">
+        <div class="image{{ post.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                {% if  post.videoid %}
+                    {#style="background-image: url('{{ post.thumbnails.medium_large.src ?? defaultImage }}')"#}
+                    style="background-image: url('http://img.youtube.com/vi/{{ post.videoid }}/sddefault.jpg')"
+                {% else %}
+                    style="background-image: url('{{ post.thumbnails.medium_large.src ?? defaultImage }}')"
+                {% endif %}>
+        </div>
+        <h2 class="title">
+            {{ post.title| truncate(14)}}
+        </h2>
+    </a>
+    <div class="date">{% include "partials/date-and-source.twig" %}</div>
+    <div class="content">
+        {{ post.content|striptags|length > 180 ? post.content|striptags|slice(0, 180) ~ '...' : post.content|striptags }}
+    </div>
+</div>

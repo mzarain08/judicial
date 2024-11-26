@@ -1,0 +1,201 @@
+{% extends "default-template.twig" %}
+
+{% block afterBodyStart %}
+    {% if backgroundImage %}
+        <div class="page-jwtv-bg" style="background-image: url('{{ backgroundImage }}')"></div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {# Header #}
+    <section class="page-jwtv-header columns is-multiline">
+        {# Logo #}
+        <div class="column column-logo">
+            <a href="/jwtv">
+                <img src="/wp-content/themes/judicial-watch/assets/images/jw-tv-new1-logo.png"/>
+            </a>
+        </div>
+
+        {# Youtube #}
+        <div class="column column-youtube">
+            <div class="g-ytsubscribe" data-channel="JudicialWatch"></div>
+        </div>
+
+        {# Subscribe #}
+        <div class="column column-subscribe">
+            <form>
+                <div class="jw-subscribe field has-addons">
+                    <form>
+                        <div class="control">
+                            <input class="input input-newsletter" required type="email" placeholder="Email Address">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-danger button-sub">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    {# Page Content #}
+    <section class="jwtv-player">
+        <div class="post-container">
+            <div class="column-social-widget component-social-share-widget is-inverted">
+                <div class="component-title">Share</div>
+                    <div class="social-links">
+                    
+						<a target="_blank" class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+						<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+					</a>
+	                <a target="_blank" class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+					</a>
+				
+					<a target="_blank" class="social-link" href="http://www.reddit.com/submit?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/reddit.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://www.linkedin.com/shareArticle?mini=true&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/linkedin.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://telegram.me/share/url?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/talegram-logo.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://gettr.com/share?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/Gettr-logo.png"></span>
+					</a>
+					<a class="social-link" href="mailto:?subject={{ social.title|replace({'+': ' '}) }}&body={{ social.link }}">
+						<span class="gmail-social"><img src="/wp-content/themes/judicial-watch/assets/images/gmail.png"></span>
+					</a>
+					<a  class="social-link" href="javascript:void(0)"  onclick="{window.print()}">
+						<span class="print-social"><img src="/wp-content/themes/judicial-watch/assets/images/print.png"></span>
+					</a>
+					</div>
+            </div>
+            <div class="column-post">
+                <div class="meta">
+                    <span class="date">{{ post.date }}</span>
+                    {% if post.category.name %}
+                        <span class="divider"></span>
+                        <span><a href="{{ post.category.link }}">{{ post.category.name }}</a></span>
+                    {% endif %}
+                </div>
+                
+                <h1 class="post-title">
+                    {{ post.title }}
+                </h1>
+                
+                <div class="wysiwyg-content">
+                    <div class="responsive-media">
+                        <iframe width="950" height="534.375"
+                                src="https://www.youtube.com/embed/{{ youtubeId }}?rel=0&enablejsapi=1"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                class="media-item"
+                                allowfullscreen></iframe>
+                    </div>
+
+                    <div class="invert-body-text description">
+                        {{ post.content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Related Videos #}
+    <section class="related-posts">
+        <div class="container-1140">
+            <div class="component-jwtv-slider">
+                <h1 class="component-title">Watch More</h1>
+                <div class="component-slides-container">
+                    <div class="js-slick jwtv-slides">
+
+                        {% for relatedPost in relatedPosts %}
+
+                        <a class="jwtv-slide" href="{{ relatedPost.link }}">
+                            <div class="slide-media"
+                                 style="background-image:url('{{ relatedPost.thumbnails.medium.src }}')"></div>
+                            <div class="slide-content">
+                                {#
+                                <div class="slide-stats">
+                                    <div>42130 views</div>
+                                    <div class="divider">|</div>
+                                    <div>427 comments</div>
+                                </div>
+                                #}
+                                <div class="slide-title">
+                                    {{ relatedPost.title|length > 100 ? relatedPost.title|slice(0, 100) ~ '...' : relatedPost.title }}
+                                </div>
+                                <div class="slide-meta">{{ relatedPost.date }}</div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block pageScripts %}
+    <script>
+        // Sliders
+        var $slickSliders = $('.jwtv-slides');
+        $slickSliders.each(function (index, elem) {
+            var $this = $(this);
+
+            $this.slick({
+                arrows: true,
+                slidesToShow: 1,
+                variableWidth: true,
+                slidesToScroll: 3,
+                infinite: false,
+                draggable: true,
+                prevArrow: '<button type="button" class="slick-prev"><span class="far fa-chevron-left"></span></button>',
+                nextArrow: '<button type="button" class="slick-next"><span class="far fa-chevron-right"></span></button>',
+                waitForAnimate: false,
+
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            arrows: false,
+                        }
+                    },
+                    {
+                        breakpoint: 1025,
+                        settings: {
+                            arrows: true
+                        }
+                    },
+                ]
+            });
+        });
+
+        // Animations
+        var $videoHoverDivs = $(document).find('.slick-slide > div');
+        var $jwtvSlides = $('.jwtv-slide');
+        $('.slick-slide').on('mouseenter', function() {
+            var $this = $(this);
+            $videoHoverDivs.removeClass('is-hovered');
+            $jwtvSlides.stop();
+            $jwtvSlides.css('max-width', '');
+
+            $this.find('.jwtv-slide').animate({
+                maxWidth: 400
+            }, 350, function () {
+                $(document).find($this).find('> div').addClass('is-hovered')
+            });
+
+        })
+
+        $('.slick-slide').on('mouseleave', function() {
+            $videoHoverDivs.removeClass('is-hovered');
+            $jwtvSlides.stop();
+            $jwtvSlides.css('max-width', '');
+        })
+    </script>
+{% endblock %}

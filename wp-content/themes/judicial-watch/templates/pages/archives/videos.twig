@@ -1,0 +1,72 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    <section class="page-jwtv-header columns is-multiline">
+        {# Logo #}
+        <div class="column column-logo">
+            <a href="/jwtv">
+                <img src="/wp-content/themes/judicial-watch/assets/images/jw-tv-new1-logo.png"/>
+            </a>
+        </div>
+
+        {# Youtube #}
+        <div class="column column-youtube">
+            <div class="g-ytsubscribe" data-channel="JudicialWatch"></div>
+        </div>
+
+        {# Subscribe #}
+        <div class="column column-subscribe">
+            <form>
+                <div class="jw-subscribe field has-addons">
+                    <form>
+                        <div class="control">
+                            <input class="input input-newsletter" required type="email" placeholder="Email Address">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-danger button-sub">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-jwtv">
+        <h1>{{ page.title }}</h1>
+    </section>
+
+    <!-- Section: Page Content -->
+    <div class="container-1140">
+        <!-- Posts -->
+        <div class="columns is-multiline">
+            {% for post in page.posts %}
+                <div class="column is-one-third">
+                    {% include "partials/post-card.twig" with { 'classes': 'is-inverted is-jwtv-playlist' }  %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <nav class="component-pagination-pager is-inverted">
+            {% if page.pagination.previous.pageNumber != page.pagination.next.pageNumber %}
+                <a href="{{ page.pagination.previous.link }}"
+                   class="pager-previous {% if page.pagination.previous.isCurrent %} disabled {% endif %}">
+                    <span class="far fa-long-arrow-left"></span>
+                </a>
+
+                {% for pageLink in page.pagination.pages %}
+                    <a href="{{ pageLink.link }}"
+                       class="pager-item {% if pageLink.isCurrent %} is-active disabled {% endif %}">{{ pageLink.pageNumber }}</a>
+                {% endfor %}
+
+                <a href="{{ page.pagination.next.link }}"
+                   class="pager-previous {% if page.pagination.next.isCurrent %} disabled {% endif %}">
+                    <span class="far fa-long-arrow-right"></span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}

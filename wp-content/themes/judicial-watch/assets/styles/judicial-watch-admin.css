@@ -1,0 +1,23 @@
+body.taxonomy-playlist #col-container {
+  display: flex;
+  flex-direction: column-reverse; }
+
+body.taxonomy-playlist #col-left,
+body.taxonomy-playlist #col-right {
+  width: 100%; }
+
+/* make nav menu editor wider */
+.nav-menus-php .menu-item-settings {
+  width: auto; }
+  .nav-menus-php .menu-item-settings .description-wide, .nav-menus-php .menu-item-settings .acf-menu-item-fields {
+    width: 100% !important; }
+.post-type-documents p.search-box {
+    width: 100%;
+    margin: 10px 0;
+}
+.post-type-documents .search-box input[name="s"], .tablenav .search-plugins input[name="s"], .tagsdiv .newtag {
+    min-width: 64%;
+}
+.post-type-documents .ep-autosuggest-container .ep-autosuggest {
+    top: 30px;
+}

@@ -1,0 +1,158 @@
+
+{# Section: Fight Now #}
+{% if footer.withCorruption %}
+    <section class="fight-now no-printme">
+        <div class="container section-content-container">
+            <div class="content">
+                <div class="columns">
+                    <div class="column column-content is-two-thirds">
+                        <h1>Five more ways to fight corruption</h1>
+                        <p>
+                            Use this website to learn more about all our anti-corruption and anti-government secrecy
+                            investigations and lawsuits. Share what you learn and educate your local community...friends,
+                            family, co-workers, neighbors.
+                        </p>
+                    </div>
+                    <div class="column column-button is-one-third">
+                        <a href="/5-more-ways-you-can-fight-corruption-now/"
+                           title="fight corruption now"
+                           class="button button-primary is-inverted">
+                            Fight Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{# Section: Day Watch's Weekly Update #}
+{#<section class="component-daily-update-sticky no-printme">
+    <div class="container section-content-container">
+       <!-- <img src="/wp-content/themes/judicial-watch/assets/images/daily-update-logo.png" class="daily-update-logo">-->
+        <label>Sign up <u>FREE</u> for the latest news and updates from America's #1 news source</label>
+        <form class="field has-addons js-clonedNewsletterForm">
+            <div class="control">
+                <div class="validation-message"></div>
+                <input class="input input-newsletter" type="email" placeholder="Email Address">
+            </div>
+            <div class="control">
+                <button type="submit" class="button is-danger button-sub">
+                    Subscribe
+                </button>
+            </div>
+        </form>
+        <div class="col-exit-component">
+            <div class="exit-component">
+                <span class="far fa-times"></span>
+            </div>
+        </div>
+    </div>
+</section>#}
+
+{# Section: Footer #}
+<section class="footer no-printme">
+    <div class="container section-content-container footer-container">
+        <div class="columns is-multiline">
+            <div class="column column-logo">
+                <a href="/" title="Judicial Watch">
+                    <img src="/wp-content/themes/judicial-watch/assets/images/logo-white.png"/>
+                </a>
+				<div class="column column-social social-footer">
+					<a title="Twitter" href="https://twitter.com/JudicialWatch" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" style="fill: #ffffff;">
+                            <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                        </svg>
+                    </a>
+					<a title="Facebook" href="https://www.facebook.com/JudicialWatch" target="_blank">
+						<span class="fab fa-facebook-f"></span>
+					</a>
+					<a title="Youtube" href="https://www.youtube.com/user/JudicialWatch" target="_blank">
+						<span class="fab fa-youtube"></span>
+					</a>
+					<a title="Instagram" href="https://www.instagram.com/judicialwatch" target="_blank">
+						<span class="fab fa-instagram"></span>
+					</a>
+					
+					<a title="Telegram" href="https://t.me/JudicialWatch" target="_blank">
+						<span class="fab fa-telegram"></span> 
+					</a>
+					<a title="Gettr" href="https://www.gettr.com/user/JudicialWatch" target="_blank">
+						<img src="/wp-content/themes/judicial-watch/assets/images/Gettr-icon.png"/>
+					</a>
+					
+					<a title="Instagram" href="https://rumble.com/c/JudicialWatch" target="_blank">
+						<img src="/wp-content/themes/judicial-watch/assets/images/Rumble-icon.png"/>
+					</a><a title="Truth Social" href="https://truthsocial.com/@JudicialWatch" target="_blank">
+						<img src="/wp-content/themes/judicial-watch/assets/images/Truth-icon.png"/> 
+					</a>
+				</div> 
+            </div>
+            <div class="column column-nav">
+                <div class="link-list">
+                    {% for menuItem in footer.menuItems %}
+                        <a href="{{ menuItem.url }}" class="link-list-item" title="{{ menuItem.title }}">
+                            {{ menuItem.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="footnote">
+                    <p>&copy; {{ meta.year }} Judicial Watch, Inc.</p>
+					<p style="padding: 10px 0;">
+                        By providing your phone number, you are consenting to receive calls and recurring SMS/MMS messages, including autodialed and automated calls and texts, to that number from the Judicial Watch. Msg&amp;data rates may apply. Reply HELP for help, STOP to end. Terms &amp; conditions/<a href="https://tandcs.us/jwi" target="_blank" style="color: #ffffff;">privacy policy apply. </a>
+
+                    </p>
+                    <p>
+                        Judicial Watch is a 501(c)(3) nonprofit organization. Contributions are received from
+                        individuals,
+                        foundations, and corporations and are tax-deductible to the extent allowed by law.
+                    </p>
+                </div>
+            </div>
+            <div class="column column-buttons">
+                <a href="https://shopjw.org" class="button button-primary is-inverted" title="Shop JW">Shop</a>
+                <a href="/donate/make-a-contribution-2/" class="button button-primary is-inverted">Donate</a>
+                <button type="button" class="button-search js-toggle-search-dialog">
+                    <span class="fa fa-search"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Component: Mobile Footer Navigation #}
+<nav class="component-mobile-footer-nav no-printme">
+    <div class="columns is-0 is-mobile">
+        <a href="/" class="column nav-item">
+            <span class="fa fa-home"></span>
+            Home
+        </a>
+        <a href="/?taxonomy=category" class="column nav-item">
+            <span class="fa fa-newspaper"></span>
+            News
+        </a>
+        <a href="/jwtv" class="column nav-item">
+            <span class="fa fa-tv"></span>
+            JWTV
+        </a>
+        <a href="https://shopjw.org/" class="column nav-item">
+            <span class="fa fa-shopping-cart"></span>
+            Store
+        </a>
+        <a href="/donate/make-a-contribution-2/" class="column nav-item">
+            <span class="fa fa-credit-card"></span>
+            Donate
+        </a>
+    </div>
+</nav>
+
+{#
+Component: Newsletter Signup
+Necessary to hide the newsletter form and call it, because many pages have 3 versions of the same form.
+Gravity Forms does not support having multiple versions of the same form on a single page, so we link them in this manner.
+#}
+<div class="visually-hidden component-newsletterForm no-printme">
+    {{ newsletterFormHtml }}
+</div>
+
+{{ function("wp_footer") }}

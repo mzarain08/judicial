@@ -1,0 +1,129 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-subpage-news">
+        <h1>Search: {{ page.searchText }}</h1>
+    </section>
+
+    <!-- Section: Page Content -->
+    <div class="container-1140">
+        <!-- Post Filter -->
+        <div class="tabs-nav component-pagination-filter">
+			<form name="search_filter" method="Post" id="target" onsubmit="return submit_form_custom(this);">
+				<div class="columns is-multiline is-mobile search-filter-posts  is-hidden-desktop is-marginless container ">
+						<div class="column p-t-0 is-paddingless search-box">
+							<p class="control has-icons-right is-three-fifths">
+										<input class="input m-r-20" type="text" placeholder="Search" name="s" id="search-box-inner" value="{{ page.searchText }}">
+										<span class="icon is-small is-right">
+											<span class="fas fa-search has-text-primary"></span>
+										</span>
+							 </p>
+						</div>
+						<div class="column p-t-0 filter-box">
+							<div class="select is-block">
+								<select class="input input-select" name="Filter">
+									<option value="{{ app.request.getSchemeAndHttpHost() }}/?taxonomy=category">All</option>
+									{% for filter in page.filters %}	
+										<option value="{{ filter.link }}" id="{{ page.current_cat_url}}"  {% if page.current_cat_url == filter.link %} selected {% endif %} >{{ filter.name }}</option>
+									{% endfor %} 
+								</select>
+							</div>
+						</div> 
+						<div class="column  p-t-0 is-paddingless search-button">
+							<input type="submit" class="button is-primary" value="View">
+						</div>
+				</div>
+			</form>
+           <div class="is-hidden-mobile pagination-filter-post">
+				<div class="filter-div"><label>Filter by:</label></div>
+				<div class="filter-category">
+					{% set myVal = 1 %}
+				{% for filter in page.filters %}
+				
+				 {% if myVal == 1 %} 
+				
+				  <div class="filter-category">
+				<a href="{{ app.request.getSchemeAndHttpHost() }}/?taxonomy=category"
+					   data-filter-id="{{ filter.termId }}"
+					   data-push-state="{{ filter.slug }}"
+					   class="pagination-filter-item {% if page.category == '' %}  {% endif %}">All</a>
+					   
+					  {% endif %}	
+				
+					<a href="{{ filter.link }}"
+					   data-filter-id="{{ filter.termId }}"
+					   data-push-state="{{ filter.slug }}"
+					   class="pagination-filter-item {% if filter.isActiveFilter %} is-active {% endif %}">{{ filter.name }}</a>
+				 
+				
+				{% set myVal = myVal + 1 %}
+				{% endfor %}
+				{% if myVal > 1 %}
+				</div>
+				{% endif %}
+				</div>
+			</div>		
+        </div>
+
+        <!-- Posts -->
+        <div class="columns is-multiline">
+            {% for post in page.posts %}
+                <div class="column is-one-third">
+                    {% include "partials/post-card.twig" %}
+                </div>
+            {% endfor %}
+
+            {% if page.posts is empty %}
+                <div class="column component-pagination-no-content-msg">
+                    <strong>No results found.</strong>
+                    <p>Please adjust filters or try another search.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Pagination #}
+        <nav class="component-pagination-pager">
+            {% if page.pagination.previous.pageNumber != page.pagination.next.pageNumber and page.pagination.pages is not empty %}
+                <a href="{{ page.pagination.previous.link }}"
+                   class="pager-previous {% if page.pagination.previous.isCurrent %} disabled {% endif %}">
+                    <span class="far fa-long-arrow-left"></span>
+                </a>
+
+                {% for pageLink in page.pagination.pages %}
+                    <a href="{{ pageLink.link }}"
+                       class="pager-item {% if pageLink.isCurrent %} is-active disabled {% endif %}">{{ pageLink.pageNumber }}</a>
+                {% endfor %}
+
+                <a href="{{ page.pagination.next.link }}"
+                   class="pager-previous {% if page.pagination.next.isCurrent %} disabled {% endif %}">
+                    <span class="far fa-long-arrow-right"></span>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+    <script>
+       function submit_form_custom(frm){
+			var search_txt = frm.s.value;
+			var filter_box = frm.Filter.value;
+			//alert(search_txt);
+			//alert(filter_box);
+			if (search_txt == '')
+				{
+					$( "#target" ).attr('action', filter_box);
+					$("#search-box-inner").attr('disabled', 'disabled');
+					
+				}
+			else
+				{
+					$( "#target" ).attr('action', filter_box+"?s="+search_txt);
+				}
+			//$( "#target" ).attr('action', filter_box+"?s="+search_txt);
+			//alert($( "#target" ).attr('action'));
+			//$( "#target" ).action = filter_box+"?s="+search_txt;
+			//alert();
+			//$( "#target" ).submit();
+			return true;
+		}
+    </script>
+{% endblock %}

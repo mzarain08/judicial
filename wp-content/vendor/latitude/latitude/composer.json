@@ -1,0 +1,50 @@
+{
+    "name": "latitude/latitude",
+    "type": "library",
+    "description": "A SQL query builder with zero dependencies",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Woody Gilk",
+            "email": "woody.gilk@gmail.com",
+            "homepage": "https://github.com/shadowhand"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "require-dev": {
+        "doctrine/coding-standard": "^8.1",
+        "eloquent/phpstan-phony": "^0.7.1",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.48",
+        "phpstan/phpstan-phpunit": "^0.12.16",
+        "phpunit/phpunit": "^9.5"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Latitude\\QueryBuilder\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Latitude\\QueryBuilder\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@check",
+            "phpunit"
+        ],
+        "check": [
+            "phpstan analyse",
+            "phpcs"
+        ]
+    }
+}

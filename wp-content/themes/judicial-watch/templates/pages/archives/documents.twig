@@ -1,0 +1,251 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    {# Section: Page Title #}
+    <section class="component-subpage-title is-subpage-archives">
+        <h1>{{ page.title }}</h1>
+    </section>
+
+    {# Section: Page Content #}
+    <section class="page-content page-container">
+        <div class="column-content">
+            <form method="get" action="/documents">
+                <h4 class="p-b-10">Search The Document Archives</h4>
+                <div class="field">
+                    <div class="columns is-marginless is-paddingless">
+                        <div class="column is-full-mobile is-three-quarters is-marginless is-paddingless">
+                            <div class="columns is-marginless is-paddingless is-mobile">
+                                <p class="control has-icons-right is-three-fifths">
+                                    <input class="input m-r-20" type="text" placeholder="Search documents" name="s"
+                                           value="{{ page.searchParams.s }}">
+                                    <span class="icon is-small is-right">
+                                        <span class="fas fa-search has-text-primary"></span>
+                                    </span>
+                                </p>
+                                <div class="column is-two-fifths is-marginless is-paddingless">
+                                    <button type="submit"
+                                            class="button is-primary m-l-20 mobile-p-l-35 mobile-p-r-35">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="m-t-40 m-b-40"/>
+
+                {# Filters #}
+                <h4 class="p-b-5">Filter by Date</h4>
+                <label class="is-bold">Select to filter by month and year</label>
+                <div class="columns is-multiline m-t-5">
+                    <div class="column p-t-0">
+                        <div class="select is-block">
+                            <select class="input input-select" name="month">
+                                <option value="">Month</option>
+                                <option value="1"{{ page.searchParams.month == 1 ? ' selected="selected"' }}>January
+                                </option>
+                                <option value="2"{{ page.searchParams.month == 2 ? ' selected="selected"' }}>February
+                                </option>
+                                <option value="3"{{ page.searchParams.month == 3 ? ' selected="selected"' }}>March
+                                </option>
+                                <option value="4"{{ page.searchParams.month == 4 ? ' selected="selected"' }}>April
+                                </option>
+                                <option value="5"{{ page.searchParams.month == 5 ? ' selected="selected"' }}>May
+                                </option>
+                                <option value="6"{{ page.searchParams.month == 6 ? ' selected="selected"' }}>June
+                                </option>
+                                <option value="7"{{ page.searchParams.month == 7 ? ' selected="selected"' }}>July
+                                </option>
+                                <option value="8"{{ page.searchParams.month == 8 ? ' selected="selected"' }}>August
+                                </option>
+                                <option value="9"{{ page.searchParams.month == 9 ? ' selected="selected"' }}>September
+                                </option>
+                                <option value="10"{{ page.searchParams.month == 10 ? ' selected="selected"' }}>October
+                                </option>
+                                <option value="11"{{ page.searchParams.month == 11 ? ' selected="selected"' }}>
+                                    November
+                                </option>
+                                <option value="12"{{ page.searchParams.month == 12 ? ' selected="selected"' }}>
+                                    December
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="column p-t-0">
+                        <div class="select is-block">
+                            <select class="input input-select" name="year">
+                                <option value="">Year</option>
+                                {% for i in 2019..1995 %}
+                                    {% if page.searchParams.year == i %}
+                                        <option value="{{ i }}" selected="selected">{{ i }}</option>
+                                    {% else %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="column is-one-quarter p-t-0">
+                        <button type="submit" class="button is-primary">Search</button>
+                    </div>
+                </div>
+
+                <hr/>
+
+                {# Documents Grid: Header #}
+                <div class="columns is-flex is-marginless is-paddingless">
+                    <div class="column is-paddingless m-t-30">
+                        {{ page.foundPosts|number_format }} results
+                    </div>
+                    <div class="column has-text-right is-paddingless m-t-15">
+                        <button data-toggle-type="grid"
+                                type="button"
+                                class="button-icon-primary is-active is-clickable js-toggle-grid">
+                            <span class="fal fa-th-large"></span>
+                        </button>
+                        <button data-toggle-type="list" type="button"
+                                class="button-icon-primary is-clickable js-toggle-grid">
+                            <span class="fal fa-list"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <hr class="m-t-20 m-b-50"/>
+
+            {# Documents Grid #}
+            <div class="columns is-multiline grid-document-archives is-type-grid">
+                {% for document in page.posts %}
+                    <div class="column is-half is-two-fifths">
+                        <div class="component-card-document">
+                            <a title="{{ document.title }}" href="{{ document.link }}">
+                                <div class="image{{ document.thumbnails.pdf ? '' : ' background-image-missing' }}"
+                                    {% if document.thumbnails.pdf %}
+                                        style="background-image: url('{{ document.thumbnails.coverimage ?? document.thumbnails.pdf }}')"
+                                    {% endif %}
+                                ></div>
+                            </a>
+
+                            <div class="is-list-flex">
+                                <div class="is-list-col">
+                                    <h4 class="component-title">
+                                        <a title="{{ document.title }}" href="{{ document.link }}">
+                                            {{ document.title }}
+                                        </a>
+                                    </h4>
+                                    <div class="date">{{ document.date }}</div>
+                                    {% if document.category.name %}
+                                        <div class="columns columns-meta">
+                                            <div class="column-dt">Category:</div>
+                                            <div class="column-dd">
+                                                <a href="{{ document.category.link }}">{{ document.category.name }}</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if document.tag.name %}
+                                        <div class="columns columns-meta">
+                                            <div class="column-dt">Tags:</div>
+                                            <div class="column-dd">
+                                                <a href="{{ document.tag.link }}">{{ document.tag.name }}</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="is-visible-list column is-one-fifth is-list-date">
+                                    {{ document.date }}
+                                </div>
+                                <div class="is-visible-list column is-one-fifth is-list-icon">
+                                    <span class="far fa-file-pdf"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            {# Pagination #}
+            <nav class="component-pagination-pager">
+                {% if page.pagination.previous.isCurrent != true %}
+                    <a href="{{ page.pagination.previous.link }}"
+                       class="pager-previous {% if page.pagination.previous.isCurrent %} disabled {% endif %}">
+                        <span class="far fa-long-arrow-left"></span>
+                    </a>
+                {% endif %}
+
+                {% for pageLink in page.pagination.pages %}
+                    <a href="{{ pageLink.link }}"
+                       class="pager-item {% if pageLink.isCurrent %} is-active disabled {% endif %}">{{ pageLink.pageNumber }}</a>
+                {% endfor %}
+
+                {% if page.pagination.next.isCurrent == false %}
+                    <a href="{{ page.pagination.next.link }}"
+                       class="pager-next {% if page.pagination.next.isCurrent == true %} disabled {% endif %}">
+                        <span class="far fa-long-arrow-right"></span>
+                    </a>
+                {% endif %}
+
+            </nav>
+        </div>
+
+        {# Page: Sidebar #}
+        <div class="column-sidebar">
+            {# Filter: Categories #}
+            <div class="sidebar-item sidebar-item-contact">
+                <h4 class="sidebar-item-title">
+                    Document Categories
+                </h4>
+                <ul class="has-lineheight-24px">
+                    {% for filterCategory in page.filterCategories %}
+                    <li{% if filterCategory.slug == page.selectedCategory %} class="active"{% endif %}>
+                        <a href="{{ filterCategory.link }}"
+                           class="has-text-default has-text-weight-semibold has-text-lato has-text-13px">
+                            {{ filterCategory.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {# Filter: Tags #}
+            <div class="sidebar-item sidebar-item-contact">
+                <h4 class="sidebar-item-title">
+                    Document Tags
+                </h4>
+                <ul class="has-lineheight-24px">
+                    {% for filterTag in page.filterTags %}
+                        <li>
+                            <a href="{{ filterTag.link }}"
+                               class="has-text-default has-text-weight-semibold has-text-lato has-text-13px">
+                                {{ filterTag.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block pageScripts %}
+    <script>
+        var $gridToggleBtns = $('.js-toggle-grid');
+        var $grid = $('.grid-document-archives');
+
+        $gridToggleBtns.on('click', function () {
+            var toggleType = $(this).data('toggle-type');
+
+            if ('list' === toggleType) {
+                $grid.removeClass('is-type-grid');
+                $grid.addClass('is-type-list');
+                $gridToggleBtns.removeClass('is-active');
+                $('.js-toggle-grid[data-toggle-type="list"]').addClass('is-active');
+            } else {
+                $grid.removeClass('is-type-list');
+                $grid.addClass('is-type-grid');
+                $gridToggleBtns.removeClass('is-active');
+                $('.js-toggle-grid[data-toggle-type="grid"]').addClass('is-active');
+            }
+
+        });
+    </script>
+{% endblock %}

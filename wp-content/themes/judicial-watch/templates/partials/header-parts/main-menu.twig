@@ -1,0 +1,104 @@
+<div class="primary-nav">
+    {% for menuItem in mainMenu %}
+
+
+        {% if menuItem.submenuExists %}
+            <div class="primary-nav-item has-submenu">
+                <span class="submenu-title">{{ menuItem.title }}</span>
+                <div class="nav-submenu primary-nav-submenu">
+
+                    {# Tab Layout #}
+                    {% if menuItem.submenu.layout == 'submenu_tabs' %}
+                        <div class="container is-flex component-tabs">
+                            <div class="tabs-nav">
+                                <ul>
+                                    {% for tabItem in menuItem.submenu.tabs %}
+                                        {% if tabItem.url and tabItem.posts is empty %}
+                                            <li class="{% if loop.first %}is-active{% endif %}">
+                                                <a href="{{ tabItem.url }}">{{ tabItem.title }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="{% if loop.first %}is-active{% endif %}">{{ tabItem.title }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="tab-content">
+                                {% for tabPaneItem in menuItem.submenu.tabs %}
+                                    <div class="tab-pane {% if loop.first %}is-active{% endif %}">
+                                        <div class="columns">
+                                            {% for tabPanePost in tabPaneItem.posts %}
+                                                <div class="column column-card">
+                                                    <a href="{{ tabPanePost.link }}" class="component-card-post">
+                                                        <div class="submenu-post-image{{ tabPanePost.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                                            {% if tabPanePost.thumbnails.medium_large.src %}
+                                                                style="background-image: url('{{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }}')"
+                                                            {% endif %}
+                                                        ></div>
+
+                                                        <span class="title">
+                                                            {{ tabPanePost.title|length > 75 ? tabPanePost.title|slice(0, 75) ~ '...' : tabPanePost.title }}
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                            {% if tabPaneItem.categoryUrl %}
+                                            <div class="column column-category-read-more">
+                                                <div class="view-all-new">
+                                                    <a href="{{ tabPaneItem.categoryUrl }}"
+                                                    title="Read more in {{ tabPaneItem.title }}"
+                                                    class="button button-primary is-inverted">
+                                                        View All
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# Individual Post Layout #}
+                    {% if menuItem.submenu.layout == 'submenu_links' %}
+                        <div class="container is-flex component-tabs">
+                            <div class="tabs-nav">
+                                <ul></ul>
+                            </div>
+
+                            <div class="tab-content columns tab-content-posts-only">
+                                {% for tabPaneItem in menuItem.submenu.posts %}
+                                <div class="column column-card">
+                                    <a href="{{ tabPaneItem.url }}"
+                                        {% if '_blank' == tabPaneItem.target %}
+                                            target="_blank"
+                                        {% endif %}
+                                       class="component-card-post">
+                                        <div class="submenu-post-image{{ tabPaneItem.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                            {% if tabPaneItem.thumbnails.medium_large.src %}
+                                                style="background-image: url('{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }}')"
+                                            {% endif %}
+                                        ></div>
+                                        <span class="title">
+                                            {{ tabPaneItem.title|length > 75 ? tabPaneItem.title|slice(0, 75) ~ '...' : tabPaneItem.title }}
+                                        </span>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="primary-nav-item">
+                <a href="{{ menuItem.url }}" title="{{ menuItem.title }}">
+                    {{ menuItem.title }}
+                </a>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+</div>

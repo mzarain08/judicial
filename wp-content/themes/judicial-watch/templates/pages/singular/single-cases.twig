@@ -1,0 +1,335 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+    <!-- Section: Page Title -->
+    <section class="component-subpage-title is-subpage-lawsuits no-printme">
+        <h1>Latest Lawsuits</h1>
+    </section>
+
+    <!-- Post -->
+    <div class="post-has-right-sidebar columns">
+        <!-- Post -->
+        <section class="column post">
+
+            <!-- Featured Image -->
+            <div class="wysiwyg-content no-printme">
+                <div class="container-featured-image responsive-media">
+                    <iframe width="650" height="365.625" src="https://www.youtube.com/embed/wQvQ72uJa6g?controls=0"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="post-container">
+                <!-- Social Share Widget -->
+                <div class="column-social-widget component-social-share-widget no-printme">
+                    <div class="component-title">Share</div>
+                        <div class="social-links">
+							<a target="_blank" class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+						<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+					</a>
+	                <a target="_blank" class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+					</a>
+					
+					<a target="_blank" class="social-link" href="http://www.reddit.com/submit?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/reddit.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://www.linkedin.com/shareArticle?mini=true&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/linkedin.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://telegram.me/share/url?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/talegram-logo.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://gettr.com/share?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/Gettr-logo.png"></span>
+					</a>
+					<a class="social-link" href="mailto:?subject={{ social.title|replace({'+': ' '}) }}&body={{ social.link }}">
+						<span class="gmail-social"><img src="/wp-content/themes/judicial-watch/assets/images/gmail.png"></span>
+					</a>
+					<a  class="social-link" href="javascript:void(0)"  onclick="{window.print()}">
+						<span class="print-social"><img src="/wp-content/themes/judicial-watch/assets/images/print.png"></span>
+					</a>
+						</div>
+                </div>
+
+                <div class="column-post wysiwyg-content">
+                    <div id="print-header" class="print-header  printme">
+                        <img src="/wp-content/themes/judicial-watch/assets/images/logo-color.png">
+                    </div>
+                    <small class="post-date">
+                        {{ post.date }}
+                        <span class="p-l-5 p-r-5">|</span>
+                        <span class="post-category-badge is-purple"></span> Case
+                    </small>
+
+                    <h1 class="post-title">
+                        {{ post.title }}
+                    </h1>
+
+                    {{ post.content }}
+
+                    <div id="print-footer" class="print-footer  printme">
+                        <p>© 2019 Judicial Watch, Inc.</p>
+                        <p>
+                            Judicial Watch is a 501(c)(3) nonprofit organization. Contributions are received from
+                            individuals,
+                            foundations, and corporations and are tax-deductible to the extent allowed by law.
+                        </p>
+                            <a href="https://shopjw.org">Shop  </a>
+                            <a href="/donate/make-a-contribution-2/" style="margin: 0 10px;">Donate</a>
+				    </div>
+
+                    <!-- Download -->
+                    {% if featuredDocument %}
+                        <div class="columns is-multiline grid-document-archives is-type-singular no-printme">
+                            <!-- Document Column -->
+                            <div class="column is-full no-printme">
+                                <div class="component-card-document no-printme">
+                                    <div class="document-image">
+                                        <img src="/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-document-80x110.png"/>
+                                    </div>
+                                    <div class="is-list-flex">
+                                        <div class="is-list-col">
+                                            <h4 class="component-title">
+                                                <a href="{{ featuredDocument.link }}">
+                                                    {{ featuredDocument.title }}
+                                                </a>
+                                            </h4>
+                                            <div class="date">{{ featuredDocument.date }}</div>
+
+                                            <div class="columns columns-meta column-meta-page">
+                                                <div class="column-dt">Pages:</div>
+                                                <div class="column-dd">unknown</div>
+                                            </div>
+                                            {% if featuredDocument.category.name %}
+                                                <div class="columns columns-meta">
+                                                    <div class="column-dt">Category:</div>
+                                                    <div class="column-dd">
+                                                        <a href="{{ featuredDocument.category.link }}">{{ featuredDocument.category.name }}</a>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                            <div class="columns columns-meta">
+                                                <div class="column-dt">Tags:</div>
+                                                <div class="column-dd">
+                                                    {% for docTag in featuredDocument.tags %}
+                                                        <a href="{{ docTag.link }}">{{ docTag.name }}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if featuredDocument.attachment_url %}
+                                            <a href="{{ featuredDocument.attachment_url }}"
+                                               class="button is-primary m-t-30 button-download">Download Case</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-t-15"/>
+                    {% endif %}
+
+                    <!-- Mobile: Social Icons -->
+                    <div class="mobile-social-icons no-printme">
+                        <h4>Share</h4>
+                        <div class="social-links no-printme">
+                            <a target="_blank" class="social-link" href="https://twitter.com/intent/tweet?text={{ social.tweet }}">
+						<span class="twitter-social"><img src="/wp-content/themes/judicial-watch/assets/images/twitter.png"></span>
+					</a>
+	                <a target="_blank" class="social-link" href="https://facebook.com/sharer.php?u={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/facebook.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://parler.com/#/&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/Parler-Logo.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="http://www.reddit.com/submit?url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/reddit.png"></span>
+					</a>
+					<a target="_blank" class="social-link" href="https://www.linkedin.com/shareArticle?mini=true&url={{ social.link }}">
+						<span class="facebook-social"><img src="/wp-content/themes/judicial-watch/assets/images/linkedin.png"></span>
+					</a>
+                            <a class="social-link"
+                               href="mailto:?subject={{ social.title }}&body={{ social.link }}"><span
+                                        class="far fa-envelope-open"></span></a>
+                            <a class="social-link" href="javascript:window.print()"><span
+                                        class="far fa-print"></span></a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile: Key Issues -->
+                    <div class="mobile-key-issues">
+                        <h4>Key Issues</h4>
+                        <div class="key-issue">
+                            <div class="featured-image"
+                                 style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                            <a class="title">Clinton Email Investigation</a>
+                            <div class="excerpt">
+                                Judicial Watch today released received responses under oath from former Secretary
+                                of State Hillary Clinton concerning her email practices.
+                            </div>
+                        </div>
+                        <div class="key-issue">
+                            <div class="featured-image"
+                                 style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                            <a class="title">Clinton Email Investigation</a>
+                            <div class="excerpt">
+                                Judicial Watch today released received responses under oath from former Secretary
+                                of State Hillary Clinton concerning her email practices.
+                            </div>
+                        </div>
+                        <div class="key-issue">
+                            <div class="featured-image"
+                                 style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                            <a class="title">Clinton Email Investigation</a>
+                            <div class="excerpt">
+                                Judicial Watch today released received responses under oath from former Secretary
+                                of State Hillary Clinton concerning her email practices.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Documents -->
+                    {% if relatedDocuments %}
+                        <h4 class="related-documents-hdg">Related Documents</h4>
+                        <div class="columns is-multiline grid-document-archives is-type-singular has-multiple">
+                            {% for relatedDocument in relatedDocuments %}
+                                <div class="column is-full">
+                                    <div class="component-card-document">
+                                        <div class="document-image">
+                                            <img src="{{ relatedDocument.thumbnails.thumbnail.src }}"/>
+                                        </div>
+                                        <div class="is-list-flex">
+                                            <div class="is-list-col">
+                                                <h4 class="component-title">
+                                                    <a href="{{ relatedDocument.link }}">
+                                                        {{ relatedDocument.title }}
+                                                    </a>
+                                                </h4>
+                                                <div class="date">{{ relatedDocument.date }}</div>
+
+                                                <div class="columns columns-meta">
+                                                    <div class="column-dt">Category:</div>
+                                                    <div class="column-dd">
+                                                        <a href="{{ relatedDocument.category.link }}">{{ relatedDocument.category.name }}</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="columns columns-meta">
+                                                    <div class="column-dt">Tags:</div>
+                                                    <div class="column-dd">
+                                                        {% for docTag in relatedDocument.tags %}
+                                                            <a href="{{ docTag.link }}">{{ docTag.name }}</a>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a href="/cases" class="button is-primary m-t-25 m-b-35 button-view-more-docs">View More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar -->
+        <section class="column right-sidebar no-printme">
+            <!-- Key Issues -->
+            <div class="key-issues-list">
+                <h4 class="widget-title">Key Issues</h4>
+                <div class="key-issue">
+                    <div class="featured-image"
+                         style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                    <a class="title">Clinton Email Investigation</a>
+                    <div class="excerpt">
+                        Judicial Watch today released received responses under oath from former Secretary
+                        of State Hillary Clinton concerning her email practices.
+                    </div>
+                </div>
+                <div class="key-issue">
+                    <div class="featured-image"
+                         style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                    <a class="title">Clinton Email Investigation</a>
+                    <div class="excerpt">
+                        Judicial Watch today released received responses under oath from former Secretary
+                        of State Hillary Clinton concerning her email practices.
+                    </div>
+                </div>
+                <div class="key-issue">
+                    <div class="featured-image"
+                         style="background-image:url('/wp-content/themes/judicial-watch/assets/images/placeholder/placeholder-555x225.png')"></div>
+                    <a class="title">Clinton Email Investigation</a>
+                    <div class="excerpt">
+                        Judicial Watch today released received responses under oath from former Secretary
+                        of State Hillary Clinton concerning her email practices.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cases -->
+            <div class="cases-list">
+                <h4 class="widget-title m-b-20 m-t-35">Cases</h4>
+                <div class="case-item">
+                    <a class="title">JW v State Kendall ltr 01363</a>
+                    <div class="excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore.
+                    </div>
+                </div>
+                <div class="case-item">
+                    <a class="title">JW v State Kendall ltr 01363</a>
+                    <div class="excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore.
+                    </div>
+                </div>
+                <div class="case-item">
+                    <a class="title">JW v State Kendall ltr 01363</a>
+                    <div class="excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <hr/>
+
+    <!-- Section: Related Cases -->
+    {% if relatedCases %}
+        <section class="section related-posts no-printme">
+            <div class="container-1140 p-t-30">
+                <h1 class="section-title section-title-primary-bordered">Related Cases</h1>
+                <div class="columns slick-slider">
+                    {% for relatedCase in relatedCases %}
+                        <div class="column">
+                            <div class="component-card-post">
+                                {% if relatedCase.category.name %}
+                                    <div class="category">
+                                        <a href="{{ relatedCase.category.link }}">{{ relatedCase.category.name }}</a>
+                                    </div>
+                                {% endif %}
+                                <a href="{{ relatedCase.link }}">
+                                    <div class="image{{ relatedCase.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                         style="background-image: url('{{ relatedCase.thumbnails.medium_large.src ?? defaultImage }}')"></div>
+
+                                    <h2 class="title">{{ relatedCase.title }}</h2>
+                                </a>
+                                <div class="date">{{ relatedCase.date }}</div>
+                                <div class="content">{{ relatedCase.content|truncate(50, true) }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <!-- Spacer to clear carousel -->
+    <div class="m-b-100 no-printme"></div>
+{% endblock %}

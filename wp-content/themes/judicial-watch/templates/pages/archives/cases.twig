@@ -1,0 +1,49 @@
+{% extends "default-template.twig" %}
+
+{% block content %}
+	<!-- Section: Page Title -->
+	<section class="component-subpage-title is-subpage-news">
+	    <h1>{{ page.title }}</h1>
+	</section>
+
+	<!-- Section: Page Content -->
+	<div class="container-1140">
+
+	    <!-- Post Filter -->
+
+		{% if page.isPosts %}
+		    <div class="component-pagination-filter">
+		        <label>Filter by:</label>
+			    {% for filter in page.filters %}
+			        <a href="{{ filter.link }}" data-filter-id="{{ filter.termId }}" class="pagination-filter-item {% if filter.isActiveFilter %} is-active {% endif %}">{{ filter.name }}</a>
+				{% endfor %}
+		    </div>
+		{% endif %}
+
+		<!-- Posts -->
+	    <div class="columns is-multiline">
+		    {% for post in page.posts %}
+		        <div class="column is-one-third">
+		            {% include "partials/post-card.twig" %}
+		        </div>
+		    {% endfor %}
+	    </div>
+
+		<!-- Pagination -->
+		<nav class="component-pagination-pager">
+			{% if page.pagination.previous.pageNumber != page.pagination.next.pageNumber %}
+		        <a href="{{ page.pagination.previous.link }}" class="pager-previous {% if page.pagination.previous.isCurrent %} disabled {% endif %}">
+		            <span class="far fa-long-arrow-left"></span>
+		        </a>
+
+			    {% for pageLink in page.pagination.pages %}
+			        <a href="{{ pageLink.link }}" class="pager-item {% if pageLink.isCurrent %} is-active disabled {% endif %}">{{ pageLink.pageNumber }}</a>
+			    {% endfor %}
+
+			    <a href="{{ page.pagination.next.link }}" class="pager-previous {% if page.pagination.next.isCurrent %} disabled {% endif %}">
+		            <span class="far fa-long-arrow-right"></span>
+		        </a>
+			{% endif %}
+		</nav>
+	</div>
+{% endblock %}

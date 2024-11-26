@@ -1,0 +1,24 @@
+<div class="nav-item secondary-nav-item has-submenu tooltip is-tooltip-bottom is-tooltip-inverted" data-tooltip="Happening Now">
+    <span class="submenu-title fal fa-newspaper"></span>
+    <span class="news-notification fas fa-circle {{ happeningNow.hideBadge ? "is-invisible" : "is-visible" }}"></span>
+    <div class="nav-submenu news-submenu">
+        <div class="submenu-triangle"></div>
+        <div class="submenu-title">Happening Now</div>
+        <div class="news-items">
+            {% for post in happeningNow.posts %}
+                <a href="{{ post.link }}" class="news-item">
+                    <span class="icon"><span class="{{ post.icon }}"></span></span>
+
+
+                    <span class="image{{ post.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                          {% if post.thumbnails.medium_large.src %}
+                              style="background-image: url('{{ post.thumbnails.medium_large.src ?? defaultImage }}')"
+                          {% endif %}
+                    ></span>
+
+                    <span class="title">{{ post.title }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

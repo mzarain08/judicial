@@ -1,0 +1,2459 @@
+{% extends "default-template.twig" %}
+
+
+
+{% block content %}
+    <!-- Section: Page Content -->
+	
+	
+    {% if pageContentAvailable %}
+
+<section class="page-content page-container container-1140 p-t-50 mobile-p-t-40">
+    <div class="columns is-multiline">
+
+        <div class="column is-two-thirds">
+                {# Page Content #}
+                <div class="wysiwyg-content">
+                    {{ page.content }}
+                </div>
+        </div>
+                
+        <div class="column is-one-third">
+            {# Donate Component #}
+			
+                <div id="VueDonateComponent">
+                   
+				   
+				   
+				   
+				   
+				   			  
+    <div>
+        <div class="modal modal-donate-response" :class="{ 'is-active': this.responseModal.active }">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+			<div class="content-data_value"> {{ this.responseModal.message }}  </div>
+               
+                <button type="button" class="button is-primary is-inverted is-slim" onclick="hideResponseModal();">Close</button>
+            </div>
+        </div>
+
+        <button v-if="isQaEnabled" @click="setQaValues()" type="button" style="display:none;">QA: Fill Out Form Fields</button>
+
+        <!-- Select Donation Amount -->
+        <h2 class="m-b-15">Select Amount to Donate</h2>
+		<input type="hidden" value="{{ function('admin_url', 'admin-post.php') }}" name="form_url_submit" id="form_url_submit" >
+        <div class="columns is-multiline is-grid-20px grid-button-list columns-donate-buttons">
+		
+		 {% for donateAmount_twig in donateAmounts %}
+		    <div 
+                 class="column is-one-third">
+                <button type="button"
+                        class="button is-primary button_select_amount is-wide"
+                        selected_value="{{donateAmount_twig}}" >
+                        
+                    ${{ donateAmount_twig}}
+                </button>
+            </div>
+		 {% endfor %}
+		
+          
+            <!-- Custom Amount -->
+            <div class="column is-one-third">
+                <div class="control has-icons-right">
+                    <input type="text"
+                           ref="otherDonationAmountInput"
+                           @keyup="setOtherDonationAmount()"
+                           placeholder="Other amount..."
+                           v-validate="'numeric'"
+                           data-vv-as="donation"
+                           name="custom_donation_amount"
+                           v-model="customDonationAmount"
+                           :class="{ 'is-danger': errors.has('custom_donation_amount') }"
+                           class="input donate-input"/>
+                   <!--   <span class="icon is-small is-right" v-if="errors.has('custom_donation_amount')">
+                        <span class="fas fa-exclamation-circle has-text-danger"></span>
+                    </span> -->
+                </div>
+				<span class="vee-validate-error donation-custom-class" style="display:none;">Please enter a valid amount</span>
+				<span class="vee-validate-error donation-custom-transaction" style="display:none;">Minimum Transaction $5</span>
+            </div>
+            <!-- PayPal -->
+			
+          
+
+            <div v-if="allowPaypal" class="column is-one-third">
+                <form  id="paypalformtwig" name="paypalform" method="post" action="https://www.paypal.com/cgi-bin/webscr" target="_top">
+                    <input type="hidden" name="business" value="development@judicialwatch.org">
+                    <input type="hidden" name="cmd" value="_donations" />
+                    <input type="hidden" name="cancel_return" value="{{ paypalCancelReturnUrl}}" />
+                    <input type="hidden" name="return" value="{{ paypalReturnUrl}}" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                      <input type="hidden" name="amount" value="1" id="amount_paypal" disabled="true">
+                    <input type="image" name="submit" style="display:none" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_donate_92x26.png" alt="Donate" />
+                    <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" />
+                </form>
+                <button type="button" class="button is-primary is-inverted is-slim paypalFormSubmit" >
+                    <img src="/wp-content/themes/judicial-watch/assets/images/button-paypal-logo.png" class="all-browser" style="width:100%;" />
+                </button>
+            </div>
+			
+        </div>
+        <div class="field">
+            <input id="monthly-donation-toggle"
+                   type="checkbox"
+                   v-model="formFields.isMonthlyDonation"
+                   class="is-checkradio is-info has-bg-active"/>
+            <label for="monthly-donation-toggle"
+                   class="checkradio-label is-marginless">
+                Make this a monthly donation! Please note, monthly donations are processed immediately and then on the 1st of every month.
+            </label>
+        </div>
+
+        <!-- Payment Information -->
+        <h2 class="m-t-50">Payment Information</h2>
+         <form class="cmxform" id="form1"  onsubmit="return sendPostRequest(this);" method="post" >
+            <div class="columns is-multiline is-gap-10px">
+                <!-- Required Fields Label -->
+                <div class="column is-full">
+                <span class="help-text is-italic p-t-5">
+                    <div class="col-asterisk">
+                        <span class="far fa-asterisk"></span>
+                    </div>
+                    <div class="col">
+                        <span class="content">Required field</span>
+                    </div>
+                </span>
+                    <div class="cc-list">
+                        <span class="fab fa-cc-visa"></span>
+                        <span class="fab fa-cc-mastercard"></span>
+                        <span class="fab fa-cc-discover"></span>
+                        <span class="fab fa-cc-amex"></span>
+                    </div>
+                </div>
+                <!-- First Row -->
+                <div class="column is-full p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="card[number]" 
+                               v-validate="'credit_card|required'" 
+                               data-vv-validate-on="blur"
+                               v-model="formFields.card.number"
+                               data-vv-as="Card"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('card[number]') }"
+                               placeholder="Card Number *" id="card-number" error-message-custome="The Card field is invalid" on-blur-effect-flag="1"/>
+                       <span class="icon is-small is-right" style="display:none;" v-if="errors.has('card[number]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="card-number vee-validate-error">{{ errors.first('card[number]') }}</span>
+                </div>
+                <!-- Second row -->
+                <div class="column is-one-third p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="card[ccv]" 
+                               v-validate="'numeric|required'"  
+                               data-vv-validate-on="blur"
+                               v-model="formFields.card.ccv"
+                               data-vv-as="CCV"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('card[ccv]') }"
+                               placeholder="Security Code *" id="cvv" error-message-custome="The CCV field may only contain numeric characters" on-blur-effect-flag="1" />
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('card[ccv]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="vee-validate-error cvv">{{ errors.first('card[ccv]') }}</span>
+                </div>
+                <div class="column is-one-third">
+                    <div class="select" :class="{ 'is-danger': errors.has('card[month]') }">
+                        <select v-model="formFields.card.month"
+                                name="card[month]"
+                                v-validate="'required'"   
+                                data-vv-as="Month"
+                                :class="{ 'is-danger': errors.has('card[month]') }"
+                                class="input-select" error-message-custome="The Month field is required">
+                            <option value="">Month *</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('card[month]') }}</span>
+                    </div>
+                </div>
+                <div class="column is-one-third">
+                    <div class="select" :class="{ 'is-danger': errors.has('card[year]') }">
+                        <select v-model="formFields.card.year"
+                                name="card[year]"
+                                v-validate="'required'"   
+                                data-vv-as="Year"
+                                :class="{ 'is-danger': errors.has('card[year]') }"
+                                class="input-select" id="year_select_twig" error-message-custome="The Year field is required">
+                            <option value="">Year *</option>
+                          
+							
+							
+							
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('card[year]') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="m-t-50">Personal Information</h2>
+            <div class="columns is-multiline">
+                <!-- Required Fields Label -->
+                <div class="column is-full">
+                <span class="help-text is-italic p-t-5">
+                    <div class="col-asterisk">
+                        <span class="far fa-asterisk"></span>
+                    </div>
+                    <div class="col">
+                        <span class="content">Required field</span>
+                    </div>
+                </span>
+
+                </div>
+
+                <!-- Row: Name -->
+                <div class="column is-half p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="person[name][first]"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('person[name][first]') }"
+                               v-validate="'required'" 
+                               data-vv-validate-on="blur"
+                               data-vv-as="Name"
+                               v-model="formFields.person.name.first"
+                               placeholder="First Name *" error-message-custome="The Name field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[name][first]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[name][first]') }}</span>
+                </div>
+                <div class="column is-half p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="person[name][last]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="Name"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.name.last"
+                               :class="{ 'is-danger': errors.has('person[name][last]') }"
+                               placeholder="Last Name *" error-message-custome="The Name field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[name][last]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[name][last]') }}</span>
+                </div>
+
+                <!-- Row: Address -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="person[address][street]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               :class="{ 'is-danger': errors.has('person[address][street]') }"
+                               data-vv-as="Address"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.address.street"
+                               placeholder="Address *" error-message-custome="The Address field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][street]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][street]') }}</span>
+                </div>
+
+                <!-- Row: Address 2 -->
+                <div class="column is-full">
+                    <input name="person[address][street_2]"
+                           type="text"
+                           class="input"
+                           v-model="formFields.person.address.street_2"
+                           placeholder="Address 2" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                </div>
+
+                <!-- Row: City & State -->
+                <div class="column is-three-fifths">
+                    <div class="control has-icons-right">
+                        <input name="person[address][city]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="City"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.address.city"
+                               :class="{ 'is-danger': errors.has('person[address][city]') }"
+                               placeholder="City *" error-message-custome="The City field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][city]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][city]') }}</span>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="select" :class="{ 'is-danger': errors.has('person[address][state]') }">
+                        <select v-model="formFields.person.address.state"
+                                name="person[address][state]"
+                                v-validate="'required'" 
+                                data-vv-as="State"
+                                class="input-select" error-message-custome="The State field is required">
+                            <option value="">State *</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+							<option value="AE">Armed Forces Africa</option>
+                            <option value="AA">Armed Forces Americas (except Canada)</option>
+                            <option value="AE">Armed Forces Canada</option>
+                            <option value="AE">Armed Forces Europe</option>
+                            <option value="AE">Armed Forces Middle East</option>
+                            <option value="AP">Armed Forces Pacific</option>
+							<option value="AR">Arkansas</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="NM">Northern Mariana Islands</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="US">United States Virgin Islands</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('person[address][state]') }}</span>
+                    </div>
+                </div>
+
+                <!-- Row: Zip -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="person[address][zipcode]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="Zipcode"
+                               data-vv-validate-on="blur"
+                               :class="{ 'is-danger': errors.has('person[address][zipcode]') }"
+                               v-model="formFields.person.address.zipcode"
+                               placeholder="Zipcode *" error-message-custome="The Zipcode field is required"/>
+                        <span class="icon is-small is-right"style="display:none;" v-if="errors.has('person[address][zipcode]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][zipcode]') }}</span>
+                </div>
+                <div class="column is-two-thirds"></div>
+
+                <!-- Row: Email & Phone -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="person[email]"
+                               type="text"
+                               class="input"
+                               v-validate="'required|email'"   
+                               data-vv-as="Email"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.email"
+                               :class="{ 'is-danger': errors.has('person[email]') }"
+                               placeholder="Email *" id="email_valid" error-message-custome="The Email field is required" on-blur-effect-flag="1"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[email]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error email_valid">{{ errors.first('person[email]') }}</span>
+                </div>
+                <div class="column is-two-thirds">
+                    <div class="control has-icons-right">
+                        <input name="person[phone]"
+                               type="text"
+                               class="input phone_number_val"
+                               v-validate="'numeric'" 
+                               data-vv-as="Phone"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.phone"
+                               :class="{ 'is-danger': errors.has('person[phone]') }"
+                               placeholder="Mobile" error-message-custome="The Phone field may only contain numeric characters" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                         <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[phone]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[phone]') }}</span>
+                </div>
+            </div>
+            <div class="field">
+                <input id="is-mobile-attached"
+                       type="checkbox" 
+                       v-model="formFields.isMobileAttached"
+                       class="is-checkradio is-info has-bg-active" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                <label for="is-mobile-attached" class="checkradio-label is-marginless">
+                    Enter your phone number above to join a recurring text messaging program. By participating, you agree to the terms &amp; <a href="https://tandcs.us/jwi/" target="_blank">privacy policy</a> for autodialed marketing messages from Judicial Watch to the phone number you provide. No consent required to buy. Msg&amp;data rates may apply
+                </label>
+            </div>
+
+            <div class="field">
+                <input id="billing-toggle"
+                       type="checkbox" 
+                       v-model="formFields.billing_address.isDifferentFromPersonalAddress"
+                       class="is-checkradio is-info has-bg-active" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                <label for="billing-toggle" class="checkradio-label is-marginless">
+                    My billing address is different from above
+                </label>
+            </div>
+
+            <!-- Billing Address -->
+            <div id="billing_address_div" style="display:none;">
+                <!-- Row: Address -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[street]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="Address"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.street"
+                               :class="{ 'is-danger': errors.has('billing_address[street]') }"
+                               placeholder="Address *" error-message-custome="The Address field is required" on-blur-effect-flag-disabled="1"/>
+                         <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[street]')" >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error Address_class">{{ errors.first('billing_address[street]') }}</span>
+                </div>
+
+                <!-- Row: Address 2 -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[street_2]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-model="formFields.billing_address.street_2"
+                               placeholder="Address 2" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[street_2]')"  >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Row: City & State -->
+                <div class="column is-three-fifths">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[city]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="City"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.city"
+                               :class="{ 'is-danger': errors.has('billing_address[city]') }"
+                               placeholder="City *" error-message-custome="The City field is required" on-blur-effect-flag-disabled="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[city]')"  >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error City_class">{{ errors.first('billing_address[city]') }}</span>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="select" :class="{ 'is-danger': errors.has('billing_address[state]') }">
+                        <select v-model="formFields.billing_address.state"
+                                name="billing_address[state]"
+                                :class="{ 'is-danger': errors.has('billing_address[state]') }"
+                                v-validate="'required'"
+                                data-vv-as="State"
+                                class="input-select billing_address_field" error-message-custome="The State field is required" on-blur-effect-flag-disabled="1">
+                            <option value="">State *</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+							<option value="AE">Armed Forces Africa</option>
+                            <option value="AA">Armed Forces Americas (except Canada)</option>
+                            <option value="AE">Armed Forces Canada</option>
+                            <option value="AE">Armed Forces Europe</option>
+                            <option value="AE">Armed Forces Middle East</option>
+                            <option value="AP">Armed Forces Pacific</option>
+							<option value="AR">Arkansas</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="NM">Northern Mariana Islands</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="US">United States Virgin Islands</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                        <span class="vee-validate-error State_class">{{ errors.first('billing_address[state]') }}</span>
+                    </div>
+                </div>
+
+                <!-- Row: Zip -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[zipcode]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="Zipcode"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.zipcode"
+                               :class="{ 'is-danger': errors.has('billing_address[zipcode]') }"
+                               placeholder="Zipcode *" error-message-custome="The Zipcode field is required" on-blur-effect-flag-disabled="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][street]')" >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error Zipcode_class">{{ errors.first('billing_address[zipcode]') }}</span>
+                </div>
+                <div class="column is-two-thirds"></div>
+            </div>
+
+            <!-- Submit -->
+            <div class="columns donate-form-submit">
+                <div v-if="formWasSubmitted && errors.any()" class="form-error-label" style="display:none;" id="all_error_class">
+                    <div class="select_amount" id="select_amount" style="display:none;">
+                       Please update donation value to be at least $5
+                    </div>
+                    <div id="all_error_display" style="display:none;">
+                           Please fix errors above before donating 
+                    </div>
+                </div>
+                <div class="column is-narrow">
+				<input type="submit" value="Donate"  class=" submit button is-primary is-wide button-donate-submit">
+			    <div class="please_wait" style="display:none;">
+                            <span class="m-r-15">Please Wait</span>
+                            <span class="fa fa-spinner fa-spin"></span>
+							</div>
+                       
+                  <!--    <button @click="validateForm()"
+                            type="button"
+                            :disabled="this.formIsSubmitting"
+                            class="button is-primary is-wide button-donate-submit">
+                        <template v-if="this.formIsSubmitting">
+                            <span class="m-r-15">Please Wait</span>
+                            <span class="fa fa-spinner fa-spin"></span>
+                        </template>
+                        <template v-else>
+                            Donate
+                        </template>
+                    </button> -->
+                </div>
+
+
+
+                 <div class="column">
+                    <div class="donate-label">Amount</div>
+                    <div class="donate-amount">
+                        <span class="donation_amount">$0</span>
+                        <span class="per_month" style="display:none;">/ month</span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden"
+                   name="donation_amount_hidden"
+				   id="hidden_donation_amount"
+                   value="0"
+                   v-validate="'required|min_value:1'">
+				   
+            <input type="hidden"
+                   name="mb_tracking_code"
+                   value="{{mbTrackingCode}}" id="mb_tracking_code" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1" />
+        </form>
+
+        <hr class="donate-form-divider"/>
+    </div>
+
+
+<style>
+        template {
+            display: none;
+        }
+</style>
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+                </div>
+        
+		
+		
+		</div>
+   
+
+
+
+   </div>
+        
+    <div class="about-jw">
+        <h4 class="m-b-10">About Judicial Watch Donations</h4>
+        <p>
+            If you have any questions or comments, please contact Judicial Watch by emailing us or calling us toll
+            free at (1) 888-593-8442.
+        </p>
+        <p>
+            Judicial Watch is a 501(c)(3) nonprofit organization. Contributions are received from individuals,
+            foundations, and corporations
+            and are tax-deductible to the extent allowed by law.
+        </p>
+        <p>
+            For a copy of our latest IRS form 990 send an email to Development@judicialwatch.org
+        </p>
+
+        <a href="/contact" class="button is-primary is-inverted is-wide is-slim button-contact">Contact</a>
+    </div>
+
+    <h4>Other Ways to Donate</h4>
+    <div class="columns columns-donate-options is-multiline is-gapless">
+        <div class="column is-full">
+            <div class="columns is-variable">
+                <div class="column"><a href="/wp-content/uploads/2021/05/Donate-by-Mail-Form-updated.pdf">Donate by Mail</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Donate by Telephone</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Monthly Giving</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Matching Gifts</a></div>
+            </div>
+        </div>
+        <div class="column is-full">
+            <div class="columns">
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Stocks, Bonds, & Securities</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Charitable Gift Annuities</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Wills & Trusts</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+    {% if pageContentNotAvailable %}
+
+<section class="page-content page-container container-750 p-t-50 mobile-p-t-40">
+
+    {# Page Content #}
+    <div class="wysiwyg-content">
+        {{ page.content }}
+    </div>
+    
+{# Donate Component #}
+       <div id="VueDonateComponent">
+                   
+				   
+				   
+				   
+				   
+				   			  
+    <div>
+        <div class="modal modal-donate-response" :class="{ 'is-active': this.responseModal.active }">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+			<div class="content-data_value"> {{ this.responseModal.message }}  </div>
+               
+                <button type="button" class="button is-primary is-inverted is-slim" onclick="hideResponseModal();">Close</button>
+            </div>
+        </div>
+
+        <button v-if="isQaEnabled" @click="setQaValues()" type="button" style="display:none;">QA: Fill Out Form Fields</button>
+
+        <!-- Select Donation Amount -->
+        <h2 class="m-b-15">Select Amount to Donate</h2>
+		<input type="hidden" value="{{ function('admin_url', 'admin-post.php') }}" name="form_url_submit" id="form_url_submit" >
+        <div class="columns is-multiline is-grid-20px grid-button-list columns-donate-buttons">
+		
+		 {% for donateAmount_twig in donateAmounts %}
+		    <div 
+                 class="column is-one-third">
+                <button type="button"
+                        class="button is-primary button_select_amount is-wide"
+                        selected_value="{{donateAmount_twig}}" >
+                        
+                    ${{ donateAmount_twig}}
+                </button>
+            </div>
+		 {% endfor %}
+		
+          
+            <!-- Custom Amount -->
+            <div class="column is-one-third">
+                <div class="control has-icons-right">
+                    <input type="text"
+                           ref="otherDonationAmountInput"
+                           @keyup="setOtherDonationAmount()"
+                           placeholder="Other amount..."
+                           v-validate="'numeric'"
+                           data-vv-as="donation"
+                           name="custom_donation_amount"
+                           v-model="customDonationAmount"
+                           :class="{ 'is-danger': errors.has('custom_donation_amount') }"
+                           class="input donate-input"/>
+                   <!--   <span class="icon is-small is-right" v-if="errors.has('custom_donation_amount')">
+                        <span class="fas fa-exclamation-circle has-text-danger"></span>
+                    </span> -->
+                </div>
+				<span class="vee-validate-error donation-custom-class" style="display:none;">Please enter a valid amount</span>
+				<span class="vee-validate-error donation-custom-transaction" style="display:none;">Minimum Transaction $5</span>
+            </div>
+            <!-- PayPal -->
+			
+          
+
+            <div v-if="allowPaypal" class="column is-one-third">
+                <form  id="paypalformtwig" name="paypalform" method="post" action="https://www.paypal.com/cgi-bin/webscr" target="_top">
+                    <input type="hidden" name="business" value="development@judicialwatch.org">
+                    <input type="hidden" name="cmd" value="_donations" />
+                    <input type="hidden" name="cancel_return" value="{{ paypalCancelReturnUrl}}" />
+                    <input type="hidden" name="return" value="{{ paypalReturnUrl}}" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                      <input type="hidden" name="amount" value="1" id="amount_paypal" disabled="true">
+                    <input type="image" name="submit" style="display:none" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_donate_92x26.png" alt="Donate" />
+                    <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" />
+                </form>
+                <button type="button" class="button is-primary is-inverted is-slim paypalFormSubmit" >
+                    <img src="/wp-content/themes/judicial-watch/assets/images/button-paypal-logo.png" class="all-browser"  style="width:100%;" />
+                </button>
+            </div>
+			
+        </div>
+        <div class="field">
+            <input id="monthly-donation-toggle"
+                   type="checkbox"
+                   v-model="formFields.isMonthlyDonation"
+                   class="is-checkradio is-info has-bg-active"/>
+            <label for="monthly-donation-toggle"
+                   class="checkradio-label is-marginless">
+                Make this a monthly donation! Please note, monthly donations are processed immediately and then on the 1st of every month.
+            </label>
+        </div>
+
+        <!-- Payment Information -->
+        <h2 class="m-t-50">Payment Information</h2>
+         <form class="cmxform" id="form1"  onsubmit="return sendPostRequest(this);" method="post" >
+            <div class="columns is-multiline is-gap-10px">
+                <!-- Required Fields Label -->
+                <div class="column is-full">
+                <span class="help-text is-italic p-t-5">
+                    <div class="col-asterisk">
+                        <span class="far fa-asterisk"></span>
+                    </div>
+                    <div class="col">
+                        <span class="content">Required field</span>
+                    </div>
+                </span>
+                    <div class="cc-list">
+                        <span class="fab fa-cc-visa"></span>
+                        <span class="fab fa-cc-mastercard"></span>
+                        <span class="fab fa-cc-discover"></span>
+                        <span class="fab fa-cc-amex"></span>
+                    </div>
+                </div>
+                <!-- First Row -->
+                <div class="column is-full p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="card[number]" 
+                               v-validate="'credit_card|required'" 
+                               data-vv-validate-on="blur"
+                               v-model="formFields.card.number"
+                               data-vv-as="Card"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('card[number]') }"
+                               placeholder="Card Number *" id="card-number" error-message-custome="The Card field is invalid" on-blur-effect-flag="1"/>
+                       <span class="icon is-small is-right" style="display:none;" v-if="errors.has('card[number]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="card-number vee-validate-error">{{ errors.first('card[number]') }}</span>
+                </div>
+                <!-- Second row -->
+                <div class="column is-one-third p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="card[ccv]" 
+                               v-validate="'numeric|required'"  
+                               data-vv-validate-on="blur"
+                               v-model="formFields.card.ccv"
+                               data-vv-as="CCV"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('card[ccv]') }"
+                               placeholder="Security Code *" id="cvv" error-message-custome="The CCV field may only contain numeric characters" on-blur-effect-flag="1" />
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('card[ccv]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="vee-validate-error cvv">{{ errors.first('card[ccv]') }}</span>
+                </div>
+                <div class="column is-one-third">
+                    <div class="select" :class="{ 'is-danger': errors.has('card[month]') }">
+                        <select v-model="formFields.card.month"
+                                name="card[month]"
+                                v-validate="'required'"   
+                                data-vv-as="Month"
+                                :class="{ 'is-danger': errors.has('card[month]') }"
+                                class="input-select" error-message-custome="The Month field is required">
+                            <option value="">Month *</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('card[month]') }}</span>
+                    </div>
+                </div>
+                <div class="column is-one-third">
+                    <div class="select" :class="{ 'is-danger': errors.has('card[year]') }">
+                        <select v-model="formFields.card.year"
+                                name="card[year]"
+                                v-validate="'required'"   
+                                data-vv-as="Year"
+                                :class="{ 'is-danger': errors.has('card[year]') }"
+                                class="input-select" id="year_select_twig" error-message-custome="The Year field is required">
+                            <option value="">Year *</option>
+                          
+							
+							
+							
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('card[year]') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="m-t-50">Personal Information</h2>
+            <div class="columns is-multiline">
+                <!-- Required Fields Label -->
+                <div class="column is-full">
+                <span class="help-text is-italic p-t-5">
+                    <div class="col-asterisk">
+                        <span class="far fa-asterisk"></span>
+                    </div>
+                    <div class="col">
+                        <span class="content">Required field</span>
+                    </div>
+                </span>
+
+                </div>
+
+                <!-- Row: Name -->
+                <div class="column is-half p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="person[name][first]"
+                               type="text"
+                               class="input"
+                               :class="{ 'is-danger': errors.has('person[name][first]') }"
+                               v-validate="'required'" 
+                               data-vv-validate-on="blur"
+                               data-vv-as="Name"
+                               v-model="formFields.person.name.first"
+                               placeholder="First Name *" error-message-custome="The Name field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[name][first]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[name][first]') }}</span>
+                </div>
+                <div class="column is-half p-t-0">
+                    <div class="control has-icons-right">
+                        <input name="person[name][last]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="Name"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.name.last"
+                               :class="{ 'is-danger': errors.has('person[name][last]') }"
+                               placeholder="Last Name *" error-message-custome="The Name field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[name][last]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[name][last]') }}</span>
+                </div>
+
+                <!-- Row: Address -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="person[address][street]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               :class="{ 'is-danger': errors.has('person[address][street]') }"
+                               data-vv-as="Address"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.address.street"
+                               placeholder="Address *" error-message-custome="The Address field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][street]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][street]') }}</span>
+                </div>
+
+                <!-- Row: Address 2 -->
+                <div class="column is-full">
+                    <input name="person[address][street_2]"
+                           type="text"
+                           class="input"
+                           v-model="formFields.person.address.street_2"
+                           placeholder="Address 2" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                </div>
+
+                <!-- Row: City & State -->
+                <div class="column is-three-fifths">
+                    <div class="control has-icons-right">
+                        <input name="person[address][city]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="City"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.address.city"
+                               :class="{ 'is-danger': errors.has('person[address][city]') }"
+                               placeholder="City *" error-message-custome="The City field is required"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][city]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][city]') }}</span>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="select" :class="{ 'is-danger': errors.has('person[address][state]') }">
+                        <select v-model="formFields.person.address.state"
+                                name="person[address][state]"
+                                v-validate="'required'" 
+                                data-vv-as="State"
+                                class="input-select" error-message-custome="The State field is required">
+                            <option value="">State *</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+							<option value="AE">Armed Forces Africa</option>
+                            <option value="AA">Armed Forces Americas (except Canada)</option>
+                            <option value="AE">Armed Forces Canada</option>
+                            <option value="AE">Armed Forces Europe</option>
+                            <option value="AE">Armed Forces Middle East</option>
+                            <option value="AP">Armed Forces Pacific</option>
+							<option value="AR">Arkansas</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="NM">Northern Mariana Islands</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="US">United States Virgin Islands</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                        <span class="vee-validate-error">{{ errors.first('person[address][state]') }}</span>
+                    </div>
+                </div>
+
+                <!-- Row: Zip -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="person[address][zipcode]"
+                               type="text"
+                               class="input"
+                               v-validate="'required'" 
+                               data-vv-as="Zipcode"
+                               data-vv-validate-on="blur"
+                               :class="{ 'is-danger': errors.has('person[address][zipcode]') }"
+                               v-model="formFields.person.address.zipcode"
+                               placeholder="Zipcode *" error-message-custome="The Zipcode field is required"/>
+                        <span class="icon is-small is-right"style="display:none;" v-if="errors.has('person[address][zipcode]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[address][zipcode]') }}</span>
+                </div>
+                <div class="column is-two-thirds"></div>
+
+                <!-- Row: Email & Phone -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="person[email]"
+                               type="text"
+                               class="input"
+                               v-validate="'required|email'"   
+                               data-vv-as="Email"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.email"
+                               :class="{ 'is-danger': errors.has('person[email]') }"
+                               placeholder="Email *" id="email_valid" error-message-custome="The Email field is required" on-blur-effect-flag="1"/>
+                        <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[email]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error email_valid">{{ errors.first('person[email]') }}</span>
+                </div>
+                <div class="column is-two-thirds">
+                    <div class="control has-icons-right">
+                        <input name="person[phone]"
+                               type="text"
+                               class="input phone_number_val"
+                               v-validate="'numeric'" 
+                               data-vv-as="Phone"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.person.phone"
+                               :class="{ 'is-danger': errors.has('person[phone]') }"
+                               placeholder="Phone" error-message-custome="The Phone field may only contain numeric characters" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                         <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[phone]')">
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                    <span class="vee-validate-error">{{ errors.first('person[phone]') }}</span>
+                </div>
+            </div>
+            <div class="field">
+                <input id="billing-toggle"
+                       type="checkbox" 
+                       v-model="formFields.billing_address.isDifferentFromPersonalAddress"
+                       class="is-checkradio is-info has-bg-active" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                <label for="billing-toggle" class="checkradio-label is-marginless">
+                    My billing address is different from above
+                </label>
+            </div>
+
+            <!-- Billing Address -->
+            <div id="billing_address_div" style="display:none;">
+                <!-- Row: Address -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[street]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="Address"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.street"
+                               :class="{ 'is-danger': errors.has('billing_address[street]') }"
+                               placeholder="Address *" error-message-custome="The Address field is required" on-blur-effect-flag-disabled="1"/>
+                         <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[street]')" >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error Address_class">{{ errors.first('billing_address[street]') }}</span>
+                </div>
+
+                <!-- Row: Address 2 -->
+                <div class="column is-full">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[street_2]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-model="formFields.billing_address.street_2"
+                               placeholder="Address 2" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[street_2]')"  >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Row: City & State -->
+                <div class="column is-three-fifths">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[city]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="City"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.city"
+                               :class="{ 'is-danger': errors.has('billing_address[city]') }"
+                               placeholder="City *" error-message-custome="The City field is required" on-blur-effect-flag-disabled="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('billing_address[city]')"  >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error City_class">{{ errors.first('billing_address[city]') }}</span>
+                </div>
+                <div class="column is-two-fifths">
+                    <div class="select" :class="{ 'is-danger': errors.has('billing_address[state]') }">
+                        <select v-model="formFields.billing_address.state"
+                                name="billing_address[state]"
+                                :class="{ 'is-danger': errors.has('billing_address[state]') }"
+                                v-validate="'required'"
+                                data-vv-as="State"
+                                class="input-select billing_address_field" error-message-custome="The State field is required" on-blur-effect-flag-disabled="1">
+                            <option value="">State *</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+							<option value="AE">Armed Forces Africa</option>
+                            <option value="AA">Armed Forces Americas (except Canada)</option>
+                            <option value="AE">Armed Forces Canada</option>
+                            <option value="AE">Armed Forces Europe</option>
+                            <option value="AE">Armed Forces Middle East</option>
+                            <option value="AP">Armed Forces Pacific</option>
+							<option value="AR">Arkansas</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="GU">Guam</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="NM">Northern Mariana Islands</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="US">United States Virgin Islands</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                        <span class="vee-validate-error State_class">{{ errors.first('billing_address[state]') }}</span>
+                    </div>
+                </div>
+
+                <!-- Row: Zip -->
+                <div class="column is-one-third">
+                    <div class="control has-icons-right">
+                        <input name="billing_address[zipcode]"
+                               type="text"
+                               class="input billing_address_field"
+                               v-validate="'required'"
+                               data-vv-as="Zipcode"
+                               data-vv-validate-on="blur"
+                               v-model="formFields.billing_address.zipcode"
+                               :class="{ 'is-danger': errors.has('billing_address[zipcode]') }"
+                               placeholder="Zipcode *" error-message-custome="The Zipcode field is required" on-blur-effect-flag-disabled="1"/>
+                          <span class="icon is-small is-right" style="display:none;" v-if="errors.has('person[address][street]')" >
+                            <span class="fas fa-exclamation-circle has-text-danger"></span>
+                        </span> 
+                    </div>
+                    <span class="vee-validate-error Zipcode_class">{{ errors.first('billing_address[zipcode]') }}</span>
+                </div>
+                <div class="column is-two-thirds"></div>
+            </div>
+
+            <!-- Submit -->
+            <div class="columns donate-form-submit">
+                <div v-if="formWasSubmitted && errors.any()" class="form-error-label" style="display:none;" id="all_error_class">
+                    <div class="select_amount" id="select_amount" style="display:none;">
+                       Please update donation value to be at least $5
+                    </div>
+                    <div id="all_error_display" style="display:none;">
+                           Please fix errors above before donating 
+                    </div>
+                </div>
+                <div class="column is-narrow">
+				<input type="submit" value="Donate"  class=" submit button is-primary is-wide button-donate-submit">
+			    <div class="please_wait" style="display:none;">
+                            <span class="m-r-15">Please Wait</span>
+                            <span class="fa fa-spinner fa-spin"></span>
+							</div>
+                       
+                  <!--    <button @click="validateForm()"
+                            type="button"
+                            :disabled="this.formIsSubmitting"
+                            class="button is-primary is-wide button-donate-submit">
+                        <template v-if="this.formIsSubmitting">
+                            <span class="m-r-15">Please Wait</span>
+                            <span class="fa fa-spinner fa-spin"></span>
+                        </template>
+                        <template v-else>
+                            Donate
+                        </template>
+                    </button> -->
+                </div>
+
+
+
+                 <div class="column">
+                    <div class="donate-label">Amount</div>
+                    <div class="donate-amount">
+                        <span class="donation_amount">$0</span>
+                        <span class="per_month" style="display:none;">/ month</span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden"
+                   name="donation_amount_hidden"
+				   id="hidden_donation_amount"
+                   value="0"
+                   v-validate="'required|min_value:1'">
+				   
+            <input type="hidden"
+                   name="mb_tracking_code"
+                   value="{{mbTrackingCode}}" id="mb_tracking_code" on-blur-effect-flag-disabled="1" on-blur-effect-flag-disabled-billing="1"/>
+        </form>
+
+        <hr class="donate-form-divider"/>
+    </div>
+
+
+<style>
+        template {
+            display: none;
+        }
+</style>
+				   
+				   
+	
+				   
+                </div>
+        
+		 
+    <div class="about-jw">
+        <h4 class="m-b-10">About Judicial Watch Donations </h4>
+        <p>
+            If you have any questions or comments, please contact Judicial Watch by emailing us or calling us toll
+            free at (1) 888-593-8442.
+        </p>
+        <p>
+            Judicial Watch is a 501(c)(3) nonprofit organization. Contributions are received from individuals,
+            foundations, and corporations
+            and are tax-deductible to the extent allowed by law.
+        </p>
+        <p>
+            For a copy of our latest IRS form 990 send an email to Development@judicialwatch.org
+        </p>
+
+        <a href="/contact" class="button is-primary is-inverted is-wide is-slim button-contact">Contact</a>
+    </div>
+
+    <h4>Other Ways to Donate</h4>
+    <div class="columns columns-donate-options is-multiline is-gapless">
+        <div class="column is-full">
+            <div class="columns is-variable">
+                <div class="column"><a href="/wp-content/uploads/2021/05/Donate-by-Mail-Form-updated.pdf">Donate by Mail</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Donate by Telephone</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Monthly Giving</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Matching Gifts</a></div>
+            </div>
+        </div>
+        <div class="column is-full">
+            <div class="columns">
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Stocks, Bonds, & Securities</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Charitable Gift Annuities</a></div>
+                <div class="column"><a href="/about/support-judicial-watch/#how-do-i-make-a-donation-to-judicial-watch">Wills & Trusts</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+{% endblock %}
+
+{% block pageScripts %}
+   
+	<script>
+	
+	$( document ).ready(function() {
+		
+		$( ".input-select" ).change(function() {
+  
+  //alert(12);
+var input_error_message = $( this).attr('error-message-custome');
+var input_on_blur_effect_flag = $( this).attr('on-blur-effect-flag');
+var input_on_blur_effect_flag_disabled = $( this).attr('on-blur-effect-flag-disabled');
+var input_val = $( this).val();
+input_val = $.trim(input_val);
+	
+	if(input_on_blur_effect_flag_disabled != 1){
+		if(input_val == ''){
+			$( this).addClass("is-danger" );
+			$( this).parent().addClass("is-danger" );
+           
+            $(this).next().html(input_error_message);
+		}else{
+			if(input_on_blur_effect_flag != 1){
+			$( this).removeClass("is-danger" );
+			$( this).parent().removeClass("is-danger" );
+           
+             $(this).next().html('');
+			}
+		}
+			
+			
+		}
+		
+  if ($('#billing-toggle').is(':checked')) {
+	  var input_on_blur_effect_flag_disabled_billing = $( this).attr('on-blur-effect-flag-disabled-billing');
+	  if(input_on_blur_effect_flag_disabled_billing != 1){
+		  if(input_val == ''){
+				$( this).parent().addClass("is-danger" );
+				$( this).addClass("is-danger" );
+				
+				  $(this).next().html(input_error_message);
+			}else{
+				if(input_on_blur_effect_flag != 1){
+				$( this).parent().removeClass("is-danger" );
+				$( this).removeClass("is-danger" );
+			
+				  $(this).next().html('');
+				}
+		}
+	  }
+  }
+
+  
+  
+});
+		
+$('.cmxform input').blur(function(){
+var input_error_message = $( this).attr('error-message-custome');
+var input_on_blur_effect_flag = $( this).attr('on-blur-effect-flag');
+var input_on_blur_effect_flag_disabled = $( this).attr('on-blur-effect-flag-disabled');
+var input_val = $( this).val();
+input_val = $.trim(input_val);
+	
+	if(input_on_blur_effect_flag_disabled != 1){
+		if(input_val == ''){
+			$( this).addClass("is-danger" );
+            $( this).parent().find('.icon').show();
+            $(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+		}else{
+			if(input_on_blur_effect_flag != 1){
+			$( this).removeClass("is-danger" );
+            $( this).parent().find('.icon').hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+			}
+		}
+			
+			
+		}
+		
+  if ($('#billing-toggle').is(':checked')) {
+	  var input_on_blur_effect_flag_disabled_billing = $( this).attr('on-blur-effect-flag-disabled-billing');
+	  if(input_on_blur_effect_flag_disabled_billing != 1){
+		  if(input_val == ''){
+				$( this).addClass("is-danger" );
+				$( this).parent().find('.icon').show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+			}else{
+				if(input_on_blur_effect_flag != 1){
+				$( this).removeClass("is-danger" );
+				$( this).parent().find('.icon').hide();
+				$(this).parent().parent('.column').find('.vee-validate-error').html('');
+				}
+		}
+	  }
+  }
+
+});
+	
+	$( ".paypalFormSubmit" ).click(function() {
+
+ var browser = '';
+var browserVersion = 0;
+var browser_flag = 0;
+if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+    browser = 'Opera';
+    browser_flag = 1;
+} else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+    browser = 'MSIE';
+} else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+    browser = 'Netscape';
+    browser_flag = 1;
+} else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+    browser = 'Chrome';
+    browser_flag = 1;
+} else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+    browser = 'Safari';
+    /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+    browserVersion = new Number(RegExp.$1);
+    browser_flag = 1;
+} else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+    browser = 'Firefox';
+    browser_flag = 1;
+}
+if(browserVersion === 0){
+    browserVersion = parseFloat(new Number(RegExp.$1));
+}
+//alert(navigator.userAgent);
+//alert(browser + "*" + browserVersion);
+if(browser_flag){
+$( "#paypalformtwig" ).submit();
+}else{
+     
+
+     if($('#hidden_donation_amount').val() < 5 ){
+            $("#select_amount").show();
+            $("#all_error_class").show();
+			$(".donation-custom-transaction").show();
+            $("#all_error_display").hide();
+            //$(".donation-custom-class").show().fadeOut(4000);
+			
+            return false;
+        }else{
+            $("#amount_paypal").attr("disabled",false);
+            $("#amount_paypal").val($('#hidden_donation_amount').val());
+
+         $( "#paypalformtwig" ).submit();
+
+        }
+}
+         
+ 
+
+       
+	
+	  
+	 
+	});
+	
+	$( "#cvv" ).keyup(function(e) {
+	
+	//var regCVV = /^[0-9]{3,3}$/;
+	
+	  var regCVV = /^[0-9]+$/;
+//	var cvvRegex = /^[0-9]{3,3}$/;
+	//var cvvRegex = /^[0-9]$/;
+  var cvv = $(this).val();
+  
+   var input_error_message = $( this).attr('error-message-custome');
+  
+   if (!regCVV.test(cvv)) {
+        
+        $( this).addClass("is-danger" );
+				$( this).parent().find('.icon').show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+      
+    }
+	else{
+		 $( this).removeClass("is-danger" );
+            $( this).parent().find('.icon').hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+	}
+});
+
+$( ".phone_number_val" ).keyup(function(e) {
+	
+	//var regCVV = /^[0-9]{3,3}$/;
+	
+	  var regCVV = /^[0-9]+$/;
+//	var cvvRegex = /^[0-9]{3,3}$/;
+	//var cvvRegex = /^[0-9]$/;
+  var cvv = $(this).val();
+  
+   var input_error_message = $( this).attr('error-message-custome');
+  
+   if (!regCVV.test(cvv) && cvv != '') {
+        
+        $( this).addClass("is-danger" );
+				$( this).parent().find('.icon').show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+      
+    }
+	else{
+		 $( this).removeClass("is-danger" );
+            $( this).parent().find('.icon').hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+	}
+	
+	
+	
+});
+
+$( ".donate-input" ).keypress(function(e) {
+	
+	var specialKeys = new Array();
+        specialKeys.push(8); //Backspace
+	    var keyCode = e.which ? e.which : e.keyCode;
+        // var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1); // For Integer Value
+       var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1  || keyCode == 46); // For Decimal Value
+	if(!ret){
+	
+	 $(".donation-custom-class").show().fadeOut(4000);
+	 $(".donation-custom-transaction").hide();
+	 return false;
+	}
+
+
+
+var val_ampunt = (($(this).val()) + String.fromCharCode(e.keyCode));
+var val_ampunt_split = val_ampunt.split(".");
+if(val_ampunt_split.length > 2){
+$(".donation-custom-class").show().fadeOut(4000);
+$(".donation-custom-transaction").hide();
+	 return false;
+}
+
+
+val_ampunt = parseFloat(val_ampunt);
+
+var regexp = /^\d+(\.\d{1,2})?$/;
+
+ if(val_ampunt != "" && val_ampunt > 0){
+     if(!regexp.test(val_ampunt)){
+    $(".donation-custom-class").show().fadeOut(4000);
+	$(".donation-custom-transaction").hide();
+	 return false;
+    }
+ }
+
+
+
+
+});
+
+
+
+
+	$( ".donate-input" ).keyup(function(e) {
+			$( ".button_select_amount" ).removeClass("is-active" );
+		
+        $("#button_select_amount_"+$( this).val( )).addClass("is-active" );
+		if( $( this).val( ) == "" || $( this).val( ) > 4 ){
+			$("#select_amount").hide();
+				$("#select_amount").hide();
+				$("#all_error_class").hide();
+				$(".donation-custom-transaction").hide();
+			
+		}else{
+			$("#select_amount").show();
+			$("#all_error_class").show();
+			$("#all_error_display").hide();
+			$(".donation-custom-transaction").show();
+		}
+		
+		$("#hidden_donation_amount").val($( this).val( ));
+		$(".donation_amount").html("$"+$( this).val());
+});
+
+  
+	
+	getYearsList();
+	$('#billing-toggle').click(function() {
+  if ($(this).is(':checked')) {
+     $("#billing_address_div").show();
+  }else{
+   $("#billing_address_div").hide();
+  }
+  
+});
+
+$('.button_select_amount').click(function() {
+  $( ".button_select_amount" ).removeClass("is-active" );
+    $( this).addClass("is-active" );
+	$( ".donate-input" ).val('');
+	$("#select_amount").hide();
+	$("#hidden_donation_amount").val($( this).attr("selected_value" ));
+	$(".donation_amount").html("$"+$( this).attr("selected_value" ));
+	
+		if($( this).attr("selected_value" ) > 4 ){
+			$("#select_amount").hide();
+				$("#select_amount").hide();
+				$("#all_error_class").hide();
+				$(".donation-custom-transaction").hide();
+			
+		}else{
+			$("#select_amount").show();
+			$("#all_error_class").show();
+			$("#all_error_display").hide();
+			$(".donation-custom-transaction").show();
+		}
+	
+	
+});
+
+	$('#monthly-donation-toggle').click(function() {
+  if ($(this).is(':checked')) {
+     $(".per_month").show();
+  }else{
+   $(".per_month").hide();
+  }
+  
+});
+
+
+
+$( "#card-number" ).keyup(function(e) {
+	var card_number = $(this).val();
+	var american_express =  cardnumber_american_express(card_number);
+	var visa_card =  cardnumber_visa_card(card_number);
+//	var dinner_card =  cardnumber_dinner_card(card_number);
+	var discover_card =  cardnumber_discover_card(card_number);
+	//var jcb_card =  cardnumber_jcb_card(card_number);
+	var master_card =  cardnumber_master_card(card_number);
+	var input_error_message = $( this).attr('error-message-custome');
+	if(american_express || visa_card || discover_card  || master_card){
+		// $(".card-number").html("");
+		 $( this).removeClass("is-danger" );
+            $( this).parent().find('.icon').hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+	}else{
+		 // $("#card-number").focus();
+		// $(".card-number").html("The Card field is invalid");
+		// alert(12);
+		        $( this).addClass("is-danger" );
+				$( this).parent().find('.icon').show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+		
+	}
+	
+	
+	
+});
+
+	$( "#email_valid" ).keyup(function(e) {
+	var card_number_email = $(this).val();
+	var ValidateEmail_var =  ValidateEmail(card_number_email);
+	var input_error_message = $( this).attr('error-message-custome');
+	if(ValidateEmail_var){
+		 $(".email_valid").html("");
+		  $( this).removeClass("is-danger" );
+            $( this).parent().find('.icon').hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+		 
+	}else{
+		 // $("#email_valid").focus();
+		/// $(".email_valid").html("The Email field must be a valid email");
+		
+		 $( this).addClass("is-danger" );
+				$( this).parent().find('.icon').show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html('The Email field must be a valid email');
+		
+	}
+	
+	
+	
+});
+
+$(".please_wait").hide();
+}); 
+
+function sendPostRequest(frm) {
+	//  alert(12);
+//	 console.log(JSON.stringify(frm));
+ var submit_flag = 0;      
+ 
+ if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }
+ 
+ 
+ 	$( ".input-select" ).each(function(index, obj){
+	 
+	 
+  
+  //alert(12);
+var input_error_message = $( this).attr('error-message-custome');
+var input_on_blur_effect_flag = $( this).attr('on-blur-effect-flag');
+var input_on_blur_effect_flag_disabled = $( this).attr('on-blur-effect-flag-disabled');
+var input_val = $( this).val();
+input_val = $.trim(input_val);
+	
+	if(input_on_blur_effect_flag_disabled != 1){
+		if(input_val == ''){
+			$( this).addClass("is-danger" );
+			$( this).parent().addClass("is-danger" );
+           
+            $(this).next().html(input_error_message);
+				submit_flag = 1;
+//console.log($( this));
+//console.log("flag1");
+		}else{
+			if(input_on_blur_effect_flag != 1){
+			$( this).removeClass("is-danger" );
+			$( this).parent().removeClass("is-danger" );
+           
+             $(this).next().html('');
+			}
+		}
+			
+			
+		}
+		
+  if ($('#billing-toggle').is(':checked')) {
+	  var input_on_blur_effect_flag_disabled_billing = $( this).attr('on-blur-effect-flag-disabled-billing');
+	  if(input_on_blur_effect_flag_disabled_billing != 1){
+		  if(input_val == ''){
+				$( this).parent().addClass("is-danger" );
+				$( this).addClass("is-danger" );
+				
+				  $(this).next().html(input_error_message);
+				  	submit_flag = 1;
+//console.log($( this));
+//console.log("flag2");
+
+			}else{
+				if(input_on_blur_effect_flag != 1){
+				$( this).parent().removeClass("is-danger" );
+				$( this).removeClass("is-danger" );
+			
+				  $(this).next().html('');
+				}
+		}
+	  }
+  }
+
+  
+	 
+ });
+ 
+ 
+$('.cmxform input' ).each(function(index, obj){
+		
+var input_error_message = $( this).attr('error-message-custome');
+var input_on_blur_effect_flag = $( this).attr('on-blur-effect-flag');
+var input_on_blur_effect_flag_disabled = $( this).attr('on-blur-effect-flag-disabled');
+var input_val = $( this).val();
+input_val = $.trim(input_val);
+	
+   
+	if(input_on_blur_effect_flag_disabled != 1){
+		if(input_val == ''){
+			//alert(input_error_message);
+			$( this).addClass("is-danger" );
+          //  $( this).parent().find('.icon').show();
+            $( this).next().show();
+            $(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+			submit_flag = 1;
+//console.log($( this).attr("name"));
+//console.log("flag3");
+		}else{
+			if(input_on_blur_effect_flag != 1){
+				//alert(input_error_message);
+			$( this).removeClass("is-danger" );
+            $( this).next().hide();
+            $(this).parent().parent('.column').find('.vee-validate-error').html('');
+			}
+		}
+			
+			
+		}
+		
+  if ($('#billing-toggle').is(':checked')) {
+	  var input_on_blur_effect_flag_disabled_billing = $( this).attr('on-blur-effect-flag-disabled-billing');
+	  if(input_on_blur_effect_flag_disabled_billing != 1){
+		  if(input_val == ''){
+				$( this).addClass("is-danger" );
+				//$( this).parent().find('.icon').show();
+				 $( this).next().show();
+				$(this).parent().parent('.column').find('.vee-validate-error').html(input_error_message);
+					submit_flag = 1;
+//console.log($( this));
+//console.log("flag4");
+			}else{
+				if(input_on_blur_effect_flag != 1){
+					//alert(12);
+				$( this).removeClass("is-danger" );
+				 $( this).next().hide();
+				$(this).parent().parent('.column').find('.vee-validate-error').html('');
+				}
+		}
+	  }
+  }
+
+});
+console.log($('#hidden_donation_amount').val());
+if(	submit_flag ){
+
+	 if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }else{
+	 $("#select_amount").hide();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").hide();
+$("#all_error_display").show();
+console.log(1);
+ }
+	return false;
+}
+
+//var regCVV = /^[0-9]{3,3}$/;
+  var regCVV = /^[0-9]+$/;
+var cvv = $("#cvv").val();
+if (!regCVV.test(cvv)) {
+        
+      //  $("#cvv").focus();
+	//	 $(".cvv").html("CVV is Invalid");
+	
+	 if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }else{
+	 $("#select_amount").hide();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").hide();
+$("#all_error_display").show();
+console.log(2);
+ }
+        return false;
+    }
+	else{
+		 $(".cvv").html("");
+	}
+	
+	var card_number = $("#card-number").val();
+	var american_express =  cardnumber_american_express(card_number);
+	var visa_card =  cardnumber_visa_card(card_number);
+//	var dinner_card =  cardnumber_dinner_card(card_number);
+	var discover_card =  cardnumber_discover_card(card_number);
+	//var jcb_card =  cardnumber_jcb_card(card_number);
+	var master_card =  cardnumber_master_card(card_number);
+	
+	if(american_express || visa_card || discover_card  || master_card){
+		 $(".card-number").html("");
+	}else{
+		 // $("#card-number").focus();
+		 $(".card-number").html("The Card field is invalid");
+		  if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }else{
+	 $("#select_amount").hide();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").hide();
+$("#all_error_display").show();
+console.log(3);
+ }
+		  return false;
+		
+	}
+	
+	
+	var card_number_email = $("#email_valid").val();
+	var ValidateEmail_var =  ValidateEmail(card_number_email);
+	
+	if(ValidateEmail_var){
+		 $(".email_valid").html("");
+	}else{
+		// $("#email_valid").focus();
+		 $(".email_valid").html("The Email field must be a valid email");
+		  if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }else{
+	 $("#select_amount").hide();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").hide();
+$("#all_error_display").show();
+console.log(4);
+ }
+		   return false;
+		
+	}
+	
+	 if ($('#billing-toggle').is(':checked')) {
+		$(".vee-validate-error").html('');
+		var flagbilling_address = 0;
+		var error_class = '';
+	  $( ".billing_address_field" ).each(function( index ) {
+		//	console.log( index + ": " + $( this ).value() );
+	
+			var billing_address_values = $( this ).val();
+			var billing_address_values_required_class = $( this ).attr('v-validate');
+			 error_class = $( this ).attr('data-vv-as');
+			$("."+error_class+"_class").html("");
+			//alert(billing_address_values);
+			//alert(billing_address_values_required_class);
+			if(billing_address_values == '' && billing_address_values_required_class == "'required'"){
+				//alert(1);data-vv-as
+				//alert(billing_address_values);
+				//$(this).closest(".vee-validate-error").html("This is required field!");
+				$("."+error_class+"_class").html("This is required field!");
+				flagbilling_address = 1;
+			}
+			
+		});
+		
+		if(flagbilling_address){
+			 if($('#hidden_donation_amount').val() < 5 ){
+ $("#select_amount").show();
+ $("#all_error_class").show();
+ $(".donation-custom-transaction").show();
+$("#all_error_display").hide();
+ }else{
+	 $("#select_amount").hide();
+	 $(".donation-custom-transaction").hide();
+ $("#all_error_class").show();
+$("#all_error_display").show();
+console.log(5);
+ }
+			return false;
+		}
+	  
+  }
+	
+
+
+//return false;
+	// console.log(JSON.parse($(frm).serialize()));
+//	 console.log(JSON.stringify($(frm).serializeArray()));
+
+	 
+	 var data_val = $(frm).serializeArray();
+	 
+	 
+	 var formdata = $(frm).serializeArray();
+var data_value = {};
+var card_number = "";
+var card_ccv = "";
+var card_month = "";
+var card_year = "";
+var person_name_first = "";
+var person_name_last = "";
+var person_address_street = "";
+var person_address_street_2 = "";
+var person_address_city = "";
+var person_address_state = "";
+var person_address_zipcode = "";
+var person_email = "";
+var person_phone = "";
+var billing_address_street = "";
+var billing_address_street_2 = "";
+var billing_address_city = "";
+var billing_address_state = "";
+var billing_address_zipcode = "";
+var donation_amount_hidden = "";
+var mb_tracking_code = "";
+$(formdata ).each(function(index, obj){
+	// console.log(obj.name);
+	 if("card[number]" == obj.name ){
+		 card_number = obj.value;
+	 }
+	  if("card[ccv]" == obj.name ){
+		 card_ccv = obj.value;
+	 }
+	 
+	 if("card[month]" == obj.name ){
+		 card_month = obj.value;
+	 }
+	 
+	  if("card[year]" == obj.name ){
+		 card_year = obj.value;
+	 }
+	 
+	   if("person[name][first]" == obj.name ){
+		 person_name_first = obj.value;
+	 }
+	 
+	  if("person[name][last]" == obj.name ){
+		 person_name_last = obj.value;
+	 }
+	  if("person[address][street]" == obj.name ){
+		 person_address_street = obj.value;
+	 }
+	 
+	  if("person[address][street_2]" == obj.name ){
+		 person_address_street_2 = obj.value;
+	 } 
+
+	 if("person[address][city]" == obj.name ){
+		 person_address_city = obj.value;
+	 }
+	 
+	 if("person[address][state]" == obj.name ){
+		 person_address_state = obj.value;
+	 }
+	 
+	  if("person[address][zipcode]" == obj.name ){
+		 person_address_zipcode = obj.value;
+	 }
+	 
+	 if("person[email]" == obj.name ){
+		 person_email = obj.value;
+	 }
+	 
+	  if("person[phone]" == obj.name ){
+		 person_phone = obj.value;
+	 }
+	 
+	   if("billing_address[street]" == obj.name ){
+		 billing_address_street = obj.value;
+	 }
+	 
+	    if("billing_address[street_2]" == obj.name ){
+		 billing_address_street_2 = obj.value;
+	 } 
+
+	 if("billing_address[city]" == obj.name ){
+		 billing_address_city = obj.value;
+	 }
+	 
+	 if("billing_address[state]" == obj.name ){
+		 billing_address_state = obj.value;
+	 }
+	 
+	  if("billing_address[zipcode]" == obj.name ){
+		 billing_address_zipcode = obj.value;
+	 }
+	 
+	  if("donation_amount_hidden" == obj.name ){
+		 donation_amount_hidden = obj.value;
+	 }
+	 
+	   if("mb_tracking_code" == obj.name ){
+		 mb_tracking_code = obj.value;
+	 }
+  //  data_value[obj.name] = obj.value;
+});
+ //console.log(data_value);
+ 
+ 
+
+ 
+var postData = $.extend({
+                    card: {
+                        number: card_number,
+                        ccv: card_ccv,
+                        month: card_month,
+                        year: card_year
+                    },
+                    person: {
+                        email: person_email,
+                        phone: person_phone,
+                        name: {
+                            first: person_name_first,
+                            last: person_name_last
+                        },
+                        address: {
+                            street: person_address_street,
+                            street_2: person_address_street_2,
+                            city: person_address_city,
+                            state: person_address_state,
+                            zipcode: person_address_zipcode
+                        },
+                    },
+                    billing_address: {
+                        isDifferentFromPersonalAddress: false,
+                        street: billing_address_street,
+                        street_2: billing_address_street_2,
+                        city: billing_address_city,
+                        state: billing_address_state,
+                        zipcode: billing_address_zipcode
+                    }
+                },{
+                    transaction_is_recurring: $('#monthly-donation-toggle').is(':checked'),
+                    transaction_amount: donation_amount_hidden,
+                    mb_transaction_code: mb_tracking_code,
+					action: 'donate_authorizenet',
+                    mbTrackingCode: $('#mb_tracking_code').val(),
+                    isMonthlyDonation: $('#monthly-donation-toggle').is(':checked'),
+                    is_mobile_attached: $('#is-mobile-attached').is(':checked')
+                });
+				
+				
+	//console.log(postData);
+	//return false;
+	 
+		 
+	 //window.location.href = '/thanks-for-your-donation';
+	  //console.log($.extend(frm));
+	  //alert(12);
+	
+              /*  var postData = $.extend(this.formFields, {
+                    transaction_is_recurring: this.isMonthlyDonation,
+                    transaction_amount: this.selectedDonationAmount,
+                    mb_transaction_code: this.mbTransactionCodeProp
+                });*/
+
+ $("#select_amount").hide();
+ $("#all_error_class").hide();
+$("#all_error_display").hide();
+$(".donation-custom-transaction").hide();
+$(".button-donate-submit").hide();
+$(".please_wait").show();
+             
+	//	return false;	  
+var  formPostUrl = $("#form_url_submit").val();
+//alert(formPostUrl);
+                $.post(formPostUrl, postData)
+                    .then(function(resp) {
+						//	console.log(resp);
+						//	return false;	  
+						///	alert(12);
+						
+                        if (resp.success) {
+						  
+                            localStorage.setItem('donationResponseData', JSON.stringify(resp));
+                         //   this.resetForm();
+                           window.location.href = '/thanks-for-your-donation';
+                        } else {
+                           // this.formIsSubmitting = false;
+							
+							$(".button-donate-submit").show();
+							$(".please_wait").hide();
+                            showResponseModal(resp);
+                        }
+                    }.bind(this))
+                    .then(function() {
+                     //   this.errors.clear();
+                    }.bind(this));
+					
+					
+					  return false;
+            }
+
+
+ function hideResponseModal() {
+               // this.responseModal.active = false;
+              //  this.responseModal.message = null;	
+				//$(".modal-donate-response").hide(); //is-active
+				
+				
+			
+					
+						$( ".modal-donate-response").removeClass("is-active" );
+				
+				
+				$(".content-data_value").html("");
+            }
+
+            function showResponseModal(response) {
+               // this.responseModal.message = response.message;
+				//$(".modal-donate-response").show();
+					$( ".modal-donate-response").addClass("is-active" );
+				$(".content-data_value").html(response.message);
+
+                //this.responseModal.active = true;
+            }
+
+
+	function setSelectedDonationAmount(floatValue) {
+                this.selectedDonationAmount = floatValue;
+                this.customDonationAmount = null;
+            }
+	
+	
+	
+	function ValidateEmail(inputText)
+{
+//var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+if (mailformat.test(inputText)) {
+
+//document.form1.text1.focus();
+return true;
+}
+else
+{
+//alert("You have entered an invalid email address!");
+//document.form1.text1.focus();
+return false;
+}
+}
+	
+	function cardnumber_american_express(inputtxt)
+{
+	
+	
+  var cardno = /^(?:3[47][0-9]{13})$/;
+  if (cardno.test(inputtxt)) {
+      
+      return true;
+        }
+      else
+        {
+    //    alert("Not a valid Amercican Express credit card number!");
+        return false;
+        }
+}
+
+
+function cardnumber_visa_card(inputtxt)
+{
+  var cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+  if (cardno.test(inputtxt)) {
+        
+      return true;
+        }
+      else
+        {
+      //  alert("Not a valid Visa credit card number!");
+        return false;
+        }
+}
+
+function cardnumber_dinner_card(inputtxt)
+{
+  var cardno = /^(?:3(?:0[0-5]|[68][0-9])[0-9]{11})$/;
+  if (cardno.test(inputtxt)) {
+        
+      return true;
+        }
+      else
+        {
+     //   alert("Not a valid Dinners Club card number!");
+        return false;
+        }
+}
+
+function cardnumber_discover_card(inputtxt)
+{
+  var cardno = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+  if (cardno.test(inputtxt)) {
+        
+      return true;
+        }
+      else
+        {
+     //   alert("Not a valid Discover card number!");
+        return false;
+        }
+}
+
+function cardnumber_jcb_card(inputtxt)
+{
+  var cardno = /^(?:(?:2131|1800|35\d{3})\d{11})$/;
+  if (cardno.test(inputtxt)) {
+        
+      return true;
+        }
+      else
+        {
+    //    alert("Not a valid JCB card number!");
+        return false;
+        }
+}
+
+function cardnumber_master_card(inputtxt)
+{
+  var cardno = /^(?:5[1-5][0-9]{14})$/;
+  if (cardno.test(inputtxt)) {
+        
+      return true;
+        }
+      else
+        {
+     //   alert("Not a valid Mastercard number!");
+        return false;
+        }
+}
+
+	
+	
+	
+	
+	
+	
+	
+	function getYearsList(){
+	//alert("test");
+				var year = new Date().getFullYear();
+				var years =[];
+				
+				var string_opt = '<option value="">Year *</option>';
+				for(var i = 0; i<20;i++){
+					//$()
+					string_opt = string_opt +  '<option value="'+(year+i)+'">'+(year+i)+' </option>';
+					//years.push(year+ i);
+				} 
+				$('#year_select_twig').html(string_opt);
+				//return years;
+			}
+			
+			
+			
+	
+</script>
+	
+	
+	
+{% endblock %}
