@@ -1,1 +1,0 @@
-import{newE2EPage}from"@stencil/core/testing";describe("presto-bunny",(()=>{it("renders",(async()=>{const e=await newE2EPage();await e.setContent("<presto-bunny></presto-bunny>");const t=await e.find("presto-bunny");expect(t).toHaveClass("hydrated")}))}));
