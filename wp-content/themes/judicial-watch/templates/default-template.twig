@@ -110,7 +110,7 @@
     {{ function("wp_head") }}
 </head>
 <body class="{{ meta.bodyClasses }}" style="{{ meta.bodyStyles }}">
-{% include "partials/header-parts/new-header.twig" %}
+
 {% block afterBodyStart %}
 {% endblock %}
 <!-- Google Tag Manager (noscript) -->
@@ -169,8 +169,10 @@
 </nav>#}
 
 <!-- Header -->
-{% if meta.fullHeader %}
-    {% include "partials/header-parts/action-band.twig" %}
+{% include "partials/header-parts/new-header.twig" %}
+{% if meta.fullHeader is empty %}
+    {#{% include "partials/header-parts/action-band.twig" %}#}
+    <style>#content {margin-top: 4rem;margin-bottom:1.5rem;}</style>
 {% endif %}
 
 <main id="content">
@@ -178,11 +180,11 @@
     {% endblock %}
 </main>
 
-{% include "partials/footer.twig" %}
-
+{#{% include "partials/footer.twig" %}#}
+{% include "partials/new-footer.twig" %}
 {% block pageScripts %}
 {% endblock %}
 {{ constant('ZOTA_MARKETING_URL') }}
-{% include "partials/new-footer.twig" %}
+
 </body>
 </html>

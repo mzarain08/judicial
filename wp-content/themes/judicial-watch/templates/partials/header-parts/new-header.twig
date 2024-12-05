@@ -2,7 +2,7 @@
       media='all' integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI"
       crossorigin="anonymous"/>
 <link rel='stylesheet' id='csco-styles-css'
-      href='{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/css/style.css' media='all'/>
+      href='{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/css/style.css' media='all'/>
 <link rel='stylesheet' id='b0d964cd1539ac560c5efa149f4392fe-css'
       href='https://fonts.googleapis.com/css?family=Inter%3A400%2C700%2C800%2C500&#038;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext%2Cvietnamese&#038;display=swap&#038;ver=1.0.3'
       media='all'/>
@@ -12,19 +12,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 
 
-
 <div class="cs-wrapper">
     <div class="cs-site-overlay"></div>
     <div class="cs-offcanvas" data-scheme="light">
         <div class="cs-offcanvas__header">
             <div class="cs-logo cs-logo-mobile">
                 <a class="cs-header__logo cs-header__logo-mobile cs-logo-default"
-                   href="https://wordpress-1249112-4481685.cloudwaysapps.com/">
-                    <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/05/judicial-watch-logo3.jpg"
+                   href="{{ function("site_url") }}">
+                    <img src="{{ function("site_url") }}wp-content/uploads/2024/05/judicial-watch-logo3.jpg"
                          alt="Judicial Watch" width="321.63265306122" height="80"> </a>
 
-                <a class="cs-header__logo cs-logo-dark" href="https://wordpress-1249112-4481685.cloudwaysapps.com/">
-                    <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/05/judicial-watch-logo3.jpg"
+                <a class="cs-header__logo cs-logo-dark" href="{{ function("site_url") }}">
+                    <img src="{{ function("site_url") }}wp-content/uploads/2024/05/judicial-watch-logo3.jpg"
                          alt="Judicial Watch" width="321.63265306122" height="80"> </a>
             </div>
 
@@ -39,7 +38,7 @@
 
         <div class="cs-offcanvas__search cs-container">
 
-            <form role="search" method="get" class="cs-search__form" action="{{ site_url }}">
+            <form role="search" method="get" class="cs-search__form" action="{{ function("site_url") }}">
                 <div class="cs-search__group" data-scheme="light">
                     <input required class="cs-search__input" type="search" value="" name="s" placeholder="Search..."
                            role="searchbox">
@@ -68,7 +67,7 @@
                                         <a href="#">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
                                     <li id="menu-item-145224"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145224 csco-menu-item-style-none">
-                                        <a href="https://www.judicialwatch.org/press-room/">PRESS RELEASES</a></li>
+                                        <a href="{{ function("site_url") }}press-room/">PRESS RELEASES</a></li>
                                     <li id="menu-item-145632"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145632 csco-menu-item-style-none">
                                         <a href="#">CORRUPTION CHRONICLES</a></li>
@@ -86,13 +85,13 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145202"
                                         class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145202 csco-menu-item-style-none">
-                                        <a href="http://judicialh.local/category/watch/">VIDEOS</a></li>
+                                        <a href="/jwtv">VIDEOS</a></li>
                                     <li id="menu-item-145192"
                                         class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145192 csco-menu-item-style-none">
                                         <a href="http://judicialh.local/category/podcasts/">PODCASTS</a></li>
                                     <li id="menu-item-145219"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145219 csco-menu-item-style-none">
-                                        <a href="#">DOCUMENTS</a></li>
+                                        <a href="/documents">DOCUMENTS</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145216"
@@ -101,7 +100,7 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145220"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145220 csco-menu-item-style-none">
-                                        <a href="#">DONATE</a></li>
+                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
                                     <li id="menu-item-145217"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145217 csco-menu-item-style-none">
                                         <a href="#">TAKE ACTION</a></li>
@@ -113,12 +112,12 @@
                                         <a href="#">EMAIL SIGN UP</a></li>
                                     <li id="menu-item-145223"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145223 csco-menu-item-style-none">
-                                        <a href="#">SHOP</a></li>
+                                        <a href="https://shopjw.org">SHOP</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145340"
                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145340 csco-menu-item-style-none">
-                                <a href="#">ABOUT</a>
+                                <a href="/about">ABOUT</a>
                                 <ul class="sub-menu">
                                     <li id="menu-item-145341"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
@@ -178,9 +177,9 @@
 
                                     <div class="cs-subscribe__description">
                                         By pressing the Subscribe button, you confirm that you have read and are
-                                        agreeing to our <a href="https://www.judicialwatch.org/privacy-policy/">Privacy
+                                        agreeing to our <a href="{{ function("site_url") }}privacy-policy/">Privacy
                                             Policy</a> and <a
-                                                href="https://www.judicialwatch.org/terms-and-conditions/">Terms of
+                                                href="{{ function("site_url") }}terms-and-conditions/">Terms of
                                             Use</a></div>
                                 </form>
 
@@ -190,27 +189,27 @@
                     <br/><br/>
                     <div class="cs-social">
                         <a class="cs-social__link" href="{{ sitewideSettings.facebook.value }}" target="_blank">
-                            <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-facebook-0001.png"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001.png"
                                  alt="Facebook"
-                                 srcset="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-facebook-0001.png 1x, https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-facebook-0001@2x.png 2x">
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="https://twitter.com/JudicialWatch" target="_blank">
-                            <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-twitter-0001.png"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001.png"
                                  alt="Twitter"
-                                 srcset="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-twitter-0001.png 1x, https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-twitter-0001@2x.png 2x">
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="{{ sitewideSettings.instagram.value }}" target="_blank">
-                            <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-instagram-0001.png"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001.png"
                                  alt="Instagram"
-                                 srcset="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-instagram-0001.png 1x, https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-instagram-0001@2x.png 2x">
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="{{ sitewideSettings.youtube.value }}" target="_blank">
-                            <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-youtube-0001.png"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001.png"
                                  alt="Youtube"
-                                 srcset="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-youtube-0001.png 1x, https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-youtube-0001@2x.png 2x">
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="https://truthsocial.com/@JudicialWatch" target="_blank">
-                            <img src="https://wordpress-1249112-4481685.cloudwaysapps.com/wp-content/uploads/2024/04/icon-social-truth.png"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-social-truth.png"
                                  alt="Truth"> </a>
                     </div>
 
@@ -235,31 +234,31 @@
 
                             <div class="cs-social">
                                 <a class="cs-social__link" href="https://twitter.com/JudicialWatch" target="_blank">
-                                    <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png"
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png"
                                          alt="Twitter"
-                                         srcset="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png 1x, {{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001@2x.png 2x">
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.facebook.value }}"
                                    target="_blank">
-                                    <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png"
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png"
                                          alt="Facebook"
-                                         srcset="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png 1x, {{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001@2x.png 2x">
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.youtube.value }}"
                                    target="_blank">
-                                    <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png"
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png"
                                          alt="Youtube"
-                                         srcset="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png 1x, {{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001@2x.png 2x">
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.instagram.value }}"
                                    target="_blank">
-                                    <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png"
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png"
                                          alt="Instagram"
-                                         srcset="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png 1x, {{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001@2x.png 2x">
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="https://truthsocial.com/@JudicialWatch"
                                    target="_blank">
-                                    <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-social-truth.png"
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-social-truth.png"
                                          alt="Truth"> </a>
                             </div>
 
@@ -270,13 +269,27 @@
                                 <a href="#">Alert: Huge Lawsuit to Clean Up CA Voter Rolls</a></h6>
                         </div>
                         <div class="cs-header__col cs-col-right">
-                            <div class="cs-subscribe__form-group" data-scheme="light">
+                            {#<div class="cs-subscribe__form-group" data-scheme="light">
                                 <input type="email" placeholder="Email News Sign Up" name="EMAIL">
                                 <button type="submit" value="Subscribe" name="subscribe"><i
                                             class="fa-solid fa-angles-right"></i></button>
                                 <div data-lastpass-icon-root=""
                                      style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
+                            </div>#}
+
+                            <div class="cs-subscribe__form-group" data-scheme="light">
+                                <form class="field has-addons js-clonedNewsletterForm">
+                                <div class="control">
+                                    <div class="validation-message"></div>
+                                    <input name="s" class="input input-newsletter" required type="email" placeholder="Email News Sign Up">
+                                </div>
+                                <button type="submit" value="Subscribe" name="subscribe"><i
+                                            class="fa-solid fa-angles-right"></i></button>
+                                <div data-lastpass-icon-root=""
+                                     style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
+                                </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -302,7 +315,7 @@
                                     <ul id="menu-primary" class="cs-header__nav-inner">
                                         <li id="menu-item-2095"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2095 csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms">
-                                            <a href="http://judicialh.local/category/read/"><span><span>NEWS</span></span></a>
+                                            <a href="/?taxonomy=category"><span><span>NEWS</span></span></a>
                                             <div class="sub-menu" data-scheme="light">
                                                 <div class="cs-container">
                                                     <div class="cs-mm__content">
@@ -347,15 +360,15 @@
                                         </li>
                                         <li id="menu-item-2102"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2102 csco-menu-item-style-none">
-                                            <a href="http://judicialh.local/category/watch/"><span><span>VIDEOS</span></span></a>
+                                            <a href="/jwtv"><span><span>VIDEOS</span></span></a>
                                         </li>
                                         <li id="menu-item-2116"
                                             class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2116 csco-menu-item-style-none">
-                                            <a href="http://judicialh.local/category/podcasts/"><span><span>PODCASTS</span></span></a>
+                                            <a href="/podcasts"><span><span>PODCASTS</span></span></a>
                                         </li>
                                         <li id="menu-item-2119"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2119 csco-menu-item-style-none">
-                                            <a href="#"
+                                            <a href="/documents"
                                                class="menu-item-without-link"><span><span>DOCUMENTS</span></span></a>
                                         </li>
                                     </ul>
@@ -364,14 +377,14 @@
 
                             <div class="cs-header__col cs-col-center">
                                 <div class="cs-logo cs-logo-desktop">
-                                    <a class="cs-header__logo cs-logo-default " href="{{ site_url }}">
-                                        <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/05/judicial-watch-logo3.jpg"
+                                    <a class="cs-header__logo cs-logo-default " href="{{ function("site_url") }}">
+                                        <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/05/judicial-watch-logo3.jpg"
                                              alt="Judicial Watch" width="321.63265306122" height="80"> </a>
 
                                 </div>
                                 <div class="cs-logo cs-logo-mobile">
                                     <a class="cs-header__logo cs-header__logo-mobile cs-logo-once"
-                                       href="{{ site_url }}">
+                                       href="{{ function("site_url") }}">
                                         Judicial Watch </a>
 
                                 </div>
@@ -384,7 +397,7 @@
 		</span>
                                 </div>
                                 <a class="cs-button cs-header__custom-button"
-                                   href="https://www.judicialwatch.org/donate/make-a-contribution-2/" target="_blank">
+                                   href="{{ function("site_url") }}donate/make-a-contribution-2/" target="_blank">
                                     Donate </a>
                             </div>
                         </div>
@@ -402,7 +415,7 @@
 				</span>
 
 
-                                <img src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/05/judicial-watch-logo3.jpg"
+                                <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/05/judicial-watch-logo3.jpg"
                                      alt="Judicial Watch">
 
                             </div>
@@ -417,13 +430,9 @@
                         <div class="cs-search">
                             <div class="cs-search__inner">
                                 <div class="cs-search__form-container">
-
-                                    <form role="search" method="get" class="cs-search__form"
-                                          action="{{ site_url }}">
+                                    <form role="search" method="get" class="cs-search__form" action="/">
                                         <div class="cs-search__group" data-scheme="light">
-                                            <input required class="cs-search__input" type="search" value="" name="s"
-                                                   placeholder="Search..." role="searchbox">
-
+                                            <input required class="cs-search__input" type="search" value="" name="s" placeholder="Search..." role="searchbox">
                                             <button class="cs-search__submit" aria-label="Search" type="submit">
                                                 Search
                                             </button>
@@ -443,7 +452,7 @@
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145631 csco-menu-item-style-none">
                                                         <a href="#">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145224 csco-menu-item-style-none">
-                                                        <a href="https://www.judicialwatch.org/press-room/">PRESS
+                                                        <a href="{{ function("site_url") }}press-room/">PRESS
                                                             RELEASES</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145632 csco-menu-item-style-none">
                                                         <a href="#">CORRUPTION CHRONICLES</a></li>
@@ -457,19 +466,19 @@
                                                 <a href="#">MEDIA &#038; RESOURCES</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145202 csco-menu-item-style-none">
-                                                        <a href="http://judicialh.local/category/watch/">VIDEOS</a></li>
+                                                        <a href="/jwtv">VIDEOS</a></li>
                                                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145192 csco-menu-item-style-none">
-                                                        <a href="http://judicialh.local/category/podcasts/">PODCASTS</a>
+                                                        <a href="/podcasts">PODCASTS</a>
                                                     </li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145219 csco-menu-item-style-none">
-                                                        <a href="#">DOCUMENTS</a></li>
+                                                        <a href="/documents">DOCUMENTS</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145216 csco-menu-item-style-none">
                                                 <a href="#">TAKE ACTION &#038; GET INVOLVED</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145220 csco-menu-item-style-none">
-                                                        <a href="#">DONATE</a></li>
+                                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145217 csco-menu-item-style-none">
                                                         <a href="#">TAKE ACTION</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145222 csco-menu-item-style-none">
@@ -477,11 +486,11 @@
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145221 csco-menu-item-style-none">
                                                         <a href="#">EMAIL SIGN UP</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145223 csco-menu-item-style-none">
-                                                        <a href="#">SHOP</a></li>
+                                                        <a href="https://shopjw.org">SHOP</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145340 csco-menu-item-style-none">
-                                                <a href="#">ABOUT</a>
+                                                <a href="/about">ABOUT</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
                                                         <a href="#">MISSION</a></li>
@@ -515,19 +524,19 @@
                                         <ul id="menu-footer" class="cs-burger-menu__bottombar-nav ">
                                             <li id="menu-item-2019"
                                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item menu-item-2019 csco-menu-item-style-none">
-                                                <a href="{{ site_url }}" aria-current="page">HOME</a></li>
+                                                <a href="{{ function("site_url") }}" aria-current="page">HOME</a></li>
                                             <li id="menu-item-145186"
                                                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145186 csco-menu-item-style-none">
-                                                <a href="http://judicialh.local/category/read/">READ</a></li>
+                                                <a href="/?taxonomy=category">READ</a></li>
                                             <li id="menu-item-145187"
                                                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145187 csco-menu-item-style-none">
                                                 <a href="http://judicialh.local/category/watch/">WATCH</a></li>
                                             <li id="menu-item-145188"
                                                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145188 csco-menu-item-style-none">
-                                                <a href="http://judicialh.local/category/podcasts/">PODCASTS</a></li>
+                                                <a href="/podcasts">PODCASTS</a></li>
                                             <li id="menu-item-145189"
                                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145189 csco-menu-item-style-none">
-                                                <a href="#">DOCUMENTS</a></li>
+                                                <a href="/documents">DOCUMENTS</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -545,7 +554,7 @@
                                 <ul id="menu-bottombar" class="cs-header-bottombar__nav ">
                                     <li id="menu-item-2055"
                                         class="fa-solid fa-heart menu-item menu-item-type-custom menu-item-object-custom menu-item-2055 csco-menu-item-style-none">
-                                        <a href="#">DONATE</a></li>
+                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
                                     <li id="menu-item-2022"
                                         class="fa-solid fa-circle-chevron-right menu-item menu-item-type-custom menu-item-object-custom menu-item-2022 csco-menu-item-style-none">
                                         <a href="#">TAKE ACTION</a></li>
@@ -554,13 +563,13 @@
                                         <a href="#">GET OUR TEXT ALERTS</a></li>
                                     <li id="menu-item-2058"
                                         class="fa-solid fa-cart-shopping menu-item menu-item-type-custom menu-item-object-custom menu-item-2058 csco-menu-item-style-none">
-                                        <a href="#">SHOP</a></li>
+                                        <a href="https://shopjw.org">SHOP</a></li>
                                     <li id="menu-item-145352"
                                         class="fa fa-flag menu-item menu-item-type-custom menu-item-object-custom menu-item-145352 csco-menu-item-style-none">
-                                        <a href="#">ABOUT US</a></li>
+                                        <a href="/about">ABOUT US</a></li>
                                     <li id="menu-item-145561"
                                         class="fa fa-house menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item menu-item-145561 csco-menu-item-style-none">
-                                        <a href="{{ site_url }}" aria-current="page">HOME</a></li>
+                                        <a href="{{ function("site_url") }}" aria-current="page">HOME</a></li>
                                 </ul>
                             </div>
                         </div>

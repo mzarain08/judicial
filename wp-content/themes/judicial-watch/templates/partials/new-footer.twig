@@ -4,7 +4,6 @@
 
 </div>
 
-
 <footer class="cs-footer" data-scheme="inverse">
     <div class="cs-container">
         <div class="cs-footer__item cs-footer__item-top-bar">
@@ -125,7 +124,7 @@
 
                     </div>
                     <div class="cs-footer__copyright">
-                        © 2024 Judicial Watch, Inc. All Rights Reserved.
+                        © {{ meta.year }} Judicial Watch, Inc. All Rights Reserved.
 
                         <p style="padding: 10px 0">
                             By providing your phone number, you are consenting to receive calls and recurring
@@ -210,5 +209,5 @@
 </script>
 <script src="{{ site_url }}/wp-content/themes/judicial-watch/assets/assets/js/scripts.js"
         id="csco-scripts-js"></script>
-
 </div>
+{{ function("wp_footer") }}

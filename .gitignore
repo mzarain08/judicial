@@ -4,6 +4,16 @@ wp-config.php
 # Ignore wp-content/uploads directory
 wp-content/uploads/
 
+wp-content/vendor/
+wp-content/wflogs/
+wp-content/aliased/
+wp-content/bfu-temp/
+wp-content/mu-plugins/
+wp-content/plugins/
+wp-content/smush-webp/
+
+wp-admin/
+wp-includes/
 # Ignore wp-content/uploads directory
 wp-content/themes/judicial-watch/assets/assets/uploads/
 

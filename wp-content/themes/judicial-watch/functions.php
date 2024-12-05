@@ -362,3 +362,9 @@ function custom_admin_css() {
 }
 add_action('admin_head', 'custom_admin_css');
 
+function add_to_twig( $twig ) {
+    // Add site_url() to Twig context
+    $twig->addFunction( new \Twig\TwigFunction('site_url', 'site_url') );
+    return $twig;
+}
+add_filter( 'twig', 'add_to_twig' );
