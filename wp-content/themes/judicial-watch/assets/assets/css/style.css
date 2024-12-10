@@ -3651,7 +3651,8 @@ body[data-scheme=dark] .cs-header__scheme-toggle .cs-header__scheme-toggle-icon:
 	display: block;
 }
 .cs-mega-menu.cs-mega-menu-terms .cs-mm__content .cs-mm__posts-container .cs-mm__posts .cs-mm__posts-mixed {
-	display: grid;
+	/*display: grid;*/
+	display: flex;
 	grid-template-columns: 410px calc(100% - 410px - 1.5rem);
 	grid-gap: 1.5rem;
 }
@@ -6370,4 +6371,11 @@ img {
 
 	}
 
+}
+.submenu-post-image {
+	height: 93px;
+	background-size: cover;
+	width: 140px;
+	background-color: #f1f1f1;
+	margin: 0 0 10px 0;
 }

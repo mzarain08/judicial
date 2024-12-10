@@ -2,7 +2,7 @@
       media='all' integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI"
       crossorigin="anonymous"/>
 <link rel='stylesheet' id='csco-styles-css'
-      href='{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/css/style.css' media='all'/>
+      href='{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/css/style.css?v={{ random() }} ' media='all'/>
 <link rel='stylesheet' id='b0d964cd1539ac560c5efa149f4392fe-css'
       href='https://fonts.googleapis.com/css?family=Inter%3A400%2C700%2C800%2C500&#038;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext%2Cvietnamese&#038;display=swap&#038;ver=1.0.3'
       media='all'/>
@@ -318,8 +318,10 @@
                                                 <li id="menu-item-2095"
                                                     class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2095 csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms">
                                                     <a href="javascript:void(0)"><span><span>{{ menuItem.title }}</span></span></a>
-                                                    {% if menuItem.submenu.tabs|length > 0 %}
-                                                    <div class="sub-menu" data-scheme="light">
+                                                    {# Tab Layout #}
+                                                    {% if menuItem.submenu.layout == 'submenu_tabs' %}
+                                                        {% if menuItem.submenu.tabs|length > 0 %}
+                                                            <div class="sub-menu" data-scheme="light">
                                                         <div class="cs-container">
                                                             <div class="cs-mm__content">
                                                                     <ul class="cs-mm__categories">
@@ -404,7 +406,44 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                         {% endif %}
                                                     {% endif %}
+                                                    {# Individual Post Layout #}
+                                            {% if menuItem.submenu.layout == 'submenu_links' %}
+                                                <div class="sub-menu" data-scheme="light">
+                                                    <div class="cs-container">
+                                                        <div class="cs-mm__content">
+                                                            <ul class="cs-mm__categories">
+
+                                                            </ul>
+                                                            <div class="cs-mm__posts-container cs-has-spinner">
+                                                                <div class="cs-mm__posts loaded cs-active-item" data-term="21">
+                                                                    <div class="cs-mm__posts-mixed">
+                                                                        {% for tabPaneItem in menuItem.submenu.posts %}
+                                                                            <div class="column column-card">
+                                                                                <a href="{{ tabPaneItem.url }}"
+                                                                                        {% if '_blank' == tabPaneItem.target %}
+                                                                                            target="_blank"
+                                                                                        {% endif %}
+                                                                                   class="component-card-post">
+                                                                                    <div class="submenu-post-image{{ tabPaneItem.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                                                                            {% if tabPaneItem.thumbnails.medium_large.src %}
+                                                                                                style="background-image: url('{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }}')"
+                                                                                            {% endif %}
+                                                                                    ></div>
+                                                                                    <span class="title">
+                                            {{ tabPaneItem.title|length > 75 ? tabPaneItem.title|slice(0, 75) ~ '...' : tabPaneItem.title }}
+                                        </span>
+                                                                                </a>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
                                                 </li>
                                             {% else %}
                                                 <li id="menu-item-2102"
@@ -416,7 +455,6 @@
                                     </ul>
                                 </nav>
                             </div>
-
                             <div class="cs-header__col cs-col-center">
                                 <div class="cs-logo cs-logo-desktop">
                                     <a class="cs-header__logo cs-logo-default " href="{{ function("site_url") }}">
