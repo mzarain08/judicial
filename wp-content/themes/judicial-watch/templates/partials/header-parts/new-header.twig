@@ -326,11 +326,11 @@
                                                                 {% for tabItem in menuItem.submenu.tabs %}
                                                                     {% if tabItem.url and tabItem.posts is empty %}
                                                                         <li class="{% if loop.first %}cs-active-item{% endif %} menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ loop.index }} csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child loaded">
-                                                                            <a href="{{ tabItem.url }}" data-term="{{ loop.index }}" data-numberposts="7">{{ tabItem.title }}</a>
+                                                                            <a href="{{ tabItem.url }}" data-term="{{ loop.index }}" data-numberposts="7">{{ tabItem.title|upper }}</a>
                                                                         </li>
                                                                     {% else %}
                                                                         <li class="{% if loop.first %}cs-active-item{% endif %} menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ tabItem.id }} csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child loaded">
-                                                                            <a href="javascript:void(0)" data-term="21" data-numberposts="7">{{ tabItem.title }}</a>
+                                                                            <a href="javascript:void(0)" data-term="{{ loop.index }}" data-numberposts="7">{{ tabItem.title|upper }}</a>
                                                                         </li>
                                                                     {% endif %}
                                                                 {% endfor %}
@@ -364,9 +364,7 @@
                                                                                                      data-scheme="inverse">
                                                                                                     <div class="cs-entry__inner cs-entry__thumbnail">
                                                                                                         <div class="cs-overlay-background">
-                                                                                                            <img width="688" height="359" src="{{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }}" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image"
-                                                                                                                 alt="" loading="lazy" decoding="async"
-                                                                                                                 srcset="{{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 688w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 300w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 332w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 664w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 768w" sizes="auto, (max-width: 688px) 100vw, 688px">
+                                                                                                            <img width="688" height="359" src="{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }}" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image" alt="" loading="lazy" decoding="async" srcset="{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 688w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 300w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 332w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 664w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 768w" sizes="auto, (max-width: 688px) 100vw, 688px">
                                                                                                         </div>
                                                                                                     </div>
 
@@ -395,7 +393,7 @@
                                                                                                         <div class="cs-overlay-background">
                                                                                                             <img width="72"
                                                                                                                  height="72"
-                                                                                                                 src="{{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }}"
+                                                                                                                 src="{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }}" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image" alt="" loading="lazy" decoding="async" srcset="{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 688w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 300w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 332w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 664w, {{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }} 768w"
                                                                                                                  class="attachment-csco-small size-csco-small wp-post-image"
                                                                                                                  alt=""
                                                                                                                  loading="lazy"
@@ -425,7 +423,7 @@
                                                                         </div>
                                                                     </div>
                                                                 {% endfor %}
-                                                             
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -435,11 +433,50 @@
 
 
                                                     {# Individual Post Layout #}
+                                                    {% if menuItem.submenu.layout == 'submenu_links' %}
+                                                        <div class="sub-menu" data-scheme="light">
+                                                            <div class="cs-container">
+                                                                <div class="cs-mm__content">
+                                                                    <ul class="cs-mm__categories">
+
+                                                                    </ul>
+                                                                    <div class="cs-mm__posts-container cs-has-spinner">
+                                                                        <div class="cs-mm__posts loaded cs-active-item" data-term="21">
+                                                                            <div class="cs-mm__posts-mixed">
+                                                                                {% for tabPaneItem in menuItem.submenu.posts %}
+                                                                                    <div class="column column-card">
+                                                                                        <a href="{{ tabPaneItem.url }}"
+                                                                                                {% if '_blank' == tabPaneItem.target %}
+                                                                                                    target="_blank"
+                                                                                                {% endif %}
+                                                                                           class="component-card-post">
+                                                                                            <div class="submenu-post-image{{ tabPaneItem.thumbnails.medium_large.src ? '' : ' background-image-missing' }}"
+                                                                                                    {% if tabPaneItem.thumbnails.medium_large.src %}
+                                                                                                        style="background-image: url('{{ tabPaneItem.thumbnails.medium_large.src ?? defaultImage }}')"
+                                                                                                    {% endif %}
+                                                                                            ></div>
+                                                                                            <span class="title">
+                                            {{ tabPaneItem.title|length > 75 ? tabPaneItem.title|slice(0, 75) ~ '...' : tabPaneItem.title }}
+                                        </span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
                                                 </li>
-                                            {% else %}
-                                            {% endif %}
+                                        {% else %}
+                                            <li id="menu-item-{{ menuItem.id }}"
+                                                class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ menuItem.id }} csco-menu-item-style-none">
+                                                <a href="{{ menuItem.url }}"><span><span>{{ menuItem.title }}</span></span></a>
+                                            </li>
+                                        {% endif %}
                                         {% endfor %}
-                                        <li id="menu-item-2095" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2095 csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms cs-sm-position-right"><a href="http://judicialp.local/category/read/"><span><span>NEWS</span></span></a>						<div class="sub-menu cs-sm-position-init" data-scheme="inverse">
+                                        {#<li id="menu-item-2095" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2095 csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms cs-sm-position-right"><a href="http://judicialp.local/category/read/"><span><span>NEWS</span></span></a>						<div class="sub-menu cs-sm-position-init" data-scheme="inverse">
                                                 <div class="cs-container">
                                                     <div class="cs-mm__content">
                                                         <ul class="cs-mm__categories">
@@ -587,7 +624,7 @@
                                         </li>
                                         <li id="menu-item-2102" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2102 csco-menu-item-style-none cs-sm__level"><a href="http://judicialp.local/category/watch/"><span><span>VIDEOS</span></span></a></li>
                                         <li id="menu-item-2116" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2116 csco-menu-item-style-none"><a href="http://judicialp.local/category/podcasts/"><span><span>PODCASTS</span></span></a></li>
-                                        <li id="menu-item-2119" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2119 csco-menu-item-style-none"><a href="#" class="menu-item-without-link"><span><span>DOCUMENTS</span></span></a></li>
+                                        <li id="menu-item-2119" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2119 csco-menu-item-style-none"><a href="#" class="menu-item-without-link"><span><span>DOCUMENTS</span></span></a></li>#}
                                     </ul>
                                 </nav>
                             </div>
