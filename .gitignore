@@ -11,7 +11,7 @@ wp-content/bfu-temp/
 wp-content/mu-plugins/
 wp-content/plugins/
 wp-content/smush-webp/
-
+judicial-24.sql
 wp-admin/
 wp-includes/
 # Ignore wp-content/uploads directory

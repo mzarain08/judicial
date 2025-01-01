@@ -9,8 +9,8 @@
 <link rel='stylesheet' id='4a08c24c79a2483725ac09cf0f0deba9-css'
       href='https://fonts.googleapis.com/css?family=DM+Sans%3A&#038;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext%2Cvietnamese&#038;display=swap&#038;ver=1.0.3'
       media='all'/>
-<link rel="c" href="https://fonts.gstatic.com/" crossorigin>
-{{ (get_typography_styles()) }}
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
 
 <div class="cs-wrapper">
     <div class="cs-site-overlay"></div>
@@ -18,7 +18,7 @@
         <div class="cs-offcanvas__header">
             <div class="cs-logo cs-logo-mobile">
                 <a class="cs-header__logo cs-header__logo-mobile cs-logo-default"
-                   noscript      href="{{ function("site_url") }}">
+                   href="{{ function("site_url") }}">
                     <img src="{{ function("site_url") }}wp-content/uploads/2024/05/judicial-watch-logo3.jpg"
                          alt="Judicial Watch" width="321.63265306122" height="80"> </a>
 
@@ -64,19 +64,19 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145631"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145631 csco-menu-item-style-none">
-                                        <a href="{{ tom_fitton_weekly_update }}">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
+                                        <a href="#">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
                                     <li id="menu-item-145224"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145224 csco-menu-item-style-none">
-                                        <a href="{{ press_releases }}">PRESS RELEASES</a></li>
+                                        <a href="{{ function("site_url") }}press-room/">PRESS RELEASES</a></li>
                                     <li id="menu-item-145632"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145632 csco-menu-item-style-none">
-                                        <a href="{{ corruption_chronicles }}">CORRUPTION CHRONICLES</a></li>
+                                        <a href="#">CORRUPTION CHRONICLES</a></li>
                                     <li id="menu-item-145633"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145633 csco-menu-item-style-none">
-                                        <a href="{{ in_the_news }}">IN THE NEWS</a></li>
+                                        <a href="#">IN THE NEWS</a></li>
                                     <li id="menu-item-145634"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145634 csco-menu-item-style-none">
-                                        <a href="{{ investigative_bulletin }}">INVESTIGATIVE BULLETIN</a></li>
+                                        <a href="#">INVESTIGATIVE BULLETIN</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145630"
@@ -85,13 +85,13 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145202"
                                         class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145202 csco-menu-item-style-none">
-                                        <a href="{{ videos }}">VIDEOS</a></li>
+                                        <a href="/jwtv">VIDEOS</a></li>
                                     <li id="menu-item-145192"
                                         class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145192 csco-menu-item-style-none">
-                                        <a href="{{ podcasts }}">PODCASTS</a></li>
+                                        <a href="http://judicialh.local/category/podcasts/">PODCASTS</a></li>
                                     <li id="menu-item-145219"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145219 csco-menu-item-style-none">
-                                        <a href="{{ documents }}">DOCUMENTS</a></li>
+                                        <a href="/documents">DOCUMENTS</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145216"
@@ -100,39 +100,37 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145220"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145220 csco-menu-item-style-none">
-                                        <a href="{{ donate }}">DONATE</a></li>
+                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
                                     <li id="menu-item-145217"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145217 csco-menu-item-style-none">
-                                        <a href="{{ petitions }}">PETITIONS</a></li>
+                                        <a href="#">TAKE ACTION</a></li>
                                     <li id="menu-item-145222"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145222 csco-menu-item-style-none">
-                                        <a href="{{ get_our_text_alerts }}">GET OUR TEXT ALERTS</a></li>
+                                        <a href="#">GET OUR TEXT ALERTS</a></li>
+                                    <li id="menu-item-145221"
+                                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145221 csco-menu-item-style-none">
+                                        <a href="#">EMAIL SIGN UP</a></li>
                                     <li id="menu-item-145223"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145223 csco-menu-item-style-none">
-                                        <a href="{{ shop }}">SHOP</a></li>
-                                    <li id="menu-item-145223"
-                                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145223 csco-menu-item-style-none">
-                                        <a href="{{ the_verdict }}">THE VERDICT</a></li>
+                                        <a href="https://shopjw.org">SHOP</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145340"
                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145340 csco-menu-item-style-none">
-                                <a href="{{ about }}">ABOUT</a>
+                                <a href="/about">ABOUT</a>
                                 <ul class="sub-menu">
                                     <li id="menu-item-145341"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                        <a href="{{ mission }}">MISSION</a></li>
-                                   {# <li id="menu-item-145343"
+                                        <a href="#">MISSION</a></li>
+                                    <li id="menu-item-145343"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145343 csco-menu-item-style-none">
-                                        <a href="{{ who_we_are }}">WHO WE ARE</a></li>#}
-                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                        <a href="{{ legal }}">LEGAL</a></li>
-                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                        <a href="{{ team }}">TEAM</a></li>
-                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145344 csco-menu-item-style-none">
-                                        <a href="{{ careers }}">CAREERS</a></li>
-                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145345 csco-menu-item-style-none">
-                                        <a href="{{ contact }}">CONTACT</a></li>
+                                        <a href="#">WHO WE ARE</a></li>
+                                    <li id="menu-item-145344"
+                                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145344 csco-menu-item-style-none">
+                                        <a href="#">CAREERS</a></li>
+                                    <li id="menu-item-145345"
+                                        class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145345 csco-menu-item-style-none">
+                                        <a href="#">CONTACT</a></li>
                                 </ul>
                             </li>
                             <li id="menu-item-145347"
@@ -141,16 +139,15 @@
                                 <ul class="sub-menu">
                                     <li id="menu-item-145346"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145346 csco-menu-item-style-none">
-                                        <a href="{{ lawsuits_and_legal_actions }}">LAWSUITS &#038; LEGAL ACTIONS</a></li>
+                                        <a href="#">LAWSUITS &#038; LEGAL ACTIONS</a></li>
                                     <li id="menu-item-145349"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145349 csco-menu-item-style-none">
-                                        <a href="{{ open_records_law_resources }}">OPEN RECORDS LAW RESOURCES</a></li>
+                                        <a href="#">OPEN RECORDS LAW RESOURCES</a></li>
                                     <li id="menu-item-145350"
                                         class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145350 csco-menu-item-style-none">
-                                        <a href="{{ international_program }}">THE INTERNATIONAL PROGRAM</a></li>
+                                        <a href="#">THE INTERNATIONAL PROGRAM</a></li>
                                 </ul>
                             </li>
-
                         </ul>
                     </div>
                 </div>
@@ -192,19 +189,27 @@
                     <br/><br/>
                     <div class="cs-social">
                         <a class="cs-social__link" href="{{ sitewideSettings.facebook.value }}" target="_blank">
-                            <img src="{{ facebook_icon_image_path[0] }}" alt="Facebook"  srcset="{{ facebook_icon_image_path[0] }} 1x, {{ facebook_icon_image_path[1] }} 2x">
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001.png"
+                                 alt="Facebook"
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-facebook-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="https://twitter.com/JudicialWatch" target="_blank">
-                            <img src="{{ twitter_icon_image_path[0] }}"  alt="Twitter"  srcset="{{ twitter_icon_image_path[0] }} 1x, {{ twitter_icon_image_path[1] }} 2x">
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001.png"
+                                 alt="Twitter"
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-twitter-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="{{ sitewideSettings.instagram.value }}" target="_blank">
-                            <img src="{{ insta_icon_image_path[0] }}" srcset="{{ insta_icon_image_path[0] }} 1x, {{ insta_icon_image_path[1] }} 2x"  alt="Instagram">
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001.png"
+                                 alt="Instagram"
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-instagram-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="{{ sitewideSettings.youtube.value }}" target="_blank">
-                            <img src="{{ youtube_icon_image_path[0] }}" srcset="{{ youtube_icon_image_path[0] }} 1x, {{ youtube_icon_image_path[1] }} 2x" alt="Youtube">
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001.png"
+                                 alt="Youtube"
+                                 srcset="{{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001.png 1x, {{ function("site_url") }}wp-content/uploads/2024/04/icon-youtube-0001@2x.png 2x">
                         </a>
                         <a class="cs-social__link" href="https://truthsocial.com/@JudicialWatch" target="_blank">
-                            <img src="{{  tsocial_icon_image_path }}"
+                            <img src="{{ function("site_url") }}wp-content/uploads/2024/04/icon-social-truth.png"
                                  alt="Truth"> </a>
                     </div>
 
@@ -229,32 +234,39 @@
 
                             <div class="cs-social">
                                 <a class="cs-social__link" href="https://twitter.com/JudicialWatch" target="_blank">
-                                    <img src="{{ twitter_icon_image_path[0] }}"  alt="Twitter"  srcset="{{ twitter_icon_image_path[0] }} 1x, {{ twitter_icon_image_path[1] }} 2x">
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png"
+                                         alt="Twitter"
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-twitter-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.facebook.value }}"
                                    target="_blank">
-                                    <img src="{{ facebook_icon_image_path[0] }}" alt="Facebook"  srcset="{{ facebook_icon_image_path[0] }} 1x, {{ facebook_icon_image_path[1] }} 2x">
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png"
+                                         alt="Facebook"
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-facebook-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.youtube.value }}"
                                    target="_blank">
-                                    <img src="{{ youtube_icon_image_path[0] }}" srcset="{{ youtube_icon_image_path[0] }} 1x, {{ youtube_icon_image_path[1] }} 2x" alt="Youtube">
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png"
+                                         alt="Youtube"
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-youtube-0001@2x.png 2x">
                                 </a>
                                 <a class="cs-social__link" href="{{ sitewideSettings.instagram.value }}"
                                    target="_blank">
-                                    <img src="{{ insta_icon_image_path[0] }}" srcset="{{ insta_icon_image_path[0] }} 1x, {{ insta_icon_image_path[1] }} 2x"  alt="Instagram">
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png"
+                                         alt="Instagram"
+                                         srcset="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001.png 1x, {{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-instagram-0001@2x.png 2x">
                                 </a>
-                                <a class="cs-social__link" href="https://truthsocial.com/@JudicialWatch" target="_blank">
-                                    <img src="{{ tsocial_icon_image_path }}" alt="Truth"> </a>
+                                <a class="cs-social__link" href="https://truthsocial.com/@JudicialWatch"
+                                   target="_blank">
+                                    <img src="{{ function("site_url") }}/wp-content/themes/judicial-watch/assets/assets/uploads/2024/04/icon-social-truth.png"
+                                         alt="Truth"> </a>
                             </div>
 
 
                         </div>
                         <div class="cs-header__col cs-col-center">
                             <h6 class="cs-subscribe__heading">
-                                <a href="{{ top_header_link }}">
-                                    {{ top_header_text }}
-                                </a>
-                            </h6>
+                                <a href="#">Alert: Huge Lawsuit to Clean Up CA Voter Rolls</a></h6>
                         </div>
                         <div class="cs-header__col cs-col-right">
                             {#<div class="cs-subscribe__form-group" data-scheme="light">
@@ -331,7 +343,7 @@
                                                                     {% endif %}
                                                                 {% endfor %}
 
-                                                              </ul>
+                                                            </ul>
 
                                                             <div class="cs-mm__posts-container cs-has-spinner">
                                                                 {% for tabPaneItem in menuItem.submenu.tabs %}
@@ -339,6 +351,7 @@
                                                                         <div class="cs-mm__posts-mixed">
                                                                             {% for tabPanePost in tabPaneItem.posts %}
                                                                                 {% if loop.first %}
+                                                                                    {% set firstTabPanePost = tabPaneItem.posts|first %}
                                                                                     <div class="cs-mm__posts-mixed-trending">
                                                                                         <h3 class="cs-mm__posts-mixed-title">
                                                                                             Trending Now</h3>
@@ -348,11 +361,13 @@
                                                                                                     class="mega-menu-item menu-post-item menu-post-item-tile post-145128 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-ashli-babbitt tag-border tag-cia tag-clinton tag-fbi tag-mexico cs-entry cs-video-wrap">
                                                                                                 <div class="cs-entry__outer cs-entry__overlay cs-overlay-ratio cs-ratio-landscape"
                                                                                                      data-scheme="inverse">
-                                                                                                    <div class="cs-entry__inner cs-entry__thumbnail">
-                                                                                                        <div class="cs-overlay-background">
-                                                                                                            <img width="688" height="359" src="{{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }}" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image" alt="" loading="lazy" decoding="async" srcset="{{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }} 688w, {{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }} 300w, {{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }} 332w, {{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }} 664w, {{ tabPanePost.thumbnails.medium_large.src ?? defaultImage }} 768w" sizes="auto, (max-width: 688px) 100vw, 688px">
+                                                                                                    {% if firstTabPanePost.thumbnails.medium_large.src %}
+                                                                                                        <div class="cs-entry__inner cs-entry__thumbnail">
+                                                                                                            <div class="cs-overlay-background">
+                                                                                                                <img width="688" height="359" src="{{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }}" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image" alt="" loading="lazy" decoding="async" srcset="{{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 688w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 300w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 332w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 664w, {{ firstTabPanePost.thumbnails.medium_large.src ?? defaultImage }} 768w" sizes="auto, (max-width: 688px) 100vw, 688px">
+                                                                                                            </div>
                                                                                                         </div>
-                                                                                                    </div>
+                                                                                                    {% endif %}
 
                                                                                                     <div class="cs-entry__inner cs-entry__content cs-overlay-content">
 
@@ -459,7 +474,156 @@
                                         {% endif %}
                                 {% endif %}
                                 {% endfor %}
-                                        </ul>
+                                        {#<li id="menu-item-2095" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-2095 csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms cs-sm-position-right"><a href="http://judicialp.local/category/read/"><span><span>NEWS</span></span></a>						<div class="sub-menu cs-sm-position-init" data-scheme="inverse">
+                                                <div class="cs-container">
+                                                    <div class="cs-mm__content">
+                                                        <ul class="cs-mm__categories">
+                                                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2101 csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child cs-active-item loaded">
+                                                                <a href="http://judicialp.local/category/read/tom-fittons-weekly-update/" data-term="21" data-numberposts="7">TOM FITTON’S JUDICIAL WATCH WEEKLY UPDATE</a>												</li>
+                                                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2099 csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child">
+                                                                <a href="http://judicialp.local/category/read/press-releases/" data-term="22" data-numberposts="7">PRESS RELEASES</a>												</li>
+                                                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2096 csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child">
+                                                                <a href="http://judicialp.local/category/read/corruption-chronicles/" data-term="23" data-numberposts="7">CORRUPTION CHRONICLES</a>												</li>
+                                                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2097 csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child">
+                                                                <a href="http://judicialp.local/category/read/in-the-news/" data-term="24" data-numberposts="7">IN THE NEWS</a>												</li>
+                                                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2098 csco-menu-item-style-none cs-mega-menu-child-term cs-mega-menu-child">
+                                                                <a href="http://judicialp.local/category/read/investigative-bulletin/" data-term="25" data-numberposts="7">INVESTIGATIVE BULLETIN</a>												</li>
+                                                        </ul>
+
+                                                        <div class="cs-mm__posts-container cs-has-spinner">
+                                                            <div class="cs-mm__posts cs-active-item loaded" data-term="21">			<div class="cs-mm__posts-mixed">
+                                                                    <div class="cs-mm__posts-mixed-trending">
+                                                                        <h3 class="cs-mm__posts-mixed-title">Trending Now</h3>
+
+                                                                        <div class="cs-mm__posts-mixed-list">
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-tile post-145128 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-ashli-babbitt tag-border tag-cia tag-clinton tag-fbi tag-mexico cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer cs-entry__overlay cs-overlay-ratio cs-ratio-landscape" data-scheme="inverse">
+                                                                                    <div class="cs-entry__inner cs-entry__thumbnail">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="688" height="359" src="http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2-688x359.jpg" class="attachment-csco-medium-uncropped size-csco-medium-uncropped wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2-688x359.jpg 688w, http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2-300x157.jpg 300w, http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2-332x173.jpg 332w, http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2-664x347.jpg 664w, http://judicialp.local/wp-content/uploads/2024/04/FBI-Abuse-of-Ashli-Babbitt-2.jpg 768w" sizes="auto, (max-width: 688px) 100vw, 688px">																							</div>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content cs-overlay-content">
+
+                                                                                        <h2 class="cs-entry__title">FBI Abuse of Ashli Babbitt</h2>
+                                                                                    </div>
+
+                                                                                    <a class="cs-overlay-link" href="http://judicialp.local/fbi-abuse-of-ashli-babbitt/" title="FBI Abuse of Ashli Babbitt"></a>
+                                                                                </div>
+                                                                            </article>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="cs-mm__posts-mixed-popular">
+                                                                        <h3 class="cs-mm__posts-mixed-title">Most popular</h3>
+
+                                                                        <div class="cs-mm__posts-mixed-list">
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-145005 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-ashli-babbitt tag-border tag-doj tag-state-department tag-tucker-carlson cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/04/Justice-for-Ashli-Babbitt-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/04/Justice-for-Ashli-Babbitt-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/04/Justice-for-Ashli-Babbitt-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/04/Justice-for-Ashli-Babbitt-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/justice-for-ashli-babbitt/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/justice-for-ashli-babbitt/">Justice for Ashli Babbitt!</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-144937 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-abortion tag-doj tag-easter tag-elections-2 tag-gun-control tag-joe-biden cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/03/Court-Battle-for-Cleaner-Elections-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/03/Court-Battle-for-Cleaner-Elections-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/03/Court-Battle-for-Cleaner-Elections-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/03/Court-Battle-for-Cleaner-Elections-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/court-battle-for-cleaner-elections/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/court-battle-for-cleaner-elections/">Court Battle for Cleaner Elections!</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-144799 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-border tag-doj tag-joe-biden tag-laken-riley cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/03/Laken-Riley-Lawsuit-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/03/Laken-Riley-Lawsuit-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/03/Laken-Riley-Lawsuit-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/03/Laken-Riley-Lawsuit-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/laken-riley-lawsuit/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/laken-riley-lawsuit/">Laken Riley Lawsuit!</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-144727 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-border tag-cia tag-fani-willis tag-florida tag-haiti tag-january-6 tag-joe-biden cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/03/NEW-Fani-Willis-Lawsuit-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/03/NEW-Fani-Willis-Lawsuit-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/03/NEW-Fani-Willis-Lawsuit-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/03/NEW-Fani-Willis-Lawsuit-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/new-fani-willis-lawsuit-2/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/new-fani-willis-lawsuit-2/">NEW: Fani Willis Lawsuit!</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-144643 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-crt tag-elections-2 tag-illinois tag-scotus tag-sheldon-whitehouse tag-trump cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/03/New-ELECTIONS-Lawsuit-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/03/New-ELECTIONS-Lawsuit-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/03/New-ELECTIONS-Lawsuit-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/03/New-ELECTIONS-Lawsuit-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/new-elections-lawsuit/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/new-elections-lawsuit/">New ELECTIONS Lawsuit</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                            <article class="mega-menu-item menu-post-item menu-post-item-horizontal post-144546 post type-post status-publish format-standard has-post-thumbnail category-tom-fittons-weekly-update tag-biden tag-border tag-border-crisis tag-hillary-clinton tag-immigration-2 tag-joe-biden cs-entry cs-video-wrap">
+                                                                                <div class="cs-entry__outer">
+                                                                                    <div class="cs-entry__inner cs-entry__overlay cs-entry__thumbnail cs-overlay-ratio cs-ratio-square">
+                                                                                        <div class="cs-overlay-background">
+                                                                                            <img width="72" height="72" src="http://judicialp.local/wp-content/uploads/2024/03/Judicial-Watch-Settles-Historic-Hillary-Clinton-Email-Lawsuit-72x72.jpg" class="attachment-csco-small size-csco-small wp-post-image" alt="" loading="lazy" decoding="async" srcset="http://judicialp.local/wp-content/uploads/2024/03/Judicial-Watch-Settles-Historic-Hillary-Clinton-Email-Lawsuit-72x72.jpg 72w, http://judicialp.local/wp-content/uploads/2024/03/Judicial-Watch-Settles-Historic-Hillary-Clinton-Email-Lawsuit-150x150.jpg 150w, http://judicialp.local/wp-content/uploads/2024/03/Judicial-Watch-Settles-Historic-Hillary-Clinton-Email-Lawsuit-144x144.jpg 144w" sizes="auto, (max-width: 72px) 100vw, 72px">												</div>
+
+                                                                                        <a href="http://judicialp.local/judicial-watch-settles-historic-hillary-clinton-email-lawsuit/" class="cs-overlay-link"></a>
+                                                                                    </div>
+
+                                                                                    <div class="cs-entry__inner cs-entry__content">
+
+                                                                                        <h2 class="cs-entry__title"><a href="http://judicialp.local/judicial-watch-settles-historic-hillary-clinton-email-lawsuit/">Judicial Watch Settles Historic Hillary Clinton Email Lawsuit!</a></h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cs-mm__posts" data-term="22"><span class="cs-spinner"></span></div>
+                                                            <div class="cs-mm__posts" data-term="23"><span class="cs-spinner"></span></div>
+                                                            <div class="cs-mm__posts" data-term="24"><span class="cs-spinner"></span></div>
+                                                            <div class="cs-mm__posts" data-term="25"><span class="cs-spinner"></span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li id="menu-item-2102" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2102 csco-menu-item-style-none cs-sm__level"><a href="http://judicialp.local/category/watch/"><span><span>VIDEOS</span></span></a></li>
+                                        <li id="menu-item-2116" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2116 csco-menu-item-style-none"><a href="http://judicialp.local/category/podcasts/"><span><span>PODCASTS</span></span></a></li>
+                                        <li id="menu-item-2119" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2119 csco-menu-item-style-none"><a href="#" class="menu-item-without-link"><span><span>DOCUMENTS</span></span></a></li>#}
+                                    </ul>
                                 </nav>
                             </div>
                             <div class="cs-header__col cs-col-center">
@@ -542,7 +706,7 @@
 		</span>
                                 </div>
                                 <a class="cs-button cs-header__custom-button"
-                                   href="{{ donate }}" target="_blank">
+                                   href="{{ function("site_url") }}donate/make-a-contribution-2/" target="_blank">
                                     Donate </a>
                             </div>
                         </div>
@@ -592,72 +756,72 @@
                                     <div class="cs-burger-menu__nav">
                                         <ul id="menu-burger-menu-1" class="cs-burger-menu__nav-menu ">
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145218 csco-menu-item-style-none">
-                                                <a href="javascript:void(0)">EXPLORE NEWS</a>
+                                                <a href="#">EXPLORE NEWS</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145631 csco-menu-item-style-none">
-                                                        <a href="{{ tom_fittons_weekly_update }}">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
+                                                        <a href="#">TOM FITTON&#8217;S WEEKLY UPDATE</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145224 csco-menu-item-style-none">
-                                                        <a href="{{ press_releases }}">PRESS RELEASES</a></li>
+                                                        <a href="{{ function("site_url") }}press-room/">PRESS
+                                                            RELEASES</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145632 csco-menu-item-style-none">
-                                                        <a href="{{ corruption_chronicles }}">CORRUPTION CHRONICLES</a></li>
+                                                        <a href="#">CORRUPTION CHRONICLES</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145633 csco-menu-item-style-none">
-                                                        <a href="{{ in_the_news }}">IN THE NEWS</a></li>
+                                                        <a href="#">IN THE NEWS</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145634 csco-menu-item-style-none">
-                                                        <a href="{{ investigative_bulletin }}">INVESTIGATIVE BULLETIN</a></li>
+                                                        <a href="#">INVESTIGATIVE BULLETIN</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145630 csco-menu-item-style-none">
-                                                <a href="javascript:void(0)">MEDIA &#038; RESOURCES</a>
+                                                <a href="#">MEDIA &#038; RESOURCES</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145202 csco-menu-item-style-none">
-                                                        <a href="{{ videos }}">VIDEOS</a></li>
+                                                        <a href="/jwtv">VIDEOS</a></li>
                                                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145192 csco-menu-item-style-none">
-                                                        <a href="{{ podcasts }}">PODCASTS</a>
+                                                        <a href="/podcasts">PODCASTS</a>
                                                     </li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145219 csco-menu-item-style-none">
-                                                        <a href="{{ documents }}">DOCUMENTS</a></li>
+                                                        <a href="/documents">DOCUMENTS</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145216 csco-menu-item-style-none">
-                                                <a href="javascript:void(0)">TAKE ACTION &#038; GET INVOLVED</a>
+                                                <a href="#">TAKE ACTION &#038; GET INVOLVED</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145220 csco-menu-item-style-none">
-                                                        <a href="{{ donate }}">DONATE</a></li>
+                                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145217 csco-menu-item-style-none">
-                                                        <a href="{{ petitions }}">PETITION</a></li>
+                                                        <a href="#">TAKE ACTION</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145222 csco-menu-item-style-none">
-                                                        <a href="{{ get_text_alerts }}">GET OUR TEXT ALERTS</a></li>
+                                                        <a href="#">GET OUR TEXT ALERTS</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145221 csco-menu-item-style-none">
-                                                        <a href="{{ the_verdict }}">THE VERDICT</a></li>
+                                                        <a href="#">EMAIL SIGN UP</a></li>
+                                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145223 csco-menu-item-style-none">
+                                                        <a href="https://shopjw.org">SHOP</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145340 csco-menu-item-style-none">
-                                                <a href="{{ home }}">ABOUT</a>
+                                                <a href="/about">ABOUT</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                                        <a href="{{ mission }}">MISSION</a></li>
-                                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                                        <a href="{{ legal }}">LEGAL</a></li>
-                                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145341 csco-menu-item-style-none">
-                                                        <a href="{{ team }}">TEAM</a></li>
+                                                        <a href="#">MISSION</a></li>
+                                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145343 csco-menu-item-style-none">
+                                                        <a href="#">WHO WE ARE</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145344 csco-menu-item-style-none">
-                                                        <a href="{{ careers }}">CAREERS</a></li>
+                                                        <a href="#">CAREERS</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145345 csco-menu-item-style-none">
-                                                        <a href="{{ contact }}">CONTACT</a></li>
+                                                        <a href="#">CONTACT</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-145347 csco-menu-item-style-none">
-                                                <a href="javascript:void(0)">INFORMATION</a>
+                                                <a href="#">INFORMATION</a>
                                                 <ul class="sub-menu">
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145346 csco-menu-item-style-none">
-                                                        <a href="{{ lawsuits_and_legal_actions }}">LAWSUITS &#038; LEGAL ACTIONS</a></li>
+                                                        <a href="#">LAWSUITS &#038; LEGAL ACTIONS</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145349 csco-menu-item-style-none">
-                                                        <a href="{{ open_records_law_resources }}">OPEN RECORDS LAW RESOURCES</a></li>
+                                                        <a href="#">OPEN RECORDS LAW RESOURCES</a></li>
                                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145350 csco-menu-item-style-none">
-                                                        <a href="{{ international_program }}">THE INTERNATIONAL PROGRAM</a></li>
+                                                        <a href="#">THE INTERNATIONAL PROGRAM</a></li>
                                                 </ul>
                                             </li>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -675,10 +839,10 @@
                                                 <a href="/?taxonomy=category">READ</a></li>
                                             <li id="menu-item-145187"
                                                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145187 csco-menu-item-style-none">
-                                                <a href="{{ watch }}">WATCH</a></li>
+                                                <a href="http://judicialh.local/category/watch/">WATCH</a></li>
                                             <li id="menu-item-145188"
                                                 class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-145188 csco-menu-item-style-none">
-                                                <a href="{{ podcasts }}">PODCASTS</a></li>
+                                                <a href="/podcasts">PODCASTS</a></li>
                                             <li id="menu-item-145189"
                                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-145189 csco-menu-item-style-none">
                                                 <a href="/documents">DOCUMENTS</a></li>
@@ -699,16 +863,19 @@
                                 <ul id="menu-bottombar" class="cs-header-bottombar__nav ">
                                     <li id="menu-item-2055"
                                         class="fa-solid fa-heart menu-item menu-item-type-custom menu-item-object-custom menu-item-2055 csco-menu-item-style-none">
-                                        <a href="{{ donate }}">DONATE</a></li>
-                                    <li id="menu-item-2022"
+                                        <a href="{{ function("site_url") }}donate/make-a-contribution-2/">DONATE</a></li>
+                                   {# <li id="menu-item-2022"
                                         class="fa-solid fa-circle-chevron-right menu-item menu-item-type-custom menu-item-object-custom menu-item-2022 csco-menu-item-style-none">
-                                        <a href="{{ function("site_url") }}/petitions/">PETITIONS</a></li>
+                                        <a href="#">TAKE ACTION</a></li>#}
                                     <li id="menu-item-2057"
                                         class="fa-solid fa-mobile menu-item menu-item-type-custom menu-item-object-custom menu-item-2057 csco-menu-item-style-none">
-                                        <a href="{{ function("site_url") }}/petitions/thank-you/">GET OUR TEXT ALERTS</a></li>
+                                        <a href="#">GET OUR TEXT ALERTS</a></li>
                                     <li id="menu-item-2058"
                                         class="fa-solid fa-cart-shopping menu-item menu-item-type-custom menu-item-object-custom menu-item-2058 csco-menu-item-style-none">
-                                        <a href="{{ shop }}">SHOP</a></li>
+                                        <a href="https://shopjw.org">SHOP</a></li>
+                                    {#<li id="menu-item-145352"
+                                        class="fa fa-flag menu-item menu-item-type-custom menu-item-object-custom menu-item-145352 csco-menu-item-style-none">
+                                        <a href="/about">ABOUT US</a></li>#}
                                     <li id="menu-item-145561"
                                         class="fa fa-house menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item menu-item-145561 csco-menu-item-style-none">
                                         <a href="{{ function("site_url") }}" aria-current="page">HOME</a></li>

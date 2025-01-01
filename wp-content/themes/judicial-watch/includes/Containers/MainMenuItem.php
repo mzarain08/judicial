@@ -122,7 +122,7 @@ class MainMenuItem extends Container
                     } else {
                         $post->url = get_the_permalink($post->postId);
                     }
-                    
+
                     // Image override
                     if (data_get($linkConfig, 'image.url')) {
                         $post->thumbnails = [
@@ -149,7 +149,8 @@ class MainMenuItem extends Container
                     ];
                 }
             });
-        } else if ('submenu_tabs' === $submenu->layout) {
+        }
+        else if ('submenu_tabs' === $submenu->layout) {
             $submenu->tabs = collect(get_field('submenu_layout_tabs', $wpPost->ID));
 
             $submenu->tabs->transform(function ($tabConfig) use ($wpPost) {

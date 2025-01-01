@@ -798,16 +798,19 @@ hr, .wp-block-separator {
 	overflow: visible;
 }
 
-h1,
-h2,
+/*h1,
+
 h3,
 h4,
-h5,
-h6 {
+h5,*/
+footer h2,
+.cs-header-topbar h6 {
 	margin-top: 0;
 	margin-bottom: 1rem;
 }
-
+.cs-header-topbar h6 {
+	font-weight: bold !important;
+}
 p {
 	margin-top: 0;
 	margin-bottom: 1rem;
@@ -1106,41 +1109,47 @@ body {
 	letter-spacing: var(--cs-font-base-letter-spacing);
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-	margin-top: 0;
-	margin-bottom: 1rem;
-	word-wrap: break-word;
-	color: var(--cs-color-primary);
-	font-family: var(--cs-font-headings-family), sans-serif;
-	font-weight: var(--cs-font-headings-weight);
-	text-transform: var(--cs-font-headings-text-transform);
-	line-height: var(--cs-font-headings-line-height);
-	letter-spacing: var(--cs-font-headings-letter-spacing);
+.cs-header-topbar h1,.cs-header-topbar h2,.cs-header-topbar h3,.cs-header-topbar h4,.cs-header-topbar h5,.cs-header-topbar h6,
+.cs-header-topbar .h1,.cs-header-topbar .h2,.cs-header-topbar .h3,.cs-header-topbar .h4,.cs-header-topbar .h5,.cs-header-topbar .h6,
+footer h1, footer h2, footer h3, footer h4, footer h5, footer h6,
+footer .h1, footer .h2, footer .h3, footer .h4, footer .h5, footer .h6 {
+	margin-top: 0 ;
+	margin-bottom: 1rem ;
+	word-wrap: break-word ;
+	color: var(--cs-color-primary) ;
+	font-family: var(--cs-font-headings-family), sans-serif ;
+	font-weight: var(--cs-font-headings-weight) ;
+	text-transform: var(--cs-font-headings-text-transform) ;
+	line-height: var(--cs-font-headings-line-height) ;
+	letter-spacing: var(--cs-font-headings-letter-spacing) ;
 }
-
-h1, .h1 {
+.cs-header-topbar h1, footer h1,.cs-header-topbar .h1, footer .h1 {
 	font-size: var(--cs-heading-1-font-size);
 }
 
-h2, .h2 {
-	font-size: var(--cs-heading-2-font-size);
+.cs-header-topbar h2,.cs-header-topbar .h2,
+footer h2, footer .h2 {
+	font-size: var(--cs-heading-2-font-size) ;
 }
 
-h3, .h3 {
-	font-size: var(--cs-heading-3-font-size);
+.cs-header-topbar h3,.cs-header-topbar .h3,
+footer h3, footer .h3 {
+	font-size: var(--cs-heading-3-font-size) ;
 }
 
-h4, .h4 {
-	font-size: var(--cs-heading-4-font-size);
+.cs-header-topbar h4,.cs-header-topbar .h4,
+footer h4, footer .h4 {
+	font-size: var(--cs-heading-4-font-size) ;
 }
 
-h5, .h5 {
-	font-size: var(--cs-heading-5-font-size);
+.cs-header-topbar h5,.cs-header-topbar .h5,
+footer h5, footer .h5 {
+	font-size: var(--cs-heading-5-font-size) ;
 }
 
-h6, .h6 {
-	font-size: var(--cs-heading-6-font-size);
+.cs-header-topbar h6,.cs-header-topbar .h6,.cs-header-topbar .cs-subscribe__heading,
+footer h6, footer .h6, footer .cs-subscribe__heading {
+	font-size: var(--cs-heading-6-font-size) ;
 }
 
 hr, .wp-block-separator {
@@ -2990,7 +2999,7 @@ body {
 }
 .cs-header__nav-inner > li.menu-item-has-children:not(.touch-device):hover > div.sub-menu {
 	/*top: calc(100% - 1px);*/
-	top: calc(73% - 1px);
+	top: calc(73% - 7px);
 }
 .cs-header__nav-inner > li.menu-item-has-children.submenu-visible > .sub-menu {
 	top: 100%;
@@ -4498,16 +4507,16 @@ body[data-scheme=dark] .cs-header__scheme-toggle .cs-header__scheme-toggle-icon:
 .cs-footer-columns__nav > li > ul > li > a:hover {
 	color: var(--cs-color-primary);
 }
-.cs-footer__copyright {
-	font-family: var(--cs-font-secondary-family), sans-serif;
-	font-size: var(--cs-font-secondary-size);
-	font-weight: var(--cs-font-secondary-weight);
-	font-style: var(--cs-font-secondary-style);
-	letter-spacing: var(--cs-font-secondary-letter-spacing);
-	text-transform: var(--cs-font-secondary-text-transform);
-	line-height: var(--cs-font-secondary-line-height);
-	margin-right: 1rem;
-	color: var(--cs-color-secondary);
+.cs-footer__copyright, .cs-footer__copyright p {
+	font-family: var(--cs-font-secondary-family), sans-serif !important;
+	font-size: var(--cs-font-secondary-size) !important;
+	font-weight: var(--cs-font-secondary-weight) !important;
+	font-style: var(--cs-font-secondary-style) !important;
+	letter-spacing: var(--cs-font-secondary-letter-spacing) !important;
+	text-transform: var(--cs-font-secondary-text-transform) !important;
+	line-height: var(--cs-font-secondary-line-height) !important;
+	margin-right: 1rem !important;
+	color: var(--cs-color-secondary) !important;
 }
 .cs-footer__copyright a {
 	display: inline;

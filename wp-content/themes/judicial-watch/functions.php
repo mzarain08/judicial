@@ -7,6 +7,7 @@ use Engage\JudicialWatch\JudicialWatch;
 // use Timber\Timber;
 
 require get_theme_file_path('includes/helpers.php');
+require get_theme_file_path('includes/timber_helpers.php');
 
 Timber::$locations = get_stylesheet_directory() . "/templates/";
 
@@ -343,9 +344,8 @@ function custom_admin_css() {
     $screen = get_current_screen();
     if ($screen->base === 'plugins') {
         echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
             const tbody = document.getElementById('the-list');
-            if (tbody) {
                 const rows = tbody.getElementsByTagName('tr');
                 for (let i = 0; i < rows.length; i++) {
                     if (rows[i].innerHTML.includes('Timber')) {
@@ -355,16 +355,10 @@ function custom_admin_css() {
                         break;
                     }
                 }
-            }
-        });
+        }, 100); // 100 milliseconds delay
         </script>";
     }
 }
+
 add_action('admin_head', 'custom_admin_css');
 
-function add_to_twig( $twig ) {
-    // Add site_url() to Twig context
-    $twig->addFunction( new \Twig\TwigFunction('site_url', 'site_url') );
-    return $twig;
-}
-add_filter( 'twig', 'add_to_twig' );
