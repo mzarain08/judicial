@@ -302,7 +302,7 @@
                                 <nav class="cs-header__nav">
                                     <ul id="menu-primary" class="cs-header__nav-inner">
                                 {% for menuItem in mainMenu %}
-                                    {% if menuItem.title in ['Read Now', 'Watch Now', 'Podcasts', 'Document Archives'] %}
+                                    {% if menuItem.title in ['Read Now', 'Watch Now', 'Podcasts', 'Documents'] %}
                                         {% set updatedTitle = menuItem.title %}
                                         {% if updatedTitle == 'Read Now' %}
                                             {% set updatedTitle = 'News' %}
@@ -481,7 +481,7 @@
                                 <nav class="cs-header__nav">
                                     <ul id="menu-primary" class="cs-header__nav-inner">
                                         {% for menuItem in mainMenu %}
-                                            {% if menuItem.title in ['About'] %}
+                                            {% if menuItem.title in ['About', 'Take Action'] %}
 
                                                 {% if menuItem.submenuExists %}
                                                     <li id="menu-item-{{ menuItem.id }}" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-{{ menuItem.id }} csco-menu-item-style-none cs-mega-menu cs-mega-menu-terms cs-sm-position-right">
